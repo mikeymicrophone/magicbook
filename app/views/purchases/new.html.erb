@@ -1,0 +1,13 @@
+
+
+<%= form_for(Purchase.new) do |f| %>
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+    data-amount="200"
+    data-name="Mikey Microphone"
+    data-description="How to Enjoy Magic Cards"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto">
+  </script>
+<% end %>
