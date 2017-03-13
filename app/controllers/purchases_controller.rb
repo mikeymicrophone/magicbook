@@ -31,6 +31,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
+        BookMailer.purchased(@purchase).deliver
         format.html { redirect_to @purchase, notice: 'Purchase was successfully created.' }
         format.json { render :show, status: :created, location: @purchase }
       else
