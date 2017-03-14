@@ -31,8 +31,11 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-        BookMailer.purchased(@purchase).deliver
-        format.html { redirect_to @purchase, notice: 'Purchase was successfully created.' }
+        if Book.last.pdf.try(:file).exists?
+          pdf = open(Book.last.pdf.file.url)
+        end
+        # BookMailer.purchased(@purchase).deliver
+        format.html { send_file pdf, :filename => 'How to Enjoy Magic Cards.pdf' }
         format.json { render :show, status: :created, location: @purchase }
       else
         format.html { render :new }
