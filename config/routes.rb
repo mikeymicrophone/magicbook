@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :purchased_books
   resources :editions
   resources :books
   resources :purchases

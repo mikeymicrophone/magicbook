@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626192403) do
+ActiveRecord::Schema.define(version: 20170626202540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20170626192403) do
     t.index ["book_id"], name: "index_editions_on_book_id"
   end
 
+  create_table "purchased_books", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "purchase_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_purchased_books_on_book_id"
+    t.index ["purchase_id"], name: "index_purchased_books_on_purchase_id"
+  end
+
   create_table "purchases", id: :serial, force: :cascade do |t|
     t.string "email"
     t.string "stripe_token"
@@ -45,4 +54,6 @@ ActiveRecord::Schema.define(version: 20170626192403) do
   end
 
   add_foreign_key "editions", "books"
+  add_foreign_key "purchased_books", "books"
+  add_foreign_key "purchased_books", "purchases"
 end

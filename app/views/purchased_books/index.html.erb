@@ -1,0 +1,6 @@
+<% @purchased_books.each do |purchased_book| %>
+  <%= div_for purchased_book do %>
+    <%= purchased_book.book.title %>
+    <%= purchased_book.purchase_id %>
+  <% end %>
+<% end %>
