@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20170626192403) do
 
   create_table "editions", force: :cascade do |t|
     t.bigint "book_id"
-    t.string "version"
+    t.integer "major"
+    t.integer "minor"
+    t.integer "patch"
     t.text "note"
     t.datetime "release"
     t.string "pdf"
