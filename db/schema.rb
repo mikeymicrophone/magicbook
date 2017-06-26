@@ -10,25 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313213811) do
+ActiveRecord::Schema.define(version: 20170626192403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "books", force: :cascade do |t|
-    t.string   "title"
-    t.string   "version"
-    t.string   "pdf"
-    t.string   "author"
+  create_table "books", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.string "version"
+    t.string "pdf"
+    t.string "author"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "purchases", force: :cascade do |t|
-    t.string   "email"
-    t.string   "stripe_token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+  create_table "editions", force: :cascade do |t|
+    t.bigint "book_id"
+    t.string "version"
+    t.text "note"
+    t.datetime "release"
+    t.string "pdf"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_editions_on_book_id"
   end
 
+  create_table "purchases", id: :serial, force: :cascade do |t|
+    t.string "email"
+    t.string "stripe_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "editions", "books"
 end

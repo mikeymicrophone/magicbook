@@ -1,0 +1,5 @@
+<% @editions.each do |edition| %>
+  <%= div_for edition do %>
+    <%= edition.book.title %> version <%= edition.version %>
+  <% end %>
+<% end %>
