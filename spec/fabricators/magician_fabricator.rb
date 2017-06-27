@@ -1,0 +1,2 @@
+Fabricator(:magician) do
+end

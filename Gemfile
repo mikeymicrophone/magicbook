@@ -44,6 +44,17 @@ gem 'awesome_print'
 
 gem 'record_tag_helper'
 
+gem 'devise'
+# gem 'omniauth-facebook'
+# gem 'omniauth-twitter'
+# gem 'omniauth-amazon'
+# gem 'omniauth-github'
+# gem 'omniauth-instagram'
+# gem 'omniauth-medium'
+# gem 'omniauth-pinterest'
+# gem 'omniauth-slack'
+# gem 'omniauth--twitch'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
