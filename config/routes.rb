@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :magicians
+  resources :magicians, :only => [:index, :show]
   resources :purchased_books
   resources :editions
   resources :books

@@ -1,51 +1,34 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :edit, :update, :destroy]
 
-  # GET /purchases
-  # GET /purchases.json
   def index
     @purchases = Purchase.all
   end
 
-  # GET /purchases/1
-  # GET /purchases/1.json
   def show
   end
 
-  # GET /purchases/new
   def new
     @purchase = Purchase.new
   end
 
-  # GET /purchases/1/edit
   def edit
   end
 
-  # POST /purchases
-  # POST /purchases.json
   def create
     @purchase = Purchase.new
     
     @purchase.email = params[:stripeEmail]
     @purchase.stripe_token = params[:stripeToken]
+    @purchase.save
 
-    respond_to do |format|
-      if @purchase.save
-        if Book.last.pdf.try(:file).exists?
-          pdf = open(Book.last.pdf.file.url)
-        end
-        # BookMailer.purchased(@purchase).deliver
-        format.html { send_file pdf, :filename => 'How to Enjoy Magic Cards.pdf' }
-        format.json { render :show, status: :created, location: @purchase }
-      else
-        format.html { render :new }
-        format.json { render json: @purchase.errors, status: :unprocessable_entity }
-      end
+    if @purchase.fulfill
+      BookMailer.purchased(@purchase).deliver
+    else
+      render :text => "The purchase was not completed."
     end
   end
 
-  # PATCH/PUT /purchases/1
-  # PATCH/PUT /purchases/1.json
   def update
     respond_to do |format|
       if @purchase.update(purchase_params)
