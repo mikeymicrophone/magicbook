@@ -1,3 +1,23 @@
+<% @book.editions.each do |edition| %>
+  <%= div_for edition do %>
+    <% edition.chapters.each do |chapter| %>
+      <%= div_for chapter do %>
+        <%= chapter.title %>
+        <% chapter.sections.each do |section| %>
+          <%= div_for section do %>
+            <%= section.heading %>
+            <%= section.subheading %>
+            <% section.paragraphs.each do |paragraph| %>
+              <%= div_for paragraph do %>
+                <%= paragraph.text %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
 <%= form_with :model => Paragraph.new do |paragraph_form| %>
   <%= paragraph_form.text_area :text %>
   <%= paragraph_form.submit :append %>

@@ -22,3 +22,24 @@
 
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>
+
+<% @book.editions.each do |edition| %>
+  <%= div_for edition do %>
+    <% edition.chapters.each do |chapter| %>
+      <%= div_for chapter do %>
+        <%= chapter.title %>
+        <% chapter.sections.each do |section| %>
+          <%= div_for section do %>
+            <%= section.heading %>
+            <%= section.subheading %>
+            <% section.paragraphs.each do |paragraph| %>
+              <%= div_for paragraph do %>
+                <%= paragraph.text %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,5 +1,5 @@
 Fabricator(:chapter) do
   edition
-  title { Faker::Hipster.words }
+  title { Faker::Hipster.sentence 3 }
   subtitle { Faker::Shakespeare.king_richard_iii }
 end
