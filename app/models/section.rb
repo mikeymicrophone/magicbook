@@ -3,4 +3,5 @@ class Section < ApplicationRecord
   has_one :edition, :through => :chapter
   has_one :book, :through => :edition
   has_many :paragraphs
+  has_many :citations, :through => :paragraphs
 end

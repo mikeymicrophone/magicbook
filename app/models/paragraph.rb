@@ -3,6 +3,7 @@ class Paragraph < ApplicationRecord
   has_one :chapter, :through => :section
   has_one :edition, :through => :chapter
   has_one :book, :through => :edition
+  has_many :citations
   
   attr_accessor :book_id, :edition_id, :chapter_id
   

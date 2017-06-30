@@ -4,8 +4,7 @@ class CreateChapters < ActiveRecord::Migration[5.1]
       t.belongs_to :edition, foreign_key: true
       t.integer :ordering
       t.string :title
-      t.string :subtitle
-      t.string :text
+      t.text :subtitle
 
       t.timestamps
     end

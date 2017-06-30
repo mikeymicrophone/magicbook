@@ -3,6 +3,7 @@ class Edition < ApplicationRecord
   has_many :chapters
   has_many :sections, :through => :chapters
   has_many :paragraphs, :through => :sections
+  has_many :citations, :through => :paragraphs
   
   mount_uploader :pdf, PdfUploader
   

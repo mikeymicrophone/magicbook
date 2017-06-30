@@ -28,8 +28,7 @@ ActiveRecord::Schema.define(version: 20170630073911) do
     t.bigint "edition_id"
     t.integer "ordering"
     t.string "title"
-    t.string "subtitle"
-    t.string "text"
+    t.text "subtitle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["edition_id"], name: "index_chapters_on_edition_id"
