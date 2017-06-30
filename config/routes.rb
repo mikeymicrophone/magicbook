@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :citations
+  resources :paragraphs
+  resources :sections
+  resources :chapters
   devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
   resources :magicians, :only => [:index, :show]
   resources :purchased_books

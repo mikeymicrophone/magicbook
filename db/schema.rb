@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630071132) do
+ActiveRecord::Schema.define(version: 20170630073911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,26 @@ ActiveRecord::Schema.define(version: 20170630071132) do
     t.string "author"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "chapters", force: :cascade do |t|
+    t.bigint "edition_id"
+    t.integer "ordering"
+    t.string "title"
+    t.string "subtitle"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["edition_id"], name: "index_chapters_on_edition_id"
+  end
+
+  create_table "citations", force: :cascade do |t|
+    t.bigint "paragraph_id"
+    t.text "source"
+    t.text "finding"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paragraph_id"], name: "index_citations_on_paragraph_id"
   end
 
   create_table "editions", force: :cascade do |t|
@@ -60,6 +80,15 @@ ActiveRecord::Schema.define(version: 20170630071132) do
     t.index ["reset_password_token"], name: "index_magicians_on_reset_password_token", unique: true
   end
 
+  create_table "paragraphs", force: :cascade do |t|
+    t.bigint "section_id"
+    t.integer "ordering"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_paragraphs_on_section_id"
+  end
+
   create_table "purchased_books", force: :cascade do |t|
     t.bigint "book_id"
     t.bigint "purchase_id"
@@ -77,7 +106,21 @@ ActiveRecord::Schema.define(version: 20170630071132) do
     t.bigint "magician_id"
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.bigint "chapter_id"
+    t.integer "ordering"
+    t.string "heading"
+    t.text "subheading"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_sections_on_chapter_id"
+  end
+
+  add_foreign_key "chapters", "editions"
+  add_foreign_key "citations", "paragraphs"
   add_foreign_key "editions", "books"
+  add_foreign_key "paragraphs", "sections"
   add_foreign_key "purchased_books", "books"
   add_foreign_key "purchased_books", "purchases"
+  add_foreign_key "sections", "chapters"
 end

@@ -1,5 +1,8 @@
 class Edition < ApplicationRecord
   belongs_to :book
+  has_many :chapters
+  has_many :sections, :through => :chapters
+  has_many :paragraphs, :through => :sections
   
   mount_uploader :pdf, PdfUploader
   
