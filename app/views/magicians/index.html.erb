@@ -1,0 +1,14 @@
+<% @magicians.each do |magician| %>
+  <%= div_for magician do %>
+    <%= div_for magician, :title_of do %>
+      <%= magician.email %>
+    <% end %>
+    <%= div_for magician, :books_of do %>
+      <% magician.books.each do |book| %>
+        <%= div_for book do %>
+          <%= book.title %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

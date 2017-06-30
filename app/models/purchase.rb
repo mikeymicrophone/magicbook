@@ -1,4 +1,5 @@
 class Purchase < ApplicationRecord
+  belongs_to :magician
   has_many :purchased_books
   has_many :books, :through => :purchased_books
   
@@ -9,6 +10,7 @@ class Purchase < ApplicationRecord
   
   def attach_magician
     @magician = Magician.find_or_create_by :email => email
+    update_attribute :magician_id, @magician.id
   end
   
   def process_payment
