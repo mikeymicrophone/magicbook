@@ -6,4 +6,8 @@ module ApplicationHelper
     link_to('purchased_books', purchased_books_path) +
     link_to('magicians', magicians_path)
   end
+  
+  def div_with_data_for obj, opts = {}, &block
+    div_for obj, opts.merge(:data => {"#{obj.class.name.downcase}_id" => obj.id}.merge(opts[:data]||{})), &block
+  end
 end
