@@ -1,9 +1,12 @@
 <% @book.editions.each do |edition| %>
   <%= div_for edition do %>
+    <%= focus_append_on edition %>
     <% edition.chapters.each do |chapter| %>
       <%= div_for chapter do %>
+        <%= focus_append_on chapter %>
         <%= chapter.title %>
         <% chapter.sections.each do |section| %>
+          <%= focus_append_on section %>
           <%= div_for section do %>
             <%= section.heading %>
             <%= section.subheading %>
