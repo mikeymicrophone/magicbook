@@ -1,17 +1,19 @@
 <% @book.editions.each do |edition| %>
-  <%= div_for edition do %>
+  <%= div_with_data_for edition do %>
     <%= focus_append_on edition %>
     <% edition.chapters.each do |chapter| %>
-      <%= div_for chapter do %>
+      <%= div_with_data_for chapter do %>
         <%= focus_append_on chapter %>
-        <%= chapter.title %>
+        <%= content_tag :heading, chapter.title %>
         <% chapter.sections.each do |section| %>
-          <%= focus_append_on section %>
-          <%= div_for section do %>
-            <%= section.heading %>
-            <%= section.subheading %>
+          <%= div_with_data_for section do %>
+            <%= focus_append_on section %>
+            <%= content_tag :heading do %>
+              <%= section.heading %>
+              <%= section.subheading %>
+            <% end %>
             <% section.paragraphs.each do |paragraph| %>
-              <%= div_for paragraph do %>
+              <%= div_with_data_for paragraph do %>
                 <%= paragraph.text %>
               <% end %>
             <% end %>

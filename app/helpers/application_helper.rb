@@ -8,6 +8,6 @@ module ApplicationHelper
   end
   
   def div_with_data_for obj, opts = {}, &block
-    div_for obj, opts.merge(:data => {"#{obj.class.name.downcase}_id" => obj.id}.merge(opts[:data]||{})), &block
+    div_for obj, opts.merge(:data => {"#{obj.class.name.downcase}_id" => obj.id}.merge(opts[:data]||{}), :class => :div_with_data), &block
   end
 end
