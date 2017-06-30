@@ -1,0 +1,24 @@
+Let's establish your access to the site.
+
+One way to access your account is with a secure password.
+
+<%= form_with(:model => @magician, :as => resource_name, :url => establish_password_path, :html => {:method => :put}) do |password_form| %>
+  <div class="field">
+    <%= password_form.label :password, "This will be my password:" %><br />
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <%= password_form.password_field :password, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= password_form.label :password_confirmation, "Type the password again." %><br />
+    <%= password_form.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= password_form.submit "This will be my password.  I just repeated it silently to myself 5 times!" %>
+  </div>
+  
+  <%= password_form.hidden_field :reset_password_token, :value => @magician.reset_password_token %>
+<% end %>
