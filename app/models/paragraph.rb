@@ -6,7 +6,7 @@ class Paragraph < ApplicationRecord
   has_many :sections, :through => :table_of_contents
   has_many :citations, :through => :table_of_contents
   
-  attr_accessor :book_id, :edition_id, :chapter_id
+  attr_accessor :section, :chapter, :edition, :book
   
   def add_to_book table_of_contents
     if section = Section.where(:id => table_of_contents[:section_id]).take
