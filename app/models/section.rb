@@ -1,7 +1,8 @@
 class Section < ApplicationRecord
-  belongs_to :chapter
-  has_one :edition, :through => :chapter
-  has_one :book, :through => :edition
-  has_many :paragraphs
-  has_many :citations, :through => :paragraphs
+  has_many :table_of_contents
+  has_many :books, :through => :table_of_contents
+  has_many :editions, :through => :table_of_contents
+  has_many :chapter, :through => :table_of_contents
+  has_many :paragraphs, -> { where :citation_id => nil }, :through => :table_of_contents
+  has_many :citations, :through => :table_of_contents
 end

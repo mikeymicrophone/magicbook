@@ -1,9 +1,10 @@
 class Paragraph < ApplicationRecord
-  belongs_to :section
-  has_one :chapter, :through => :section
-  has_one :edition, :through => :chapter
-  has_one :book, :through => :edition
-  has_many :citations
+  has_many :table_of_contents
+  has_many :books, :through => :table_of_contents
+  has_many :editions, :through => :table_of_contents
+  has_many :chapters, :through => :table_of_contents
+  has_many :sections, :through => :table_of_contents
+  has_many :citations, :through => :table_of_contents
   
   attr_accessor :book_id, :edition_id, :chapter_id
   

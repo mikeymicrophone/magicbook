@@ -1,9 +1,10 @@
 class Book < ApplicationRecord
-  has_many :editions
-  has_many :chapters, :through => :editions
-  has_many :sections, :through => :chapters
-  has_many :paragraphs, :through => :chapters
-  has_many :citations, :through => :paragraphs
+  has_many :table_of_contents
+  has_many :editions, -> { where :chapter_id => nil }, :through => :table_of_contents
+  has_many :chapters, -> { where :section_id => nil }, :through => :table_of_contents
+  has_many :sections, -> { where :paragraph_id => nil }, :through => :table_of_contents
+  has_many :paragraphs, -> { where :citation_id => nil }, :through => :table_of_contents
+  has_many :citations, :through => :table_of_contents
   
   mount_uploader :pdf, PdfUploader
   
