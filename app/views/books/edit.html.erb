@@ -4,7 +4,10 @@
     <% edition.chapters.each do |chapter| %>
       <%= div_with_data_for chapter do %>
         <%= focus_append_on chapter %>
-        <%= content_tag :heading, chapter.title %>
+        <%= content_tag :heading do %>
+          <%= chapter.title %>
+          <%= chapter.subtitle %>
+        <% end %>
         <% chapter.sections.each do |section| %>
           <%= div_with_data_for section do %>
             <%= focus_append_on section %>

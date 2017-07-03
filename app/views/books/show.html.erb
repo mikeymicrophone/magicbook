@@ -28,6 +28,7 @@
     <% edition.chapters.each do |chapter| %>
       <%= div_with_data_for chapter do %>
         <%= chapter.title %>
+        <%= chapter.subtitle %>
         <% chapter.sections.each do |section| %>
           <%= div_with_data_for section do %>
             <%= section.heading %>
