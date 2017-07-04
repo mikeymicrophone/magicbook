@@ -1,0 +1,7 @@
+<%= form_with :model => @edition do |edition_form| %>
+  <%= edition_form.text_field :major, :placeholder => 'Major' %>
+  <%= edition_form.text_field :minor, :placeholder => 'Minor' %>
+  <%= edition_form.text_field :patch, :placeholder => 'Patch' %>
+  <%= edition_form.submit %>
+  <%= hidden_field :book, :id, :value => params[:book_id] %>
+<% end %>

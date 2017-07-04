@@ -1,23 +1,26 @@
-<% @book.editions.each do |edition| %>
-  <%= div_with_data_for edition do %>
-    <%= focus_append_on edition %>
-    <% edition.chapters.each do |chapter| %>
-      <%= div_with_data_for chapter do %>
-        <%= focus_append_on chapter %>
-        <%= content_tag :heading do %>
-          <%= chapter.title %>
-          <%= chapter.subtitle %>
-        <% end %>
-        <% chapter.sections.each do |section| %>
-          <%= div_with_data_for section do %>
-            <%= focus_append_on section %>
-            <%= content_tag :heading do %>
-              <%= section.heading %>
-              <%= section.subheading %>
-            <% end %>
-            <% section.paragraphs.each do |paragraph| %>
-              <%= div_with_data_for paragraph do %>
-                <%= paragraph.text %>
+<%= link_to 'Begin new edition', new_edition_path(:book_id => @book.id) %>
+<%= div_with_data_for @book do %>
+  <% @book.editions.each do |edition| %>
+    <%= div_with_data_for edition do %>
+      <%= focus_append_on edition %>
+      <% edition.chapters.each do |chapter| %>
+        <%= div_with_data_for chapter do %>
+          <%= focus_append_on chapter %>
+          <%= content_tag :heading do %>
+            <%= chapter.title %>
+            <%= chapter.subtitle %>
+          <% end %>
+          <% chapter.sections.each do |section| %>
+            <%= div_with_data_for section do %>
+              <%= focus_append_on section %>
+              <%= content_tag :heading do %>
+                <%= section.heading %>
+                <%= section.subheading %>
+              <% end %>
+              <% section.paragraphs.each do |paragraph| %>
+                <%= div_with_data_for paragraph do %>
+                  <%= paragraph.text %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
@@ -25,9 +28,4 @@
       <% end %>
     <% end %>
   <% end %>
-<% end %>
-<%= form_with :model => Paragraph.new do |paragraph_form| %>
-  <%= paragraph_form.text_area :text %>
-  <%= paragraph_form.submit :append %>
-  <%= paragraph_form.hidden_field :book_id, :value => @book.id %>
 <% end %>

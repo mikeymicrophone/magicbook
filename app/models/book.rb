@@ -1,9 +1,9 @@
 class Book < ApplicationRecord
   has_many :table_of_contents
-  has_many :editions, -> { where :chapter_id => nil }, :through => :table_of_contents
-  has_many :chapters, -> { where :section_id => nil }, :through => :table_of_contents
-  has_many :sections, -> { where :paragraph_id => nil }, :through => :table_of_contents
-  has_many :paragraphs, -> { where :citation_id => nil }, :through => :table_of_contents
+  has_many :editions, -> { where 'table_of_contents.chapter_id' => nil }, :through => :table_of_contents
+  has_many :chapters, -> { where 'table_of_contents.section_id' => nil }, :through => :table_of_contents
+  has_many :sections, -> { where 'table_of_contents.paragraph_id' => nil }, :through => :table_of_contents
+  has_many :paragraphs, -> { where 'table_of_contents.citation_id' => nil }, :through => :table_of_contents
   has_many :citations, :through => :table_of_contents
   
   mount_uploader :pdf, PdfUploader
