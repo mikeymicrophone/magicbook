@@ -8,8 +8,6 @@ class Edition < ApplicationRecord
   
   attr_accessor :book
   
-  before_create :locate
-  
   mount_uploader :pdf, PdfUploader
   
   scope :recent, lambda { order(:major => :desc, :minor => :desc, :patch => :desc) }
@@ -19,7 +17,8 @@ class Edition < ApplicationRecord
     "#{major}.#{minor}.#{patch}"
   end
   
-  def locate
-    self.books = [book]
+  def locate params
+    @book = Book.find params[:book]
+    table_of_contents.create
   end
 end

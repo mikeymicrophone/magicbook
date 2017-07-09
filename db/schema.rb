@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20170703203430) do
   end
 
   create_table "chapters", force: :cascade do |t|
-    t.integer "ordering"
     t.string "title"
     t.text "subtitle"
     t.datetime "created_at", null: false
@@ -76,7 +75,6 @@ ActiveRecord::Schema.define(version: 20170703203430) do
   end
 
   create_table "paragraphs", force: :cascade do |t|
-    t.integer "ordering"
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,7 +98,6 @@ ActiveRecord::Schema.define(version: 20170703203430) do
   end
 
   create_table "sections", force: :cascade do |t|
-    t.integer "ordering"
     t.string "heading"
     t.text "subheading"
     t.datetime "created_at", null: false

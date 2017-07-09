@@ -6,17 +6,17 @@
       <% edition.chapters.each do |chapter| %>
         <%= div_with_data_for chapter do %>
           <%= focus_append_on chapter %>
-          <%= content_tag :heading do %>
+          <%= content_tag :header do %>
             <%= chapter.title %>
-            <%= chapter.subtitle %>
           <% end %>
+          <%= chapter.subtitle %>
           <% chapter.sections.each do |section| %>
             <%= div_with_data_for section do %>
               <%= focus_append_on section %>
-              <%= content_tag :heading do %>
+              <%= content_tag :header do %>
                 <%= section.heading %>
-                <%= section.subheading %>
               <% end %>
+              <%= section.subheading %>
               <% section.paragraphs.each do |paragraph| %>
                 <%= div_with_data_for paragraph do %>
                   <%= focus_append_on paragraph %>

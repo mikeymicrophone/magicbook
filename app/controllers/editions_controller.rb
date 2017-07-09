@@ -8,9 +8,8 @@ class EditionsController < ApplicationController
   end
   
   def create
-    @edition = Edition.new edition_params
-    @edition.book = Book.find(params[:book][:id])
-    @edition.save
+    @edition = Edition.create edition_params
+    @edition.locate params
   end
   
   def append

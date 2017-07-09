@@ -3,5 +3,5 @@
   <%= edition_form.text_field :minor, :placeholder => 'Minor' %>
   <%= edition_form.text_field :patch, :placeholder => 'Patch' %>
   <%= edition_form.submit %>
-  <%= hidden_field :book, :id, :value => params[:book_id] %>
+  <%= hidden_field_tag :book, :id, :value => params[:book_id] %>
 <% end %>
