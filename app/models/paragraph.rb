@@ -8,6 +8,14 @@ class Paragraph < ApplicationRecord
   
   attr_accessor :section, :chapter, :edition, :book
   
+  def locate params
+    @section = Section.find params[:section]
+    @chapter = Chapter.find params[:chapter]
+    @edition = Edition.find params[:edition]
+    @book = Book.find params[:book]
+    table_of_contents.create
+  end
+  
   def add_to_book table_of_contents
     if section = Section.where(:id => table_of_contents[:section_id]).take
       self.section_id = section.id

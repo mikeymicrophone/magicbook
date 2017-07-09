@@ -1,7 +1,16 @@
 class ParagraphsController < ApplicationController
   def create
-    @paragraph = Paragraph.new paragraph_params
-    @paragraph.add_to_book paragraph_params
+    @paragraph = Paragraph.create paragraph_params
+    @paragraph.locate params
+  end
+  
+  def append
+    @paragraph = Paragraph.find params[:id]
+    @paragraph.section = Section.find params[:id]
+    @paragraph.chapter = Chapter.find params[:chapterId]
+    @paragraph.edition = Edition.find params[:editionId]
+    @paragraph.book = Book.find params[:bookId]
+    @citation = @paragraph.citations.new
   end
   
   def paragraph_params

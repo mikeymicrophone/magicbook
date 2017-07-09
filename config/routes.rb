@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :citations
-  resources :paragraphs
+  resources :paragraphs do
+    member do
+      get :append
+    end
+  end
   resources :sections do
     member do
       get :append

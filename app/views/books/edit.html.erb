@@ -19,7 +19,14 @@
               <% end %>
               <% section.paragraphs.each do |paragraph| %>
                 <%= div_with_data_for paragraph do %>
+                  <%= focus_append_on paragraph %>
                   <%= paragraph.text %>
+                  <% paragraph.citations.each do |citation| %>
+                    <%= div_with_data_for citation do %>
+                      <%= citation.finding %>
+                      <%= citation.source %>
+                    <% end %>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
