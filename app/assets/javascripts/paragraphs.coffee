@@ -15,7 +15,6 @@ attachFormTo = (table_of_contents) ->
       location_data[key] = data[key]
     )
   )
-  debugger
   $.get
     url: '/' + vertices[1] + 's/' + vertices[2] + '/append'
     data: location_data

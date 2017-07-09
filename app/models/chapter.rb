@@ -7,4 +7,10 @@ class Chapter < ApplicationRecord
   has_many :citations, :through => :table_of_contents
   
   attr_accessor :edition, :book
+  
+  def locate params
+    @edition = Edition.find params[:edition]
+    @book = Book.find params[:book]
+    table_of_contents.create
+  end
 end
