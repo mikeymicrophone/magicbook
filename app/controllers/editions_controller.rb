@@ -16,7 +16,6 @@ class EditionsController < ApplicationController
   def append
     @edition = Edition.find params[:editionId]
     @edition.book = Book.find params[:bookId]
-    @chapter = @edition.chapters.new
   end
   
   def edition_params

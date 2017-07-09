@@ -6,7 +6,11 @@ Rails.application.routes.draw do
       get :append
     end
   end
-  resources :chapters
+  resources :chapters do
+    member do
+      get :append
+    end
+  end
   devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
   resources :magicians, :only => [:index, :show]
   resources :purchased_books
