@@ -1,4 +1,4 @@
-class CreateIdentitifiers < ActiveRecord::Migration[5.1]
+class CreateIdentifiers < ActiveRecord::Migration[5.1]
   def change
     create_table :identifiers do |t|
       t.string :provider
