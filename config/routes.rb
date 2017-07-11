@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     end
   end
   devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
-  resources :magicians, :only => [:index, :show]
+  resources :magicians, :only => [:index, :show] do
+    resources :books, :only => :index
+  end
   resources :purchased_books
   resources :editions do
     member do

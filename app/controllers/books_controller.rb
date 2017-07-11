@@ -4,7 +4,11 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = if params[:magician_id]
+      current_magician.books
+    else
+      Book.all
+    end
   end
 
   # GET /books/1

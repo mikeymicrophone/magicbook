@@ -1,6 +1,10 @@
 module ApplicationHelper
   def login_links
-    link_to "Sign in with Facebook", "/auth/facebook"
+    unless current_magician
+      link_to("Sign in with Facebook", "/auth/facebook")
+    else
+      link_to("Review purchased books", magician_books_path(current_magician))
+    end
   end
   
   def navigation_links
