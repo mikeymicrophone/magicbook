@@ -6,17 +6,16 @@ class AuthenticationsController < ApplicationController
   def create
     Rails.logger.info "Omniauth parameters: #{request.env['omniauth.auth']}"
     auth = request.env['omniauth.auth']
-    @magician = Magician.find_by_provider_and_uid(auth['provider'], auth['uid'])
-    @muggle = Muggle.find_by :provider => auth['provider'], :uid => auth[uid] unless @magician
-    
-    @magician = Magician.create_with_omniauth auth unless @magician || @muggle
+    if @identifier = Identifier.find_by :provider => auth['provider'], :uid => auth['uid']
+      @magician = @identifier.magician
+    elsif @magician = Magician.find_by :email => auth['email']
+      @identity = @magician.identities.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['email']
+    end
     
     if @magician
       sign_in @magician
-    elsif @muggle
-      sign_in @muggle
+      redirect_to root_url, :notice => 'Signed in!'
     end
-    redirect_to root_url, :notice => 'Signed in!'
   end
 
   def destroy

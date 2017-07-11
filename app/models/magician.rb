@@ -1,6 +1,7 @@
 class Magician < ApplicationRecord
   has_many :purchases
   has_many :books, :through => :purchases
+  has_many :identifiers
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :confirmable
