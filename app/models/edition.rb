@@ -13,6 +13,14 @@ class Edition < ApplicationRecord
   scope :recent, lambda { order(:major => :desc, :minor => :desc, :patch => :desc) }
   scope :published, lambda { where Edition.arel_table[:release].lt DateTime.now }
   
+  def copy_contents_from edition, book
+    edition.table_of_contents.where(:book_id => book.id).each do |table_of_content|
+      attrs = table_of_content.attributes.except 'edition_id', 'id'
+      next if attrs['chapter_id'].blank?
+      table_of_contents.create attrs
+    end
+  end
+  
   def version
     "#{major}.#{minor}.#{patch}"
   end

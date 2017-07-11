@@ -5,11 +5,16 @@ class EditionsController < ApplicationController
   
   def new
     @edition = Edition.new
+    @previous_edition = Edition.where(:id => params[:previous_edition_id]).take
+    @book = Book.find params[:book_id]
   end
   
   def create
+    @previous_edition = Edition.where(:id => params[:previous_edition]).take
+    @book = Book.find params[:book]
     @edition = Edition.create edition_params
     @edition.locate params
+    @edition.copy_contents_from @previous_edition, @book if @previous_edition
   end
   
   def append

@@ -1,7 +1,8 @@
 <%= form_with :model => @edition do |edition_form| %>
-  <%= edition_form.text_field :major, :placeholder => 'Major' %>
-  <%= edition_form.text_field :minor, :placeholder => 'Minor' %>
-  <%= edition_form.text_field :patch, :placeholder => 'Patch' %>
+  <%= edition_form.text_field :major, :placeholder => "Major (#{@previous_edition&.major})" %>
+  <%= edition_form.text_field :minor, :placeholder => "Minor (#{@previous_edition&.minor})" %>
+  <%= edition_form.text_field :patch, :placeholder => "Patch (#{@previous_edition&.patch})" %>
   <%= edition_form.submit %>
   <%= hidden_field_tag :book, :id, :value => params[:book_id] %>
+  <%= hidden_field_tag :previous_edition, :id, :value => @previous_edition&.id %>
 <% end %>

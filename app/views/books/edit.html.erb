@@ -1,27 +1,32 @@
-<%= link_to 'Begin new edition', new_edition_path(:book_id => @book.id) %>
 <%= div_with_data_for @book do %>
+  <%= content_tag :header do %>
+    <%= @book.title %>
+  <% end %>
   <% @book.editions.each do |edition| %>
     <%= div_with_data_for edition do %>
+      <%= content_tag :header do %>
+        version <%= edition.version %>
+      <% end %>
       <%= focus_append_on edition %>
-      <% edition.chapters.each do |chapter| %>
+      <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
         <%= div_with_data_for chapter do %>
           <%= focus_append_on chapter %>
           <%= content_tag :header do %>
             <%= chapter.title %>
           <% end %>
           <%= chapter.subtitle %>
-          <% chapter.sections.each do |section| %>
+          <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
             <%= div_with_data_for section do %>
               <%= focus_append_on section %>
               <%= content_tag :header do %>
                 <%= section.heading %>
               <% end %>
               <%= section.subheading %>
-              <% section.paragraphs.each do |paragraph| %>
+              <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
                 <%= div_with_data_for paragraph do %>
                   <%= focus_append_on paragraph %>
                   <%= paragraph.text %>
-                  <% paragraph.citations.each do |citation| %>
+                  <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
                     <%= div_with_data_for citation do %>
                       <%= citation.finding %>
                       <%= citation.source %>
@@ -34,5 +39,9 @@
         <% end %>
       <% end %>
     <% end %>
+    <%= link_to 'Begin new edition', new_edition_path(:book_id => @book.id, :previous_edition_id => edition.id) %>
+  <% end %>
+  <% if @book.editions.empty? %>
+    <%= link_to 'Begin first edition', new_edition_path(:book_id => @book.id) %>
   <% end %>
 <% end %>
