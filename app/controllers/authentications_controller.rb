@@ -6,9 +6,9 @@ class AuthenticationsController < ApplicationController
   def create
     Rails.logger.info "Omniauth parameters: #{request.env['omniauth.auth']}"
     auth = request.env['omniauth.auth']
-    if @identifier = Identifier.find_by :provider => auth['provider'], :uid => auth['uid']
+    if @identifier = Identifier.find_by(:provider => auth['provider'], :uid => auth['uid'])
       @magician = @identifier.magician
-    elsif @magician = Magician.find_by :email => auth['email']
+    elsif @magician = Magician.find_by(:email => auth['email'])
       @identity = @magician.identities.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['email']
     end
     
