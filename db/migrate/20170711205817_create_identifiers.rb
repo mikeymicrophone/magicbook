@@ -1,6 +1,6 @@
 class CreateIdentitifiers < ActiveRecord::Migration[5.1]
   def change
-    create_table :identitifiers do |t|
+    create_table :identifiers do |t|
       t.string :provider
       t.string :uid
       t.string :email
