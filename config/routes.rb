@@ -31,6 +31,8 @@ Rails.application.routes.draw do
     get 'confirmations/establish_access', :to => 'confirmations#establish_access'
   end
   
+  get "/auth/:action/callback", :controller => "authentications", :constraints => { :action => /twitter|github|facebook/ }
+  
   root :to => 'purchases#new'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
