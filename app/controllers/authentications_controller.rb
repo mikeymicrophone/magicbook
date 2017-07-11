@@ -1,5 +1,10 @@
 class AuthenticationsController < ApplicationController
+  def facebook
+    create
+  end
+  
   def create
+    Rails.logger.info "Omniauth parameters: #{request.env['omniauth.auth']}"
     auth = request.env['omniauth.auth']
     @magician = Magician.find_by_provider_and_uid(auth['provider'], auth['uid'])
     @muggle = Muggle.find_by :provider => auth['provider'], :uid => auth[uid] unless @magician
