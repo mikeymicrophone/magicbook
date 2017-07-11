@@ -24,6 +24,7 @@ class PurchasesController < ApplicationController
 
     if @purchase.fulfill
       BookMailer.purchased(@purchase).deliver
+      redirect_to @purchase.books.first
     else
       render :text => "The purchase was not completed."
     end
