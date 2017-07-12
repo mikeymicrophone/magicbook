@@ -9,7 +9,7 @@ class AuthenticationsController < ApplicationController
     if @identifier = Identifier.find_by(:provider => auth['provider'], :uid => auth['uid'])
       @magician = @identifier.magician
     elsif @magician = Magician.find_by(:email => auth['info']['email'])
-      @identity = @magician.identities.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['info']['email']
+      @identity = @magician.identifiers.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['info']['email']
     end
     
     if @magician
