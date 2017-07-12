@@ -214,6 +214,7 @@ GEM
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    google-analytics-rails (1.1.1)
     hashie (3.5.5)
     i18n (0.8.4)
     inflecto (0.0.2)
@@ -385,6 +386,7 @@ DEPENDENCIES
   fabrication
   faker
   fog
+  google-analytics-rails
   jbuilder
   jquery-rails
   listen
