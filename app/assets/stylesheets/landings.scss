@@ -1,0 +1,13 @@
+#homepage {
+  font-family: 'Noto Sans';
+  font-size: 2.1em;
+  
+  section {
+    margin: 20px;
+    
+    section:last-child {
+      text-align: right;
+      font-size: 0.8em;
+    }
+  }
+}

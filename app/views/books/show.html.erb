@@ -1,34 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @book.title %>
+  <strong><%= @book.title %></strong>
 </p>
 
 <p>
-  <strong>Version:</strong>
-  <%= @book.version %>
+  by <%= @book.author %>
 </p>
-
-<p>
-  <strong>Pdf:</strong>
-  <%= @book.pdf %>
-</p>
-
-<p>
-  <strong>Author:</strong>
-  <%= @book.author %>
-</p>
-
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
 
 <% edition = @book.editions.last %>
 <%= div_with_data_for edition do %>
   <%= content_tag :header do %>
     version <%= edition.version %>
   <% end %>
-  <%= focus_append_on edition %>
   <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
     <%= div_with_data_for chapter do %>
       <%= content_tag :header do %>

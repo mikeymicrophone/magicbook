@@ -35,6 +35,6 @@ Rails.application.routes.draw do
   
   get "/auth/:action/callback", :controller => "authentications", :constraints => { :action => /twitter|github|facebook/ }
   
-  root :to => 'purchases#new'
+  root :to => 'landings#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

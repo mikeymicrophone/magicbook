@@ -58,6 +58,7 @@ gem 'omniauth-twitter'
 # gem 'omniauth--twitch'
 
 gem 'google-analytics-rails'
+gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
