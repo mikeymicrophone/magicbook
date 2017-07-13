@@ -24,7 +24,7 @@ class PurchasesController < ApplicationController
 
     if @purchase.fulfill
       BookMailer.purchased(@purchase).deliver
-      redirect_to @purchase.books.first
+      redirect_to invite_muggles_path(:purchase_id => @purchase.id)
     else
       render :text => "The purchase was not completed."
     end

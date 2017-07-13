@@ -1,0 +1,31 @@
+<%= tag.div :class => 'inviting' do %>
+  <%= tag.p do %>
+    Your purchase gives you a license to share the book with 4 people!
+  <% end %>
+  <%= tag.p do %>
+    Enter their email addresses here.
+    
+    <%= form_with :url => submit_muggles_path do %>
+      <%= text_field_tag :email_1 %>
+      <%= tag.br %>
+      <%= text_field_tag :email_2 %>
+      <%= tag.br %>
+      <%= text_field_tag :email_3 %>
+      <%= tag.br %>
+      <%= text_field_tag :email_4 %>
+      <%= tag.br %>
+      <%= text_area_tag :message, nil, :placeholder => 'Write them a message if you like!' %>
+      <%= tag.br %>
+      <%= submit_tag 'Ready!' %>
+      <%= hidden_field_tag :purchase_id, params[:purchase_id] %>
+    <% end %>
+  <% end %>
+  
+  
+  <%= tag.p do %>
+    If you need more time to locate their email addresses or pick your recipients, simply return to this page within 3 days.
+  <% end %>
+  <%= tag.p do %>
+    If you want to give it to more people, please make another purchase.
+  <% end %>
+<% end %>

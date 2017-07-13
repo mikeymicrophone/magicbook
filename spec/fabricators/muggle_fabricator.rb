@@ -1,0 +1,2 @@
+Fabricator(:muggle) do
+end
