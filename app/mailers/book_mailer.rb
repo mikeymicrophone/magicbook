@@ -5,8 +5,10 @@ class BookMailer < ApplicationMailer
         attachments["#{book.title}.pdf"] = open(book.pdf.file.url).read
       end
     end
+    
+    @purchase = purchase
 
-    mail :subject => "How to Enjoy Magic Cards (your purchased ebook)",
+    mail :subject => "Ways We Enjoy Magic Cards (your purchased e-book)",
          :to      => purchase.email,
          :from    => ENV['DELIVERY_EMAIL']
   end
