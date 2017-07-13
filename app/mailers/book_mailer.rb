@@ -13,7 +13,15 @@ class BookMailer < ApplicationMailer
          :from    => ENV['DELIVERY_EMAIL']
   end
   
-  def gifted
-    
+  def gifted purchase, muggle
+    purchase.books.each do |book|
+      if book.pdf&.file&.exists?
+        attachments["#{book.title}.pdf"] = open(book.pdf.file.url).read
+      end
+    end
+
+    mail :subject => "Ways We Enjoy Magic Cards (your gifted e-book)",
+         :to      => muggle.email,
+         :from    => ENV['DELIVERY_EMAIL']
   end
 end

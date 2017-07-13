@@ -7,6 +7,7 @@ class Muggle < ApplicationRecord
          
   before_validation :set_password_to_card_name
   validate :number_of_invited_muggles, :time_since_purchase
+  validates :email, :presence => true
   
   def select_card_name
     card_name = ''
