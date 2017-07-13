@@ -45,3 +45,5 @@
     <%= link_to 'Begin first edition', new_edition_path(:book_id => @book.id) %>
   <% end %>
 <% end %>
+
+<%= render 'form', :book => @book %>
