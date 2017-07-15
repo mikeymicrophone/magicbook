@@ -1,10 +1,13 @@
 module ApplicationHelper
   def login_links
-    unless current_magician
-      link_to("Sign in with Facebook", "/auth/facebook")
-    else
+    if current_magician
       link_to("Read books", magician_books_path(current_magician)) +
       link_to('lot out', destroy_magician_session_path, :method => :delete)
+    elsif current_muggle
+      link_to("Read books", muggle_books_path(current_muggle['id'])) +
+      link_to('lot out', destroy_muggle_session_path, :method => :delete)
+    else
+      link_to("Sign in with Facebook", "/auth/facebook")
     end
   end
   

@@ -1,6 +1,7 @@
 class Muggle < ApplicationRecord
   belongs_to :magician
   belongs_to :purchase
+  has_many :identifiers
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :confirmable

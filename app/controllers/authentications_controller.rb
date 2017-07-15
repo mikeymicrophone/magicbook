@@ -4,16 +4,21 @@ class AuthenticationsController < ApplicationController
   end
   
   def create
-    Rails.logger.info "Omniauth parameters: #{request.env['omniauth.auth']}"
     auth = request.env['omniauth.auth']
     if @identifier = Identifier.find_by(:provider => auth['provider'], :uid => auth['uid'])
-      @magician = @identifier.magician
+      if @identifier.magician
+        @magician = @identifier.magician
+      elsif @identifier.muggle
+        @muggle = @identifier.muggle
+      end
     elsif @magician = Magician.find_by(:email => auth['info']['email'])
-      @identity = @magician.identifiers.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['info']['email']
+      @identifier = @magician.identifiers.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['info']['email']
+    elsif @muggle = Muggle.find_by(:email => auth['info']['email'])
+      @identifier = @muggle.identifiers.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['info']['email']
     end
     
-    if @magician
-      sign_in @magician
+    if @magician || @muggle
+      sign_in @magician || @muggle
       redirect_to root_url, :notice => 'Signed in!'
     end
   end

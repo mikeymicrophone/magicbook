@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :muggles do
+    resources :books, :only => :index
     collection do
       get :invite
       post :submit
