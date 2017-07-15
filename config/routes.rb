@@ -31,9 +31,16 @@ Rails.application.routes.draw do
   resources :editions do
     member do
       get :append
+      put :release
     end
   end
-  resources :books
+  resources :books do
+    resources :chapters do
+      collection do
+        get :free
+      end
+    end
+  end
   resources :purchases
   
   devise_scope :magician do

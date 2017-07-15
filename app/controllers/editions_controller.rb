@@ -22,6 +22,12 @@ class EditionsController < ApplicationController
     @edition.book = Book.find params[:bookId]
   end
   
+  def release
+    @edition = Edition.find params[:id]
+    @edition.update_attribute :release, Time.now
+    head :ok
+  end
+  
   def edition_params
     params.require(:edition).permit(:major, :minor, :patch)
   end

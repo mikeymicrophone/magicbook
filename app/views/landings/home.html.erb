@@ -15,7 +15,7 @@
     </section>
   
     <section>
-      Since not everyone can make purchases online, we make a random chapter available every day.
+      Since not everyone can make purchases online, we make a random <%= link_to 'chapter', free_book_chapters_path(Book.featured) %> available every day.
     </section>
   </section>
   <%= wwemc_purchase %>

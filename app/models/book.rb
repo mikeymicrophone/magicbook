@@ -9,7 +9,7 @@ class Book < ApplicationRecord
   mount_uploader :pdf, PdfUploader
   
   def current_edition
-    editions.recent.published.first
+    editions.recent.published.recent.first
   end
   
   def major_version
@@ -22,5 +22,9 @@ class Book < ApplicationRecord
   
   def patch_version
     version.split('.').third.to_i
+  end
+  
+  def self.featured
+    find(ENV['DEFAULT_BOOK_IDS'])
   end
 end

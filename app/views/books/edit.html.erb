@@ -7,6 +7,9 @@
       <%= content_tag :header do %>
         version <%= edition.version %>
       <% end %>
+      <% if edition.release.blank? %>
+        <%= link_to 'release!', release_edition_path(edition), :method => :put %>
+      <% end %>
       <%= focus_append_on edition %>
       <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
         <%= div_with_data_for chapter do %>
