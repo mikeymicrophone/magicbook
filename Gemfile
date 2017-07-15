@@ -60,6 +60,9 @@ gem 'omniauth-twitter'
 gem 'google-analytics-rails'
 gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
 
+gem 'resque'
+gem 'resque_mailer'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

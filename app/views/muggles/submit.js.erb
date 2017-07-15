@@ -1,0 +1,12 @@
+<% if @muggle_1.persisted? %>
+  $('#email_1').replaceWith('<%=j "#{@muggle_1.email} is hooked up!" %>');
+<% end %>
+<% if @muggle_2.persisted? %>
+  $('#email_2').replaceWith('<%=j "#{@muggle_2.email} is hooked up!" %>');
+<% end %>
+<% if @muggle_3.persisted? %>
+  $('#email_3').replaceWith('<%=j "#{@muggle_3.email} is hooked up!" %>');
+<% end %>
+<% if @muggle_4.persisted? %>
+  $('#email_4').replaceWith('<%=j "#{@muggle_4.email} is hooked up!" %>');
+<% end %>

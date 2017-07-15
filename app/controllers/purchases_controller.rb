@@ -23,7 +23,8 @@ class PurchasesController < ApplicationController
     @purchase.save
 
     if @purchase.fulfill
-      BookMailer.purchased(@purchase).deliver
+      sign_in @purchase.magician
+      BookMailer.purchased(@purchase.id).deliver
       redirect_to invite_muggles_path(:purchase_id => @purchase.id)
     else
       render :text => "The purchase was not completed."
