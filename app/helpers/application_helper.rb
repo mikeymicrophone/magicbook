@@ -7,7 +7,9 @@ module ApplicationHelper
       link_to("Read books", muggle_books_path(current_muggle['id'])) +
       link_to('lot out', destroy_muggle_session_path, :method => :delete, :id => 'lot_out')
     else
-      link_to("Sign in with Facebook", "/auth/facebook")
+      link_to("Sign in with Facebook", "/auth/facebook", :id => 'facebook_login') +
+      tag.br +
+      link_to("Sign in with password", new_magician_session_path, :id => 'password_login')
     end
   end
   
@@ -22,6 +24,12 @@ module ApplicationHelper
   
   def div_with_data_for obj, opts = {}, &block
     div_for obj, opts.merge(:data => {"#{obj.class.name.downcase}_id" => obj.id}.merge(opts[:data]||{}), :class => :div_with_data), &block
+  end
+  
+  def site_logo
+    tag.div :id => 'logo_holder' do
+      link_to image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo'), root_url
+    end
   end
   
   def google_fonts

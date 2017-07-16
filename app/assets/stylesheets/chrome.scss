@@ -1,0 +1,12 @@
+#logo_holder {
+  text-align: center;
+  clear: both;
+}
+
+#site_logo {
+  width: 60%;
+  
+  &:hover {
+    background-color: #881D98;
+  }
+}
