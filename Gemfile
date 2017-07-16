@@ -57,6 +57,8 @@ gem 'omniauth-twitter'
 # gem 'omniauth-slack'
 # gem 'omniauth--twitch'
 
+gem 'cancancan'
+
 gem 'google-analytics-rails'
 gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
 

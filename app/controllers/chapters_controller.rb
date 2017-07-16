@@ -1,4 +1,6 @@
 class ChaptersController < ApplicationController
+  load_and_authorize_resource
+  
   def create
     @chapter = Chapter.create chapter_params
     @edition = Edition.find params[:edition]

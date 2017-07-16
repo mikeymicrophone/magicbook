@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+  load_and_authorize_resource
+  
   def create
     @section = Section.create section_params
     @section.locate params

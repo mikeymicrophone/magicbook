@@ -3,11 +3,10 @@ class Magician < ApplicationRecord
   has_many :books, :through => :purchases
   has_many :identifiers
   
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :confirmable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
 
   def needs_access_technique?
-    password.blank?
+    encrypted_password.blank?
   end
   
   def self.reset_password_by_token(attributes={})

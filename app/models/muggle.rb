@@ -3,8 +3,7 @@ class Muggle < ApplicationRecord
   belongs_to :purchase
   has_many :identifiers
   
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :confirmable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
          
   before_validation :set_password_to_card_name
   validate :number_of_invited_muggles, :time_since_purchase
@@ -28,5 +27,9 @@ class Muggle < ApplicationRecord
   
   def time_since_purchase
     errors.add(:base, "This purchase was made more than three days ago.") if purchase.created_at < 3.days.ago
+  end
+  
+  def needs_access_technique?
+    encrypted_password.blank?
   end
 end

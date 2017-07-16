@@ -1,4 +1,6 @@
 class ParagraphsController < ApplicationController
+  load_and_authorize_resource
+  
   def create
     @paragraph = Paragraph.create paragraph_params
     @paragraph.locate params

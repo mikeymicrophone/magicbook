@@ -53,6 +53,7 @@ GEM
     bindex (0.5.0)
     builder (3.2.3)
     byebug (9.0.6)
+    cancancan (2.0.0)
     carrierwave (1.1.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -413,6 +414,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   byebug
+  cancancan
   carrierwave
   coffee-rails
   devise

@@ -1,6 +1,8 @@
 module ApplicationHelper
   def login_links
-    if current_magician
+    if current_scribe
+      link_to('lot out', destroy_scribe_session_path, :method => :delete, :id => 'lot_out')
+    elsif current_magician
       link_to("Read books", magician_books_path(current_magician)) +
       link_to('lot out', destroy_magician_session_path, :method => :delete, :id => 'lot_out')
     elsif current_muggle
