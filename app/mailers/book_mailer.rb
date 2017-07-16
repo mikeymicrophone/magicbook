@@ -14,7 +14,7 @@ class BookMailer < ApplicationMailer
          :from    => ENV['DELIVERY_EMAIL']
   end
   
-  def gifted purchase_id, muggle_id
+  def gifted purchase_id, muggle_id, note
     @purchase = Purchase.find purchase_id
     @purchase.books.each do |book|
       if book.pdf&.file&.exists?
@@ -23,6 +23,7 @@ class BookMailer < ApplicationMailer
     end
     
     @muggle = Muggle.find muggle_id
+    @note = note
 
     mail :subject => "#{@purchase.books.first.title} (your gifted e-book)",
          :to      => @muggle.email,
