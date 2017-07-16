@@ -3,6 +3,7 @@ class CitationsController < ApplicationController
   
   def create
     @citation = Citation.create citation_params
+    @paragraph = Paragraph.find params[:paragraph]
     @citation.locate params
   end
   
