@@ -9,4 +9,14 @@ module ChaptersHelper
       hidden_field_tag(:book, :id, :value => edition.book.id)
     end
   end
+  
+  def chapter_control chapter
+    div_with_data_for chapter do
+      focus_append_on(chapter) +
+      tag.header do
+        chapter.title
+      end +
+      chapter.subtitle
+    end
+  end
 end

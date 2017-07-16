@@ -1,6 +1,7 @@
 class ChaptersController < ApplicationController
   def create
     @chapter = Chapter.create chapter_params
+    @edition = Edition.find params[:edition]
     @chapter.locate params
   end
   
