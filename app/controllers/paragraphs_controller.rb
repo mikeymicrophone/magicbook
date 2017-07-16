@@ -3,6 +3,7 @@ class ParagraphsController < ApplicationController
   
   def create
     @paragraph = Paragraph.create paragraph_params
+    @section = Section.find params[:section]
     @paragraph.locate params
   end
   
