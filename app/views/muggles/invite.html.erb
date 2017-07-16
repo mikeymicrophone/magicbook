@@ -1,11 +1,11 @@
 <%= tag.div :class => 'inviting' do %>
   <%= tag.p do %>
-    Your purchase gives you a license to share the book with 4 people!
+    Your purchase gives you a license to share the book with four people!
   <% end %>
   <%= tag.p do %>
     Enter their email addresses here.
     
-    <%= form_with :url => submit_muggles_path do %>
+    <%= form_with :url => submit_muggles_path, :id => 'muggle_form' do %>
       <%= text_field_tag :email_1 %>
       <%= tag.br %>
       <%= text_field_tag :email_2 %>
@@ -14,18 +14,23 @@
       <%= tag.br %>
       <%= text_field_tag :email_4 %>
       <%= tag.br %>
-      <%= text_area_tag :message, nil, :placeholder => 'Write them a message if you like!' %>
+      <%= text_area_tag :message, nil, :placeholder => 'Add a message. This is how they can know who the gift is from.', :size => '60x5' %>
       <%= tag.br %>
       <%= submit_tag 'Ready!' %>
       <%= hidden_field_tag :purchase_id, params[:purchase_id] %>
     <% end %>
   <% end %>
   
-  
   <%= tag.p do %>
-    If you need more time to locate email addresses, you can return to this page within 3 days.  The link is in your inbox.
+    If you need more time to locate email addresses, remember to return to this page within 3 days.  The link is in your inbox.
   <% end %>
   <%= tag.p do %>
-    If you want to give it to more than 4 people, <%= link_to 'purchase another copy for $2', root_url %>.
+    To give it to even more people, <%= link_to 'purchase another copy', root_url %>.
+  <% end %>
+  <%= tag.p do %>
+    Nothing except your own good judgement will stop you from copying the pdf you've received.  However, recipients of unauthorized copies will not be able to access updates, and they will know how little you <i>didn't</i> spend on them :/
+  <% end %>
+  <%= tag.p do %>
+    If you choose to copy the pdf, I won't be mad.  My goal is to make these online resources worth more than the price I've asked.  I understand, though, that sometimes money is tight!
   <% end %>
 <% end %>
