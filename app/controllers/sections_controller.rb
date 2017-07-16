@@ -3,6 +3,7 @@ class SectionsController < ApplicationController
   
   def create
     @section = Section.create section_params
+    @chapter = Chapter.find params[:chapter]
     @section.locate params
   end
   
