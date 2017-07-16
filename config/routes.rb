@@ -1,3 +1,4 @@
+require 'resque/server'
 Rails.application.routes.draw do
   resources :muggles do
     resources :books, :only => :index
@@ -51,5 +52,6 @@ Rails.application.routes.draw do
   get "/auth/:action/callback", :controller => "authentications", :constraints => { :action => /twitter|github|facebook/ }
   
   root :to => 'landings#home'
+  mount Resque::Server.new, :at => "/resque"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
