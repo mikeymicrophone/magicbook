@@ -1,1 +1,2 @@
-$('#<%=j dom_id @edition %>').append('<%=j chapter_control @chapter %>');
+$('#<%=j dom_id @edition, :append_chapter_to %>').before('<%=j chapter_control @chapter %>');
+$('#<%=j dom_id @edition, :append_chapter_to %>')[0].reset();

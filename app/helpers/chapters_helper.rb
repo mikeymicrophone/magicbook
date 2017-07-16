@@ -1,6 +1,6 @@
 module ChaptersHelper
   def chapter_form edition
-    form_with :model => edition.chapters.new do |chapter_form|
+    form_with :model => edition.chapters.new, :id => dom_id(edition, :append_chapter_to) do |chapter_form|
       chapter_form.text_field(:title, :placeholder => 'Chapter title') +
       tag.br +
       chapter_form.text_area(:subtitle, :placeholder => 'Chapter subtitle') +
