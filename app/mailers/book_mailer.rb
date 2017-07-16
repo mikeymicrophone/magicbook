@@ -9,7 +9,7 @@ class BookMailer < ApplicationMailer
       end
     end
 
-    mail :subject => "#{purchase.books.first.title} (your purchased e-book)",
+    mail :subject => "#{@purchase.books.first.title} (your purchased e-book)",
          :to      => @purchase.email,
          :from    => ENV['DELIVERY_EMAIL']
   end
@@ -22,10 +22,10 @@ class BookMailer < ApplicationMailer
       end
     end
     
-    muggle = Muggle.find muggle_id
+    @muggle = Muggle.find muggle_id
 
-    mail :subject => "#{purchase.books.first.title} (your gifted e-book)",
-         :to      => muggle.email,
+    mail :subject => "#{@purchase.books.first.title} (your gifted e-book)",
+         :to      => @muggle.email,
          :from    => ENV['DELIVERY_EMAIL']
   end
 end
