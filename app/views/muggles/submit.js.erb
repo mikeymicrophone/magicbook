@@ -1,12 +1,20 @@
 <% if @muggle_1.persisted? %>
   $('#email_1').replaceWith('<%=j "#{@muggle_1.email} is hooked up!" %>');
+<% elsif @muggle_1.email.present? %>
+  $('#email_1').after('<%=j @muggle_1.errors.full_messages.join %>');
 <% end %>
 <% if @muggle_2.persisted? %>
   $('#email_2').replaceWith('<%=j "#{@muggle_2.email} is hooked up!" %>');
+<% elsif @muggle_2.email.present? %>
+  $('#email_2').after('<%=j @muggle_2.errors.full_messages.join %>');
 <% end %>
 <% if @muggle_3.persisted? %>
   $('#email_3').replaceWith('<%=j "#{@muggle_3.email} is hooked up!" %>');
+<% elsif @muggle_3.email.present? %>
+  $('#email_3').after('<%=j @muggle_3.errors.full_messages.join %>');
 <% end %>
 <% if @muggle_4.persisted? %>
   $('#email_4').replaceWith('<%=j "#{@muggle_4.email} is hooked up!" %>');
+<% elsif @muggle_4.email.present? %>
+  $('#email_4').after('<%=j @muggle_4.errors.full_messages.join %>');
 <% end %>
