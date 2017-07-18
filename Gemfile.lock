@@ -323,6 +323,7 @@ GEM
       trollop (~> 2.1)
     record_tag_helper (1.0.0)
       actionview (~> 5.x)
+    redcarpet (3.4.0)
     redis (3.3.3)
     redis-namespace (1.5.3)
       redis (~> 3.0, >= 3.0.4)
@@ -433,6 +434,7 @@ DEPENDENCIES
   puma
   rails
   record_tag_helper
+  redcarpet
   resque
   resque_mailer
   rollbar

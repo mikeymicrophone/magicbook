@@ -34,7 +34,17 @@ module ApplicationHelper
     end
   end
   
+  
+  def markdown
+    @renderer ||= Redcarpet::Render::HTML.new
+    @markdown ||= Redcarpet::Markdown.new @renderer
+  end
+  
+  def mark_up content
+    markdown.render(content.to_s).html_safe
+  end
+  
   def google_fonts
-    google_webfonts_init(:google => ['Anton', 'Cabin', 'Dosis', 'Josefin Sans', 'Noto Sans'])
+    google_webfonts_init(:google => ['Anton', 'Cabin', 'Cinzel', 'Dosis', 'Josefin Sans', 'Noto Sans'])
   end
 end

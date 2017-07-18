@@ -15,7 +15,7 @@
       <%= section.subheading %>
       <% @book.table_of_contents.in_edition(@edition).in_chapter(@chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
         <%= div_with_data_for paragraph do %>
-          <%= paragraph.text %>
+          <%= mark_up paragraph.text %>
           <% @book.table_of_contents.in_edition(@edition).in_chapter(@chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
             <%= div_with_data_for citation do %>
               <%= citation.finding %>
