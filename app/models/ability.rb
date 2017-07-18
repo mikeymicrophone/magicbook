@@ -8,8 +8,12 @@ class Ability
       can :read, :all
       can :invite, Muggle
       can :submit, Muggle
+      can :free, Chapter
     elsif user.is_a? Muggle
       can :read, :all
+      can :free, Chapter
+    else
+      can :free, Chapter
     end
   end
 end
