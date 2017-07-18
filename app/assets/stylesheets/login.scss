@@ -1,3 +1,21 @@
 #facebook_login, #password_login {
-  float: right;
+  position: absolute;
+  right: 30px;
+  font-family: 'Cabin';
+}
+
+#facebook_login {
+  top: 5px;
+}
+
+#password_login {
+  top: 25px;
+}
+
+#lot_out {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  text-decoration: none;
+  font-family: 'Cabin';
 }

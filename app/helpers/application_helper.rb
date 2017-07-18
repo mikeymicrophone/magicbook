@@ -1,13 +1,13 @@
 module ApplicationHelper
   def login_links
     if current_scribe
-      link_to('lot out', destroy_scribe_session_path, :method => :delete, :id => 'lot_out')
+      link_to('log out', destroy_scribe_session_path, :method => :delete, :id => 'lot_out')
     elsif current_magician
       link_to("Read books", magician_books_path(current_magician)) +
-      link_to('lot out', destroy_magician_session_path, :method => :delete, :id => 'lot_out')
+      link_to('log out', destroy_magician_session_path, :method => :delete, :id => 'lot_out')
     elsif current_muggle
       link_to("Read books", muggle_books_path(current_muggle['id'])) +
-      link_to('lot out', destroy_muggle_session_path, :method => :delete, :id => 'lot_out')
+      link_to('log out', destroy_muggle_session_path, :method => :delete, :id => 'lot_out')
     else
       link_to("Sign in with Facebook", "/auth/facebook", :id => 'facebook_login') +
       tag.br +
@@ -35,6 +35,6 @@ module ApplicationHelper
   end
   
   def google_fonts
-    google_webfonts_init(:google => ['Anton', 'Noto Sans'])
+    google_webfonts_init(:google => ['Anton', 'Cabin', 'Josefin Sans', 'Noto Sans'])
   end
 end
