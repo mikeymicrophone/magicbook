@@ -50,3 +50,47 @@
     }
   }
 }
+
+.syllabus {
+  .div_with_data {
+    border: none;
+  }
+  
+  .chapter_title {
+    font-size: 1.3em;
+    font-family: Anton;
+    margin-top: 10px;
+    
+    a {
+      text-decoration: none;
+    
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .chapter_subtitle {
+    margin-left: 5px;
+  }
+  
+  .section_heading {
+    margin-top: 10px;
+    margin-left: 15px;
+    font-size: 0.9em;
+    
+    a {
+      text-decoration: none;
+    
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .section_subheading {
+    margin-left: 15px;
+    font-size: 0.9em;
+    text-decoration: italic;
+  }
+}
