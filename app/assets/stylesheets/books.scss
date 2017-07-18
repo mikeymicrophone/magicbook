@@ -16,3 +16,38 @@
   border: none;
   padding: 10px;
 }
+
+.bookshelf_display_of_book {
+  margin: 15%;
+  font-size: 1.5em;
+  font-family: Helvetica;
+  
+  .chapter_count_of_book {
+    font-size: 0.6em;
+    float: right;
+  }
+  
+  
+  
+  .actions_with_book {
+    margin-top: 60px;
+    font-size: 0.8em;
+    
+    a {
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    a.begin_reading_link {
+      color: #2A4098;
+    }
+  
+    a.book_purchase_link {
+      color: #37786F;
+      float: right;
+    }
+  }
+}

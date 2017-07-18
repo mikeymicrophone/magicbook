@@ -1,0 +1,15 @@
+<% @muggles.each do |muggle| %>
+  <%= div_for muggle do %>
+    <%= tag.div do %>
+      <%= muggle.email %> 
+      (signed in <%= pluralize muggle.sign_in_count, 'time' %>)
+    <% end %>
+    <%= tag.div do %>
+      invited by: <%= muggle.magician&.email %> (<%= time_ago_in_words muggle.created_at %> ago)
+    <% end %>
+    has access to:
+    <% muggle.books.each do |book| %>
+      <%= link_to book.title, book %>
+    <% end %>
+  <% end %>
+<% end %>

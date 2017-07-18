@@ -1,5 +1,9 @@
 require 'resque/server'
 Rails.application.routes.draw do
+  devise_for :scribes, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
+  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords', :sessions => 'sessions'}
+  devise_for :muggles, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
+
   resources :muggles do
     resources :books, :only => :index
     collection do
@@ -23,9 +27,6 @@ Rails.application.routes.draw do
       get :append
     end
   end
-  devise_for :scribes, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
-  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
-  devise_for :muggles, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
   resources :magicians, :only => [:index, :show] do
     resources :books, :only => :index
   end

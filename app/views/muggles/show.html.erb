@@ -1,0 +1,12 @@
+<%= div_for @muggle do %>
+  <%= tag.div do %>
+    <%= @muggle.email %> 
+  <% end %>
+  <%= tag.div do %>
+    invited by: <%= @muggle.magician&.email %>
+  <% end %>
+  has access to:
+  <% @muggle.books.each do |book| %>
+    <%= link_to book.title, book %>
+  <% end %>
+<% end %>

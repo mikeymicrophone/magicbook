@@ -1,26 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Books</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Version</th>
-      <th>Author</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= book.title %></td>
-        <td><%= book.version %></td>
-        <td><%= book.author %></td>
-        <td><%= link_to 'Show', book %></td>
-      </tr>
+<% @books.each do |book| %>
+  <%= div_for book, :bookshelf_display_of do %>
+    <%= div_for book, :chapter_count_of do %>
+      <%= pluralize book.current_edition.chapters.count, 'chapter' %>
     <% end %>
-  </tbody>
-</table>
-
+    <%= div_for book, :title_of do %>
+      <%= link_to(book.title, book) %>
+    <% end %>
+    
+    by <%= book.author %>
+    
+    <%= div_for book, :actions_with do %>
+      <%= link_to 'Read this book online', book, :class => 'begin_reading_link' %>
+      <%= link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link' %>
+    <% end %>
+  <% end %>
+<% end %>

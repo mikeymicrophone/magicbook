@@ -7,6 +7,8 @@ class BooksController < ApplicationController
   def index
     @books = if params[:magician_id]
       current_magician.books
+    elsif params[:muggle_id]
+      current_muggle.books
     else
       Book.all
     end

@@ -1,4 +1,6 @@
 class MugglesController < ApplicationController
+  load_and_authorize_resource
+  
   def invite
     
   end
@@ -15,5 +17,13 @@ class MugglesController < ApplicationController
     BookMailer.gifted(@purchase.id, @muggle_2.id, params[:message]).deliver if @muggle_2.valid?
     BookMailer.gifted(@purchase.id, @muggle_3.id, params[:message]).deliver if @muggle_3.valid?
     BookMailer.gifted(@purchase.id, @muggle_4.id, params[:message]).deliver if @muggle_4.valid?
+  end
+  
+  def index
+    @muggles = Muggle.recent
+  end
+  
+  def show
+    @muggle = Muggle.find params[:id]
   end
 end

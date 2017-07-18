@@ -1,6 +1,7 @@
 class Muggle < ApplicationRecord
   belongs_to :magician
   belongs_to :purchase
+  has_many :books, :through => :purchase
   has_many :identifiers
   
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
@@ -8,6 +9,8 @@ class Muggle < ApplicationRecord
   before_validation :set_password_to_card_name
   validate :number_of_invited_muggles, :time_since_purchase
   validates :email, :presence => true
+  
+  scope :recent, lambda { order 'created_at desc' }
   
   def select_card_name
     card_name = ''
