@@ -1,6 +1,6 @@
 module ParagraphsHelper
-  def paragraph_form section
-    form_with :model => section.paragraphs.new, :id => dom_id(section, :append_paragraph_to) do |paragraph_form|
+  def paragraph_form section, paragraph = section.paragraphs.new
+    form_with :model => paragraph, :id => dom_id(section, :append_paragraph_to) do |paragraph_form|
       paragraph_form.text_area(:text) +
       paragraph_form.submit(:Append) +
       hidden_field_tag(:section, :id, :value => section.id) +

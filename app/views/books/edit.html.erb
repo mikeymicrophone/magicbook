@@ -29,6 +29,7 @@
                 <%= div_with_data_for paragraph do %>
                   <%= focus_append_on paragraph %>
                   <%= paragraph.text %>
+                  <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
                   <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
                     <%= div_with_data_for citation do %>
                       <%= citation.finding %>
