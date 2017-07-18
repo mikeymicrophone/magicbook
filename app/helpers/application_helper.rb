@@ -3,10 +3,10 @@ module ApplicationHelper
     if current_scribe
       link_to('log out', destroy_scribe_session_path, :method => :delete, :id => 'lot_out')
     elsif current_magician
-      link_to("Read books", magician_books_path(current_magician)) +
+      link_to("Bookshelf", magician_books_path(current_magician), :id => 'bookshelf') +
       link_to('log out', destroy_magician_session_path, :method => :delete, :id => 'lot_out')
     elsif current_muggle
-      link_to("Read books", muggle_books_path(current_muggle['id'])) +
+      link_to("Bookshelf", muggle_books_path(current_muggle['id']), :id => 'bookshelf') +
       link_to('log out', destroy_muggle_session_path, :method => :delete, :id => 'lot_out')
     else
       link_to("Sign in with Facebook", "/auth/facebook", :id => 'facebook_login') +
