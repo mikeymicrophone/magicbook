@@ -1,3 +1,17 @@
-// Place all the styles related to the chapters controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.read_by_chapter {
+  
+  .chapter_title {
+    text-align: center;
+    font-family: Anton;
+    font-size: 2.2em;
+  }
+  
+  .chapter_subtitle {
+    text-align: center;
+    font-family: Dosis;
+  }
+  
+  .div_with_data.section {
+    border: none;
+  }
+}

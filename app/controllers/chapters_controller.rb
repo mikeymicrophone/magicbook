@@ -24,6 +24,13 @@ class ChaptersController < ApplicationController
     @chapter = @book.table_of_contents.where(:edition_id => @edition, :section_id => nil).where.not(:chapter_id => nil).where(:ordering => free_chapter_position).first.chapter
   end
   
+  def show
+    @book = Book.find params[:book_id]
+    @edition = Edition.find params[:edition_id]
+    @chapter = Chapter.find params[:id]
+    
+  end
+  
   def chapter_params
     params.require(:chapter).permit(:title, :subtitle)
   end

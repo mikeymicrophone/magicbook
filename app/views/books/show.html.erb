@@ -15,7 +15,7 @@
     <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
       <%= div_with_data_for chapter do %>
         <%= content_tag :header do %>
-          <%= chapter.title %>
+          <%= link_to chapter.title, chapter_path(chapter, :book_id => @book.id, :edition_id => edition.id) %>
         <% end %>
         <%= chapter.subtitle %>
         <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>

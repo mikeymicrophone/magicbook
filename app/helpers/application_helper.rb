@@ -25,7 +25,7 @@ module ApplicationHelper
   end
   
   def div_with_data_for obj, opts = {}, &block
-    div_for obj, opts.merge(:data => {"#{obj.class.name.downcase}_id" => obj.id}.merge(opts[:data]||{}), :class => :div_with_data), &block
+    div_for obj, opts.merge(:data => {"#{obj.class.name.downcase}_id" => obj.id}.merge(opts[:data]||{}), :class => "div_with_data #{opts[:class]}"), &block
   end
   
   def site_logo
@@ -35,6 +35,6 @@ module ApplicationHelper
   end
   
   def google_fonts
-    google_webfonts_init(:google => ['Anton', 'Cabin', 'Josefin Sans', 'Noto Sans'])
+    google_webfonts_init(:google => ['Anton', 'Cabin', 'Dosis', 'Josefin Sans', 'Noto Sans'])
   end
 end
