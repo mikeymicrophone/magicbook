@@ -1,5 +1,19 @@
 .read_by_chapter {
   
+  .previous_chapter, .next_chapter {
+    font-family: Noto Sans;
+    font-size: 0.7em;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    };
+  }
+  
+  .next_chapter {
+    float: right;
+  }
+  
   .chapter_title {
     text-align: center;
     font-family: Anton;

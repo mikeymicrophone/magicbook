@@ -1,6 +1,6 @@
 <%= div_with_data_for @chapter, :class => 'read_by_chapter' do %>
-  <%= link_to 'Previous Chapter', chapter_path(@previous_chapter, :book_id => @book.id, :edition_id => @edition.id) if @previous_chapter %>
-  <%= link_to 'Next Chapter', chapter_path(@next_chapter, :book_id => @book.id, :edition_id => @edition.id) if @next_chapter %>
+  <%= link_to 'Previous Chapter', chapter_path(@previous_chapter, :book_id => @book.id, :edition_id => @edition.id), :class => 'previous_chapter' if @previous_chapter %>
+  <%= link_to 'Next Chapter', chapter_path(@next_chapter, :book_id => @book.id, :edition_id => @edition.id), :class => 'next_chapter' if @next_chapter %>
   <%= content_tag :header, :class => 'chapter_title' do %>
     <%= @chapter.title %>
   <% end %>

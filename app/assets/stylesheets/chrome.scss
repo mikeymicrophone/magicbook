@@ -10,3 +10,12 @@
     background-color: #881D98;
   }
 }
+
+#bookshelf {
+  font-family: Cinzel;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  };
+}
