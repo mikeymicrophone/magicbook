@@ -1,15 +1,15 @@
-<p>
-  <strong><%= @book.title %></strong>
-</p>
+<%= content_tag :header, :class => 'book_title' do %>
+  <%= @book.title %>
+<% end %>
 
-<p>
+<%= content_tag :header, :class => 'book_author' do %>
   by <%= @book.author %>
-</p>
+<% end %>
 
 <% edition = @book.editions.last %>
 <% if edition %>
   <%= div_with_data_for edition, :class => 'syllabus' do %>
-    <%= content_tag :header do %>
+    <%= content_tag :header, :class => 'edition' do %>
       version <%= edition.version %>
     <% end %>
     <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>

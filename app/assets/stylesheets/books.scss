@@ -51,15 +51,36 @@
   }
 }
 
+.book_title {
+  margin-left: 5%;
+  padding-top: 25px;
+  font-weight: bold;
+  font-family: Josefin Sans;
+  font-size: 2em;
+}
+
+.book_author {
+  margin-left: 7%;
+  font-family: Josefin Sans;
+  font-size: 1.3em;
+}
+
 .syllabus {
   .div_with_data {
     border: none;
+  }
+  
+  .edition {
+    text-align: center;
+    font-family: Noto Sans;
+    font-size: 0.8em;
   }
   
   .chapter_title {
     font-size: 1.3em;
     font-family: Anton;
     margin-top: 10px;
+    margin-left: 6%;
     
     a {
       text-decoration: none;
@@ -70,14 +91,13 @@
     }
   }
   
-  .chapter_subtitle {
-    margin-left: 5px;
+  .section {
+    padding: 0;
   }
   
   .section_heading {
-    margin-top: 10px;
-    margin-left: 15px;
-    font-size: 0.9em;
+    padding: 2px;
+    margin-left: 8%;
     
     a {
       text-decoration: none;
@@ -89,7 +109,8 @@
   }
   
   .section_subheading {
-    margin-left: 15px;
+    margin-left: 8%;
+    margin-right: 8%;
     font-size: 0.9em;
     text-decoration: italic;
   }
