@@ -25,7 +25,7 @@ class Muggle < ApplicationRecord
   end
   
   def number_of_invited_muggles
-    errors.add(:base, "Four muggles have already been shared with.  Please purchase another license to share with more.") if Muggle.where(:purchase_id => purchase_id).count > 3
+    errors.add(:base, "Four muggles have already been shared with.  Please purchase another license to share with more.") if Muggle.where(:purchase_id => purchase_id).count > 4
   end
   
   def time_since_purchase
