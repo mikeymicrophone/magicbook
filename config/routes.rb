@@ -46,6 +46,8 @@ Rails.application.routes.draw do
   end
   resources :purchases
   
+  get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
+  
   devise_scope :magician do
     put 'passwords/establish', :to => 'passwords#establish', :as => 'establish_password'
     get 'confirmations/establish_access', :to => 'confirmations#establish_access'
