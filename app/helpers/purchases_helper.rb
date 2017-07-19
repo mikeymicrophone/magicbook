@@ -8,7 +8,8 @@ module PurchasesHelper
         :description => 'Ways We Enjoy Magic Cards',
         :image => 'https://stripe.com/img/documentation/checkout/marketplace.png',
         :locale => 'auto',
-        :label => "It's just $2"
+        :label => "It's just $2",
+        :bitcoin => true
       }
     end
   end
