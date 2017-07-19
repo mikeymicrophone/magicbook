@@ -34,6 +34,17 @@ module ApplicationHelper
     end
   end
   
+  def contact_us_link
+    mail_to ENV['CUSTOMER_SUPPORT_EMAIL_ADDRESS'], 'Contact Us', :encode => 'javascript'
+  end
+  
+  def footer_links
+    tag.div :class => 'footer_links' do
+      link_to('More Info', wwemc_path) +
+      contact_us_link
+    end
+  end
+  
   
   def markdown
     @renderer ||= Redcarpet::Render::HTML.new
