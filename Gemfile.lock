@@ -33,6 +33,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    actionview-encoded_mail_to (1.0.9)
+      rails
     activejob (5.1.1)
       activesupport (= 5.1.1)
       globalid (>= 0.3.6)
@@ -413,6 +415,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionview-encoded_mail_to
   awesome_print
   byebug
   cancancan

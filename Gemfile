@@ -60,6 +60,7 @@ gem 'omniauth-twitter'
 gem 'cancancan'
 
 gem 'redcarpet'
+gem 'actionview-encoded_mail_to'
 
 gem 'google-analytics-rails'
 gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
