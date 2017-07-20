@@ -1,0 +1,7 @@
+<%= form_with :model => @list do |list_form| %>
+  <%= list_form.text_field :name, :placeholder => 'Name the list' %>
+  <%= tag.br %>
+  <%= list_form.text_area :description, :placeholder => 'Describe the list (optional)' %>
+  <%= tag.br %>
+  <%= list_form.submit %>
+<% end %>

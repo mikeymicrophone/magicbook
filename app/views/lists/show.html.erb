@@ -1,0 +1,13 @@
+<%= div_for @list, :name_of do %>
+  <%= @list.name %>
+<% end %>
+
+<%= div_for @list, :listed_items_in do %>
+  <% @list.listed_items.each do |listed_item| %>
+    <%= listed_item_display listed_item %>
+  <% end %>
+<% end %>
+
+<%= div_for @list, :new_item_adder_for %>
+
+<%= link_to 'Add an item', new_list_listed_item_path(@list), :remote => true if current_magician == @list.magician %>

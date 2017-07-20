@@ -1,4 +1,4 @@
-class TableOfContent < ActiveRecord::Base
+class TableOfContent < ApplicationRecord
   belongs_to :book, :optional => true
   belongs_to :edition, :optional => true
   belongs_to :chapter, :optional => true

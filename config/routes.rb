@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     end
   end
   resources :purchases
+  resources :lists do
+    resources :listed_items
+  end
   
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
   

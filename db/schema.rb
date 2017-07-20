@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716044600) do
+ActiveRecord::Schema.define(version: 20170719092326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,29 @@ ActiveRecord::Schema.define(version: 20170716044600) do
     t.datetime "updated_at", null: false
     t.index ["magician_id"], name: "index_identifiers_on_magician_id"
     t.index ["muggle_id"], name: "index_identifiers_on_muggle_id"
+  end
+
+  create_table "listed_items", force: :cascade do |t|
+    t.bigint "list_id"
+    t.text "designation"
+    t.text "expression"
+    t.string "content_type"
+    t.integer "content_id"
+    t.integer "ordering"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_listed_items_on_list_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "magician_id"
+    t.integer "mode"
+    t.integer "privacy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["magician_id"], name: "index_lists_on_magician_id"
   end
 
   create_table "magicians", force: :cascade do |t|

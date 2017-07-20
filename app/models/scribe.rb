@@ -1,4 +1,4 @@
-class Scribe < ActiveRecord::Base
+class Scribe < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
   
   def needs_access_technique?
