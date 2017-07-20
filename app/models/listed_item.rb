@@ -8,6 +8,6 @@ class ListedItem < ApplicationRecord
   before_create :sequence
   
   def sequence
-    self.ordering = list.listed_items.ordered.last.ordering.to_i + 1
+    self.ordering = list.listed_items.ordered.last&.ordering.to_i + 1
   end
 end
