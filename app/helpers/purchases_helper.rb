@@ -1,5 +1,5 @@
 module PurchasesHelper
-  def wwemc_purchase
+  def wwemc_purchase text
     form_for Purchase.new do |f|
       tag.script :src => 'https://checkout.stripe.com/checkout.js', :class => 'stripe-button', :data => {
         :key => ENV['STRIPE_PUBLISHABLE_KEY'],
@@ -8,7 +8,7 @@ module PurchasesHelper
         :description => 'Ways We Enjoy Magic Cards',
         :image => 'https://stripe.com/img/documentation/checkout/marketplace.png',
         :locale => 'auto',
-        :label => "It's just $2",
+        :label => text,
         :bitcoin => true
       }
     end
