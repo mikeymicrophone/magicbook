@@ -32,14 +32,6 @@
     margin-top: 60px;
     font-size: 0.8em;
     
-    a {
-      text-decoration: none;
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-    
     a.begin_reading_link {
       color: #2A4098;
     }
@@ -81,14 +73,6 @@
     font-family: Anton;
     margin-top: 10px;
     margin-left: 6%;
-    
-    a {
-      text-decoration: none;
-    
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
   
   .section {
@@ -98,20 +82,12 @@
   .section_heading {
     padding: 2px;
     margin-left: 8%;
-    
-    a {
-      text-decoration: none;
-    
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
   
   .section_subheading {
     margin-left: 8%;
     margin-right: 8%;
     font-size: 0.9em;
-    text-decoration: italic;
+    font-style: italic;
   }
 }

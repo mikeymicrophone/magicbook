@@ -13,12 +13,7 @@
 
 .bookshelf {
   font-family: Cinzel;
-  text-decoration: none;
   padding: 5px;
-  
-  &:hover {
-    text-decoration: underline;
-  };
 }
 
 .footer_links {
@@ -28,6 +23,5 @@
   
   a {
     margin: 6%;
-    text-decoration: none;
   }
 }

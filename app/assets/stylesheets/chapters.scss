@@ -3,11 +3,6 @@
   .previous_chapter, .next_chapter {
     font-family: Noto Sans;
     font-size: 0.7em;
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: underline;
-    };
   }
   
   .next_chapter {

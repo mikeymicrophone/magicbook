@@ -1,0 +1,25 @@
+#lists, .list {
+  margin: 30px 10px;
+  font-family: Cabin;
+  border-bottom: 1px solid #999;
+  
+  div.list {
+    margin-bottom: 15px;
+  }
+  
+  .name_of_list {
+    font-size: 1.4em;
+  }
+  
+  .listed_item {
+    border-bottom: 1px solid #bbb;
+  }
+  
+  .designation_of_listed_item {
+    font-size: 1.3em;
+  }
+  
+  #new_list_link {
+    color: #309D0E;
+  }
+}

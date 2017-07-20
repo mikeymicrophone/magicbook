@@ -1,6 +1,8 @@
-<% @lists.each do |list| %>
-  <%= div_for list do %>
-    <%= link_to list.name, list %>
+<div id="lists">
+  <% @lists.each do |list| %>
+    <%= div_for list do %>
+      <%= link_to list.name, list %>
+    <% end %>
   <% end %>
-<% end %>
-<%= link_to 'Begin new list', new_list_path %>
+  <%= link_to 'Begin new list', new_list_path, :id => 'new_list_link' %>
+</div>
