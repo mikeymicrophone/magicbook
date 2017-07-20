@@ -4,6 +4,8 @@ Fabricator :table_of_content do
 end
 
 Fabricator :chapter_of_content, :from => :table_of_content do
+  book
+  edition
   chapter
 end
 

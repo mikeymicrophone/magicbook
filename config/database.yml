@@ -5,7 +5,7 @@ default: &default
 
 development:
   <<: *default
-  database: magicbook_development
+  database: magicbook_ordered
 
 test:
   <<: *default
