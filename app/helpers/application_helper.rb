@@ -89,6 +89,10 @@ module ApplicationHelper
   end
   
   def google_fonts
-    google_webfonts_init(:google => ['Anton', 'Cabin', 'Cinzel', 'Dosis', 'Josefin Sans', 'Noto Sans'])
+    google_webfonts_init :google => selected_fonts
+  end
+  
+  def selected_fonts
+    ['Anton', 'Cabin', 'Cinzel', 'Dosis', 'Josefin Sans', 'Noto Sans']
   end
 end

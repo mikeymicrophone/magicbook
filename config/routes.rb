@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   end
   
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
+  get '/font_guide' => 'landings#font_guide'
   
   devise_scope :magician do
     put 'passwords/establish', :to => 'passwords#establish', :as => 'establish_password'
