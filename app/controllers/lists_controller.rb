@@ -1,4 +1,6 @@
 class ListsController < ApplicationController
+  load_and_authorize_resource
+  
   def new
     @list = List.new
   end

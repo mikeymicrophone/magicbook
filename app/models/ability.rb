@@ -9,6 +9,7 @@ class Ability
       can :invite, Muggle
       can :submit, Muggle
       can :free, Chapter
+      can :manage, List
     elsif user.is_a? Muggle
       can :read, :all
       can :free, Chapter
