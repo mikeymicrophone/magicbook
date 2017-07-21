@@ -16,5 +16,15 @@
   position: absolute;
   top: 40px;
   right: 30px;
-  font-family: 'Cabin';
+  font-family: Cabin;
+}
+
+#login_form {
+  text-align: center;
+  font-family: Cabin;
+  
+  form {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
 }
