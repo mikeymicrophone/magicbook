@@ -1,0 +1,9 @@
+<div id="lists">
+  <% @lists.each do |list| %>
+    <%= div_for list do %>
+      <%= link_to list.name, list %>
+      <%= link_to 'approve', approve_list_path(list), :method => :put %>
+      <%= link_to 'reject', reject_list_path(list), :method => :put %>
+    <% end %>
+  <% end %>
+</div>

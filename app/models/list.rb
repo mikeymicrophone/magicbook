@@ -8,6 +8,8 @@ class List < ApplicationRecord
   validates :name, :presence => true
   
   scope :published, lambda { where :privacy => :published }
+  scope :visible, lambda { where :privacy => [:unreviewed, :published] }
+  scope :visible_to, lambda { |muggle| where :privacy => [:unreviewed_secret, :secret], :magician_id => muggle.magician_id }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   
   def ordered_items

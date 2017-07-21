@@ -10,6 +10,9 @@ class Ability
       can :submit, Muggle
       can :free, Chapter
       can :manage, List
+      can :review, List
+      can :approve, List
+      can :reject, List
     elsif user.is_a? Muggle
       can :read, :all
       can :free, Chapter

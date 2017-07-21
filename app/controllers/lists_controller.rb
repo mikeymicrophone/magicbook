@@ -34,7 +34,34 @@ class ListsController < ApplicationController
   end
   
   def index
-    @lists = List.all
+    @lists = if current_magician
+      List.visible
+    elsif current_muggle
+      List.visible + List.visible_to(current_muggle)
+    else
+      List.published
+    end
+  end
+  
+  def review
+    @lists = List.unreviewed
+  end
+  
+  def approve
+    @list = List.find params[:id]
+    case @list.privacy
+    when 'unreviewed'
+      @list.update_attribute :privacy, 'published'
+    when 'unreviewed_secret'
+      @list.update_attribute :privacy, 'secret'
+    end
+    redirect_to :action => :review
+  end
+  
+  def reject
+    @list = List.find params[:id]
+    @list.update_attribute :privacy, 'rejected'
+    redirect_to :action => :review
   end
   
   def list_params

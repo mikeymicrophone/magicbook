@@ -47,7 +47,24 @@ Rails.application.routes.draw do
   resources :purchases
   resources :lists do
     resources :listed_items
+    collection do
+      get :review
+    end
+    member do
+      put :approve
+      put :reject
+    end
   end
+  resources :listed_items do
+    collection do
+      get :review
+    end
+    member do
+      put :approve
+      put :reject
+    end
+  end
+  
   
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
   get '/font_guide' => 'landings#font_guide'

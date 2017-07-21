@@ -9,6 +9,7 @@ class ListedItem < ApplicationRecord
   scope :for_my_muggles, lambda { where :privacy => [:unreviewed, :unreviewed_secret, :published, :secret] }
   scope :for_muggles, lambda { where :privacy => [:unreviewed, :published] }
   scope :published, lambda { where :privacy => :published }
+  scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   
   before_create :sequence
   
