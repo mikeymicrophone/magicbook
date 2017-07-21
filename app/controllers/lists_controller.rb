@@ -14,7 +14,13 @@ class ListsController < ApplicationController
   
   def show
     @list = List.find params[:id]
-    @listed_items = @list.items
+    @listed_items = if current_magician
+      @list.ordered_items
+    elsif current_muggle
+      @list.items_for current_muggle
+    else
+      @list.published_items
+    end
   end
   
   def edit

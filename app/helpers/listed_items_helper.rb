@@ -5,6 +5,13 @@ module ListedItemsHelper
       tag.br +
       listed_item_form.text_area(:expression, :placeholder => 'Expression (e.g. card, writing, link)', :style => "width: 418px; height: 107px") +
       tag.br +
+      listed_item_form.radio_button(:privacy, :draft) +
+      listed_item_form.label(:privacy, :draft) +
+      listed_item_form.radio_button(:privacy, :unreviewed) +
+      listed_item_form.label(:privacy_unreviewed, 'public') +
+      listed_item_form.radio_button(:privacy, :unreviewed_secret) +
+      listed_item_form.label(:privacy_unreviewed_secret, 'just for my muggles') +
+      tag.br +
       listed_item_form.submit('Ready') +
       tag.div(:class => 'instructions') do
         "You can use Markdown for formatting, links, and HTML.  Submissions are subject to approval.  Present material that is legal and tasteful."
