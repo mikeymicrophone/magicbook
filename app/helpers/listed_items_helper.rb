@@ -21,16 +21,23 @@ module ListedItemsHelper
   
   def listed_item_display listed_item
     div_for listed_item do
+      if listed_item.list.mode == 'numbered'
+        div_for listed_item, :number_of do
+          listed_item.ordering.to_s
+        end
+      else
+        ''.html_safe
+      end +
       div_for(listed_item, :designation_of) do
         mark_up listed_item.designation
       end +
-      if listed_item.expression?
-        div_for listed_item, :expression_of do
-          mark_up listed_item.expression
-        end
+      div_for(listed_item, :expression_of) do
+        mark_up listed_item.expression
       end +
       if listed_item.content.present?
-        link_to listed_item.content.id, listed_item.content rescue nil
+        link_to listed_item.content.id, listed_item.content
+      else
+        ''.html_safe
       end
     end
   end

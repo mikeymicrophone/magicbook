@@ -2,7 +2,7 @@ class List < ApplicationRecord
   belongs_to :magician
   has_many :listed_items
   
-  enum :mode => [:ordered, :randomized]
+  enum :mode => [:ordered, :randomized, :numbered]
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected]
   
   validates :name, :presence => true
@@ -14,7 +14,7 @@ class List < ApplicationRecord
   
   def ordered_items
     case mode
-    when 'ordered'
+    when 'ordered', 'numbered'
       listed_items.ordered
     when 'randomized'
       listed_items.randomized

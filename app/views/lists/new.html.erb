@@ -10,6 +10,8 @@
   <%= list_form.radio_button :privacy, :unreviewed_secret %>
   <%= list_form.label :privacy_unreviewed_secret, 'Just for my muggles' %>
   <%= tag.br %>
+  <%= list_form.radio_button :mode, :numbered %>
+  <%= list_form.label :mode, :numbered %>
   <%= list_form.radio_button :mode, :ordered %>
   <%= list_form.label :mode, :ordered %>
   <%= list_form.radio_button :mode, :randomized %>

@@ -12,11 +12,17 @@
   }
   
   .listed_item {
+    .number_of_listed_item {
+      display: inline-block;
+      padding-right: 14px;
+    }
+    
+    .designation_of_listed_item {
+      display: inline-block;
+      font-size: 1.3em;
+    }
+    
     border-bottom: 1px solid #bbb;
-  }
-  
-  .designation_of_listed_item {
-    font-size: 1.3em;
   }
   
   #new_list_link {
