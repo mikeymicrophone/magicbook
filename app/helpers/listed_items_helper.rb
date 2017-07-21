@@ -5,7 +5,10 @@ module ListedItemsHelper
       tag.br +
       listed_item_form.text_area(:expression, :placeholder => 'Expression (e.g. card, writing, link)', :style => "width: 418px; height: 107px") +
       tag.br +
-      listed_item_form.submit('Ready')
+      listed_item_form.submit('Ready') +
+      tag.div(:class => 'instructions') do
+        "You can use Markdown for formatting, links, and HTML.  Submissions are subject to approval.  Present material that is legal and tasteful."
+      end
     end
   end
   
