@@ -16,6 +16,7 @@ class Ability
     else
       can :read, List
       can :free, Chapter
+      can :index, Book
     end
   end
 end

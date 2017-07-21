@@ -2,7 +2,7 @@
   <%= div_for book, :bookshelf_display_of do %>
     <%= div_for book, :chapter_count_of do %>
       <%= pluralize book.current_edition.chapters.count, 'chapter' %>
-    <% end %>
+    <% end if book.current_edition %>
     <%= div_for book, :title_of do %>
       <%= link_to(book.title, book) %>
     <% end %>
@@ -10,7 +10,8 @@
     by <%= book.author %>
     
     <%= div_for book, :actions_with do %>
-      <%= link_to 'Read this book online', book, :class => 'begin_reading_link' %>
+      <%= begin_reading_link book %>
+      <%# if they have no invites left %>
       <%= link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link' %>
     <% end %>
   <% end %>

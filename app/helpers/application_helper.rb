@@ -24,6 +24,7 @@ module ApplicationHelper
         link_to('Bookshelf', muggle_books_path(current_muggle['id']), :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf')
       else
+        link_to('Bookshelf', books_path, :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf')
       end
     end
