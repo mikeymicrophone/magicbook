@@ -8,7 +8,7 @@ class ListedItem < ApplicationRecord
   scope :randomized, lambda { order 'random()' }
   scope :for_my_muggles, lambda { where :privacy => [:unreviewed, :unreviewed_secret, :published, :secret] }
   scope :for_muggles, lambda { where :privacy => [:unreviewed, :published] }
-  scope :published, lambda { where :privacy => 'published' }
+  scope :published, lambda { where :privacy => :published }
   
   before_create :sequence
   

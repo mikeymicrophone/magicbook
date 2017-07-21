@@ -7,7 +7,8 @@ class List < ApplicationRecord
   
   validates :name, :presence => true
   
-  scope :published, lambda { where :privacy => 'published' }
+  scope :published, lambda { where :privacy => :published }
+  scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   
   def ordered_items
     case mode
