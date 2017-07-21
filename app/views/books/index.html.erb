@@ -4,7 +4,7 @@
       <%= pluralize book.current_edition.chapters.count, 'chapter' %>
     <% end if book.current_edition %>
     <%= div_for book, :title_of do %>
-      <%= link_to(book.title, book) %>
+      <%= book_title_link book %>
     <% end %>
     
     by <%= book.author %>
