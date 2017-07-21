@@ -2,8 +2,11 @@ class Purchase < ApplicationRecord
   belongs_to :magician, :optional => true
   has_many :purchased_books
   has_many :books, :through => :purchased_books
+  has_many :muggles
   
   attr_accessor :fulfill
+  
+  scope :fresh, lambda { where Purchase.arel_table[:created_at].gt 3.days.ago }
   
   before_create :default_book
   after_create :process_payment, :attach_magician
@@ -35,5 +38,9 @@ class Purchase < ApplicationRecord
   
   def price
     books.count * 200
+  end
+  
+  def invites_remaining
+    4 - muggles.count
   end
 end

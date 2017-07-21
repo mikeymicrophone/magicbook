@@ -1,5 +1,6 @@
 class Magician < ApplicationRecord
   has_many :purchases
+  has_many :purchased_books, :through => :purchases
   has_many :books, :through => :purchases
   has_many :identifiers
   has_many :lists

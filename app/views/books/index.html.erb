@@ -11,8 +11,7 @@
     
     <%= div_for book, :actions_with do %>
       <%= begin_reading_link book %>
-      <%# if they have no invites left %>
-      <%= link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link' %>
+      <%= add_muggles_link book %>
     <% end %>
   <% end %>
 <% end %>

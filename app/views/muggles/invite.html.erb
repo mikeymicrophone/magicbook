@@ -6,14 +6,10 @@
     Enter their email addresses here.
     
     <%= form_with :url => submit_muggles_path, :id => 'muggle_form' do %>
-      <%= text_field_tag :email_1 %>
-      <%= tag.br %>
-      <%= text_field_tag :email_2 %>
-      <%= tag.br %>
-      <%= text_field_tag :email_3 %>
-      <%= tag.br %>
-      <%= text_field_tag :email_4 %>
-      <%= tag.br %>
+      <% @purchase.invites_remaining.times do |i| %>
+        <%= text_field_tag "email_#{i + 1}" %>
+        <%= tag.br %>
+      <% end %>
       <%= text_area_tag :message, nil, :placeholder => 'Add a message. This is how they can know who the gift is from.', :size => '60x5' %>
       <%= tag.br %>
       <%= submit_tag 'Ready!' %>

@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   # GET /books.json
   def index
     @books = if params[:magician_id]
-      current_magician.books
+      Book.all
     elsif params[:muggle_id]
       current_muggle.books
     else

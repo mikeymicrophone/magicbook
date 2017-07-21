@@ -2,7 +2,7 @@ class MugglesController < ApplicationController
   load_and_authorize_resource
   
   def invite
-    
+    @purchase = Purchase.find params[:purchase_id]
   end
   
   def submit
