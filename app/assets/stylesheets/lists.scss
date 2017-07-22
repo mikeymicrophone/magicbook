@@ -16,8 +16,13 @@
   }
   
   .listed_item {
+    margin: 0px 12px;
     padding: 9px;
     border-bottom: 1px solid #bbb;
+    
+    &:last-child {
+      border-bottom: none;
+    }
     
     .number_of_listed_item {
       display: inline-block;
