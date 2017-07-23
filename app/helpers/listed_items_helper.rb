@@ -31,16 +31,16 @@ module ListedItemsHelper
       div_for(listed_item, :designation_of) do
         mark_up listed_item.designation
       end +
+      if current_magician == listed_item.list.magician
+        link_to 'edit', edit_listed_item_path(listed_item, :format => :js), :remote => true, :class => 'list_item_edit_link'
+      else
+        ''.html_safe
+      end +
       div_for(listed_item, :expression_of) do
         mark_up listed_item.expression
       end +
       if listed_item.content.present?
         link_to listed_item.content.id, listed_item.content
-      else
-        ''.html_safe
-      end +
-      if current_magician == listed_item.list.magician
-        link_to 'edit', edit_listed_item_path(listed_item, :format => :js), :remote => true
       else
         ''.html_safe
       end

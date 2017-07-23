@@ -11,6 +11,11 @@ class ListedItemsController < ApplicationController
   
   def edit
     @listed_item = ListedItem.find params[:id]
+    if @listed_item.privacy == 'published'
+      @listed_item.privacy = 'unreviewed'
+    elsif @listed_item.privacy == 'secret'
+      @listed_item.privacy = 'unreviewed_secret'
+    end
   end
   
   def update
