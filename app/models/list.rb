@@ -12,6 +12,7 @@ class List < ApplicationRecord
   scope :visible, lambda { where :privacy => [:unreviewed, :published] }
   scope :visible_to, lambda { |muggle| where :privacy => [:unreviewed_secret, :secret], :magician_id => muggle.magician_id }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
+  scope :in_draft, lambda { where :privacy => :draft }
   
   def ordered_items
     case mode

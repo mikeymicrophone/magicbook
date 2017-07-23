@@ -21,3 +21,22 @@
     text-align: center;
   }
 }
+
+#list_faq {
+  font-family: 'Noto Sans';
+  
+  section {
+    font-size: 1.4em;
+    
+    question {
+      display: block;
+      margin-bottom: 1.5em;
+      
+      answer {
+        text-align: right;
+        display: block;
+        margin-top: 0.5em;
+      }
+    }
+  }
+}
