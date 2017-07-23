@@ -4,6 +4,8 @@ class ListedItem < ApplicationRecord
   
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected]
   
+  attr_default :privacy, 'unreviewed'
+  
   scope :ordered, lambda { order :ordering }
   scope :randomized, lambda { order 'random()' }
   scope :for_my_muggles, lambda { where :privacy => [:unreviewed, :unreviewed_secret, :published, :secret] }

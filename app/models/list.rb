@@ -6,7 +6,7 @@ class List < ApplicationRecord
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected]
   
   attr_default :mode, 'ordered'
-  attr_default :privacy, 'draft'
+  attr_default :privacy, 'unreviewed'
   
   validates :name, :presence => true
   
