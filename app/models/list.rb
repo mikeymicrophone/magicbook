@@ -5,6 +5,9 @@ class List < ApplicationRecord
   enum :mode => [:ordered, :randomized, :numbered]
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected]
   
+  attr_default :mode, 'ordered'
+  attr_default :privacy, 'draft'
+  
   validates :name, :presence => true
   
   scope :randomized, lambda { order 'random()' }
