@@ -32,7 +32,13 @@ module ListedItemsHelper
         mark_up listed_item.designation
       end +
       if current_magician == listed_item.list.magician
-        link_to 'edit', edit_listed_item_path(listed_item, :format => :js), :remote => true, :class => 'list_item_edit_link'
+        div_for listed_item, :editing_tools_for do
+          link_to('move up', move_up_listed_item_path(listed_item, :format => :js), :method => :put, :remote => true, :class => 'list_item_ordering') +
+          tag.br +
+          link_to('edit', edit_listed_item_path(listed_item, :format => :js), :remote => true, :class => 'list_item_edit_link') +
+          tag.br +
+          link_to('move down', move_down_listed_item_path(listed_item, :format => :js), :method => :put, :remote => true, :class => 'list_item_ordering')
+        end
       else
         ''.html_safe
       end +

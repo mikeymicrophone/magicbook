@@ -44,6 +44,26 @@ class ListedItemsController < ApplicationController
     redirect_to :action => :review
   end
   
+  def move_up
+    @listed_item = ListedItem.find params[:id]
+    @previous_item = @listed_item.list.listed_items.where(:ordering => @listed_item.ordering - 1).first
+    if @previous_item
+      position = @listed_item.ordering
+      @listed_item.update_attribute :ordering, @previous_item.ordering
+      @previous_item.update_attribute :ordering, position
+    end
+  end
+  
+  def move_down
+    @listed_item = ListedItem.find params[:id]
+    @next_item = @listed_item.list.listed_items.where(:ordering => @listed_item.ordering + 1).first
+    if @next_item
+      position = @listed_item.ordering
+      @listed_item.update_attribute :ordering, @next_item.ordering
+      @next_item.update_attribute :ordering, position
+    end
+  end
+  
   def listed_item_params
     params.require(:listed_item).permit(:designation, :expression, :content_type, :content_id, :ordering, :privacy)
   end

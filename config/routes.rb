@@ -63,6 +63,8 @@ Rails.application.routes.draw do
     member do
       put :approve
       put :reject
+      put :move_up
+      put :move_down
     end
   end
   

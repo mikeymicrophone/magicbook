@@ -3,6 +3,10 @@
     <%= @list.name %>
     <%= link_to 'edit', edit_list_path(@list), :class => 'edit_list_link' if current_magician == @list.magician %>
   <% end %>
+  
+  <%= div_for @list, :description_of do %>
+    <%= mark_up @list.description %>
+  <% end if @list.description? %>
 
   <%= div_for @list, :listed_items_in do %>
     <% @listed_items.each do |listed_item| %>
