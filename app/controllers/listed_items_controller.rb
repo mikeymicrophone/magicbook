@@ -9,6 +9,15 @@ class ListedItemsController < ApplicationController
     @listed_item.save
   end
   
+  def edit
+    @listed_item = ListedItem.find params[:id]
+  end
+  
+  def update
+    @listed_item = ListedItem.find params[:id]
+    @listed_item.update_attributes listed_item_params
+  end
+  
   def review
     @listed_items = ListedItem.unreviewed
   end
@@ -28,7 +37,8 @@ class ListedItemsController < ApplicationController
     @listed_item = ListedItem.find params[:id]
     @listed_item.update_attribute :privacy, 'rejected'
     redirect_to :action => :review
-  end  
+  end
+  
   def listed_item_params
     params.require(:listed_item).permit(:designation, :expression, :content_type, :content_id, :ordering, :privacy)
   end

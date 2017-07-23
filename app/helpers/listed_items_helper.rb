@@ -1,6 +1,6 @@
 module ListedItemsHelper
-  def listed_item_form list
-    form_with :model => list.listed_items.new, :url => list_listed_items_path(list) do |listed_item_form|
+  def listed_item_form list, listed_item = list.listed_items.new
+    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for) do |listed_item_form|
       listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :style => "width: 344px; height: 30px") +
       tag.br +
       listed_item_form.text_area(:expression, :placeholder => 'Expression (e.g. card, writing, link)', :style => "width: 418px; height: 107px") +
@@ -36,6 +36,11 @@ module ListedItemsHelper
       end +
       if listed_item.content.present?
         link_to listed_item.content.id, listed_item.content
+      else
+        ''.html_safe
+      end +
+      if current_magician == listed_item.list.magician
+        link_to 'edit', edit_listed_item_path(listed_item, :format => :js), :remote => true
       else
         ''.html_safe
       end
