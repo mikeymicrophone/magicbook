@@ -1,0 +1,3 @@
+$('#<%=j dom_id @previous_item %>').before($('#<%=j dom_id @listed_item %>'));
+$('#<%=j dom_id @previous_item, :number_of %>').text('<%= @previous_item.ordering %>');
+$('#<%=j dom_id @listed_item, :number_of %>').text('<%= @listed_item.ordering %>');
