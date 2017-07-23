@@ -37,9 +37,9 @@ class ListsController < ApplicationController
     @lists = if current_magician
       List.randomized.visible
     elsif current_muggle
-      List.randomized.visible + List.randomzied.visible_to(current_muggle)
+      List.randomized.visible + List.randomized.visible_to(current_muggle)
     else
-      List.randomzied.published
+      List.randomized.published
     end
   end
   
