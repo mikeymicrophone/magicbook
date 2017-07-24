@@ -1,1 +1,1 @@
-$('#<%=j dom_id(@listed_item, :form_for) %>').replaceWith('<%=j listed_item_display @listed_item %>');
+$('#<%=j dom_id(@listed_item, :form_for) %>').replaceWith('<%=j listed_item_display @listed_item unless @listed_item.privacy == 'removed' %>');

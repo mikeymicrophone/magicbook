@@ -3,7 +3,7 @@ class List < ApplicationRecord
   has_many :listed_items
   
   enum :mode => [:ordered, :randomized, :numbered]
-  enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected]
+  enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
   
   attr_default :mode, 'ordered'
   attr_default :privacy, 'unreviewed'
@@ -20,9 +20,9 @@ class List < ApplicationRecord
   def ordered_items
     case mode
     when 'ordered', 'numbered'
-      listed_items.ordered
+      listed_items.remaining.ordered
     when 'randomized'
-      listed_items.randomized
+      listed_items.remaining.randomized
     end
   end
   
