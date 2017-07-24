@@ -18,7 +18,7 @@ class ListedItem < ApplicationRecord
   before_update :remove_from_sequence
   
   def sequence
-    self.ordering = list.listed_items.ordered.last&.ordering.to_i + 1
+    self.ordering = list.listed_items.remaining.ordered.last&.ordering.to_i + 1
   end
   
   def remove_from_sequence
