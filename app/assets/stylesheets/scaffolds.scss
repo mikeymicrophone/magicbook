@@ -4,6 +4,16 @@ body {
   margin: 30px;
 }
 
+.right {
+  float: right;
+  margin-right: 10px;
+}
+
+.inline {
+  display: inline-block;
+  vertical-align: top;
+}
+
 ol, ul, td {
   margin: 33px;
 }
@@ -17,6 +27,7 @@ pre {
 a {
   color: #000;
   text-decoration: none;
+  padding: 2px;
   
   &:hover {
     text-decoration: underline;

@@ -2,12 +2,7 @@
   <% @lists.each do |list| %>
     <%= div_for list do %>
       <%= link_to list.name, list %>
-      <% if list.magician == current_magician %>
-        <% if list.privacy == 'draft' %>
-          <%= link_to 'publish for all', list_path(list, :list => {:privacy => 'unreviewed'}), :method => :put %>
-          <%= link_to 'publish for my muggles', list_path(list, :list => {:privacy => 'unreviewed_secret'}), :method => :put %>
-        <% end %>
-      <% end %>
+      <%= publish_controls_for list %>
     <% end %>
   <% end %>
   <%= begin_list_link %>
