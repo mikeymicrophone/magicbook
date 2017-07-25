@@ -2,39 +2,38 @@
   <%= content_tag :header do %>
     <%= @book.title %>
   <% end %>
-  <% @book.editions.each do |edition| %>
-    <%= div_with_data_for edition do %>
-      <%= content_tag :header do %>
-        version <%= edition.version %>
-      <% end %>
-      <% if edition.release.blank? %>
-        <%= link_to 'release!', release_edition_path(edition), :method => :put %>
-      <% end %>
-      <%= focus_append_on edition %>
-      <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
-        <%= div_with_data_for chapter do %>
-          <%= focus_append_on chapter %>
-          <%= content_tag :header do %>
-            <%= chapter.title %>
-          <% end %>
-          <%= chapter.subtitle %>
-          <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
-            <%= div_with_data_for section do %>
-              <%= focus_append_on section %>
-              <%= content_tag :header do %>
-                <%= section.heading %>
-              <% end %>
-              <%= section.subheading %>
-              <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
-                <%= div_with_data_for paragraph do %>
-                  <%= focus_append_on paragraph %>
-                  <%= mark_up paragraph.text %>
-                  <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
-                  <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
-                    <%= div_with_data_for citation do %>
-                      <%= citation.finding %>
-                      <%= citation.source %>
-                    <% end %>
+  <% edition = @book.editions.last %>
+  <%= div_with_data_for edition do %>
+    <%= content_tag :header do %>
+      version <%= edition.version %>
+    <% end %>
+    <% if edition.release.blank? %>
+      <%= link_to 'release!', release_edition_path(edition), :method => :put %>
+    <% end %>
+    <%= focus_append_on edition %>
+    <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
+      <%= div_with_data_for chapter do %>
+        <%= focus_append_on chapter %>
+        <%= content_tag :header do %>
+          <%= chapter.title %>
+        <% end %>
+        <%= chapter.subtitle %>
+        <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
+          <%= div_with_data_for section do %>
+            <%= focus_append_on section %>
+            <%= content_tag :header do %>
+              <%= section.heading %>
+            <% end %>
+            <%= section.subheading %>
+            <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
+              <%= div_with_data_for paragraph do %>
+                <%= focus_append_on paragraph %>
+                <%= mark_up paragraph.text %>
+                <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
+                <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
+                  <%= div_with_data_for citation do %>
+                    <%= citation.finding %>
+                    <%= citation.source %>
                   <% end %>
                 <% end %>
               <% end %>
