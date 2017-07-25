@@ -16,6 +16,7 @@ module ApplicationHelper
   def shelf
     tag.div :class => 'header_links' do
       if current_scribe
+        link_to('Bookshelf', books_path, :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf')
       elsif current_magician
         link_to('Bookshelf', magician_books_path(current_magician), :class => 'bookshelf') +
@@ -45,7 +46,10 @@ module ApplicationHelper
   
   def site_logo
     tag.div :id => 'logo_holder' do
-      link_to image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo'), root_url
+      link_to(image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo'), root_url) +
+      tag.div(:id => 'site_subtitle') do
+        "$2 books and crowd-sourced listicles about Magic"
+      end
     end
   end
   
