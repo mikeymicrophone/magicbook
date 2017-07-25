@@ -13,8 +13,16 @@ class Edition < ApplicationRecord
   scope :recent, lambda { order(:major => :desc, :minor => :desc, :patch => :desc) }
   scope :published, lambda { where Edition.arel_table[:release].lt DateTime.now }
   
-  def copy_contents_from edition, book
-    edition.table_of_contents.where(:book_id => book.id).each do |table_of_content|
+  def copy_contents_from edition, book, options = {}
+    excluded_parameters = ""
+    if options[:exclude]
+      excluded = options[:exclude]
+      case excluded
+      when Paragraph
+        excluded_parameters = "paragraph_id is distinct from #{excluded.id}"
+      end
+    end
+    edition.table_of_contents.where(:book_id => book.id).where(excluded_parameters).each do |table_of_content|
       attrs = table_of_content.attributes.except 'edition_id', 'id'
       next if attrs['chapter_id'].blank?
       table_of_contents.create attrs

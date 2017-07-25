@@ -10,7 +10,11 @@ module BooksHelper
   end
   
   def begin_reading_link book
-    if current_magician
+    if current_scribe
+      link_to('Read this book online', book, :class => 'begin_reading_link') +
+      tag.br +
+      link_to('Edit this book', edit_book_path(book), :class => 'begin_reading_link')
+    elsif current_magician
       link_to 'Read this book online', book, :class => 'begin_reading_link'
     elsif current_muggle
       link_to 'Read this book online', book, :class => 'begin_reading_link'

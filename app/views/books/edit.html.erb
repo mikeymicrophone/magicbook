@@ -30,6 +30,7 @@
                 <%= focus_append_on paragraph %>
                 <%= mark_up paragraph.text %>
                 <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
+                <%= link_to 'remove', paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :delete, :remote => true %>
                 <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
                   <%= div_with_data_for citation do %>
                     <%= citation.finding %>
@@ -42,7 +43,6 @@
         <% end %>
       <% end %>
     <% end %>
-    <%= link_to 'Begin new edition', new_edition_path(:book_id => @book.id, :previous_edition_id => edition.id) %>
   <% end %>
   <% if @book.editions.empty? %>
     <%= link_to 'Begin first edition', new_edition_path(:book_id => @book.id) %>
