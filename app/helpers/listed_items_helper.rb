@@ -1,23 +1,37 @@
 module ListedItemsHelper
   def listed_item_form list, listed_item = list.listed_items.new
     form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for) do |listed_item_form|
-      tag.div(:class => 'inline') do
-        listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :style => "width: 344px; height: 30px") +
-        tag.br +
-        listed_item_form.text_area(:expression, :placeholder => 'Expression (e.g. card, writing, link)', :style => "width: 418px; height: 107px") +
-        tag.br +
-        listed_item_form.radio_button(:privacy, :draft) +
-        listed_item_form.label(:privacy, :draft) +
-        listed_item_form.radio_button(:privacy, :unreviewed) +
-        listed_item_form.label(:privacy_unreviewed, 'public') +
-        listed_item_form.radio_button(:privacy, :unreviewed_secret) +
-        listed_item_form.label(:privacy_unreviewed_secret, 'just for my muggles')
+      tag.div do
+        tag.div(:class => 'inline') do
+          listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :id => 'listed_item_designation') +
+          tag.br +
+          listed_item_form.text_area(:expression, :placeholder => 'Expression (e.g. card, writing, link)', :id => 'listed_item_expression')
+        end +
+        tag.div(:class => 'inline') do
+          tag.div do
+            'To put a list in this item, select it here:'
+          end +
+          listed_item_form.collection_select(:content_id, List.all, :id, :name, {:include_blank => true}, {:id => 'listed_item_content_id'}) +
+          listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type')
+        end
       end +
-      tag.div(:class => 'inline') do
-        listed_item_form.collection_select(:content_id, List.all, :id, :name, {:include_blank => true}, {:id => 'listed_item_content_id'}) +
-        listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type')
+      div_for(listed_item, :privacy_options_for) do
+        tag.privacy do
+          listed_item_form.radio_button(:privacy, :draft) +
+          listed_item_form.label(:privacy, :draft)
+        end +
+        tag.privacy do
+          listed_item_form.radio_button(:privacy, :unreviewed) +
+          listed_item_form.label(:privacy_unreviewed, 'public')
+        end +
+        tag.privacy do
+          listed_item_form.radio_button(:privacy, :unreviewed_secret) +
+          listed_item_form.label(:privacy_unreviewed_secret, 'just for my muggles')
+        end
       end +
-      listed_item_form.submit('Ready') +
+      div_for(listed_item, :submission_of) do
+        listed_item_form.submit '~>ready to add this<~'
+      end +
       tag.div(:class => 'instructions') do
         "You can use Markdown for formatting, links, and HTML.  Submissions are subject to approval.  Present material that is legal and tasteful."
       end

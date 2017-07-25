@@ -13,7 +13,7 @@
     padding: 9px;
     border-radius: 28px;
     box-shadow: 0px 10px 25px #888888;
-    transition: background-color 5s;
+    transition: background-color 3s;
     
     &:hover {
       background-color: #B1EDFA;
@@ -45,7 +45,7 @@
     }
   }
   
-  .privacy_options_for_list, .sorting_options_for_list {
+  .privacy_options_for_list, .privacy_options_for_listed_item, .sorting_options_for_list {
     text-align: center;
     height: 55px;
     
@@ -54,7 +54,7 @@
     }
   }
   
-  .submission_of_list {
+  .submission_of_list, .submission_of_listed_item {
     text-align: center;
     
     input {
@@ -101,4 +101,29 @@
   padding: 3px;
   border-radius: 8px;
   box-shadow: 0px 3px 25px #888888
+}
+
+.new_item_adder_for_list {
+  margin: 45px;
+  
+  padding: 13px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 25px #888888;
+  
+  .inline {
+    margin: 2%;
+  }
+  
+  textarea {
+    width: 400px;
+    height: 100px;
+    
+    &#listed_item_designation {
+      height: 40px;
+    }
+  }
+  
+  .instructions {
+    margin: 14px;
+  }
 }
