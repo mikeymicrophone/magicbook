@@ -5,6 +5,28 @@
   
   div.list {
     margin-bottom: 15px;
+    font-size: 1.75em;
+    
+    &.two, &.eight {
+      margin-left: 20%;
+    }
+    
+    &.three, &.seven {
+      text-align: center;
+    }
+    
+    &.four, &.five, &.six {
+      text-align: right;
+    }
+    
+    &.four, &.six {
+      margin-right: 20%;
+    }
+    
+    a:hover {
+      transition: color 2s;
+      color: #F49440;
+    };
   }
   
   .name_of_list {
