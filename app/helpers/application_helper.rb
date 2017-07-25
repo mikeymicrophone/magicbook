@@ -91,6 +91,10 @@ module ApplicationHelper
     tag.div :class => 'fb-quote'
   end
   
+  def tapped_out_plugin
+    tag.script :src => 'http://tappedout.net/tappedout.js'
+  end
+  
   def markdown
     @renderer ||= Redcarpet::Render::HTML.new
     @markdown ||= Redcarpet::Markdown.new @renderer
