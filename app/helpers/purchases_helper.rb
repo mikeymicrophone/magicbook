@@ -22,15 +22,15 @@ module PurchasesHelper
         if invitable_purchases.present?
           link_to 'Invite more friends', invite_muggles_path(:purchase_id => invitable_purchases.first), :class => 'book_purchase_link'
         else
-          link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link'
+          link_to 'Purchase and share', root_url, :class => 'book_purchase_link'
         end
       else 
-        link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link'
+        link_to 'Purchase and share', root_url, :class => 'book_purchase_link'
       end
     elsif current_muggle
-      link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link'
+      link_to 'Purchase and share', root_url, :class => 'book_purchase_link'
     else
-      link_to 'Purchase for my friends', root_url, :class => 'book_purchase_link'
+      link_to 'Purchase and share', root_url, :class => 'book_purchase_link'
     end
   end
 end

@@ -21,7 +21,11 @@
 .bookshelf_display_of_book {
   margin: 15%;
   font-size: 1.5em;
-  font-family: Helvetica;
+  font-family: Cabin;
+  
+  .title_of_book {
+    font-size: 1.6em;
+  }
   
   .chapter_count_of_book {
     font-size: 0.6em;
