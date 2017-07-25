@@ -39,4 +39,14 @@ module ListsHelper
       end
     end
   end
+  
+  def open_graph_tags list
+    tag.div :class => 'open_graph_tags' do
+      tag.meta(:property => 'og:url', :content => list_url(list)) +
+      tag.meta(:property => 'og:type', :content => 'article') +
+      tag.meta(:property => 'og:title', :content => list.name) +
+      tag.meta(:property => 'og:description', :content => list.description) +
+      tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
+    end
+  end
 end
