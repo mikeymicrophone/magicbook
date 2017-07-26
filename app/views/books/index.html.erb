@@ -1,13 +1,21 @@
+<% if current_magician %>
+  <%= tag.div :id => 'my_purchases_link' do %>
+    <%= link_to 'Your Purchases', purchases_path %>
+  <% end %>
+<% end %>
 <% @books.each do |book| %>
   <%= div_for book, :bookshelf_display_of do %>
     <%= div_for book, :chapter_count_of do %>
       <%= pluralize book.current_edition.chapters.count, 'chapter' %>
     <% end if book.current_edition %>
+    
     <%= div_for book, :title_of do %>
       <%= book_title_link book %>
     <% end %>
     
-    by <%= book.author %>
+    <%= div_for book, :author_of do %>
+      by <%= book.author %>
+    <% end %>
     
     <%= div_for book, :actions_with do %>
       <%= begin_reading_link book %>

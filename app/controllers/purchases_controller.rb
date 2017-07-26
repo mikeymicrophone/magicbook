@@ -2,7 +2,11 @@ class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :edit, :update, :destroy]
 
   def index
-    @purchases = Purchase.all
+    @purchases = if current_magician
+      current_magician.purchases
+    elsif current_scribe
+      Purchase.all
+    end
   end
 
   def show

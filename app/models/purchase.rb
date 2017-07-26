@@ -43,4 +43,12 @@ class Purchase < ApplicationRecord
   def invites_remaining
     4 - muggles.count
   end
+  
+  def fresh?
+    created_at > 3.days.ago
+  end
+  
+  def can_invite_muggles?
+    invites_remaining.present? && fresh?
+  end
 end

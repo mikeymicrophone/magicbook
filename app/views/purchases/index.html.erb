@@ -1,25 +1,25 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Purchases</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @purchases.each do |purchase| %>
-      <tr>
-        <td><%= link_to 'Show', purchase %></td>
-        <td><%= link_to 'Edit', edit_purchase_path(purchase) %></td>
-        <td><%= link_to 'Destroy', purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<%= tag.div :class => 'purchases' do %>
+  <% @purchases.each do |purchase| %>
+    <%= div_for purchase do %>
+      <%= div_for purchase, :date_of do %>
+        On <%= purchase.created_at.strftime("%B %d") %> you bought
+      <% end %>
+      <% purchase.books.each do |book| %>
+        <%= link_to book.title, book %>
+      <% end %>
+      <% if purchase.muggles.present? %>
+        and shared with
+        <%= div_for purchase, :muggles_with_access_to do %>
+          <% purchase.muggles.each do |muggle| %>
+            <%= div_for muggle do %>
+              <%= muggle.email %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if purchase.can_invite_muggles? %>
+        <%= link_to 'Invite muggles', invite_muggles_path(:purchase_id => purchase.id) %>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Purchase', new_purchase_path %>
+  <% end %>
+<% end %>
