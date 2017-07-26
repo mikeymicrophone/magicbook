@@ -37,4 +37,8 @@ class Paragraph < ApplicationRecord
       save
     end
   end
+  
+  def lead
+    text[0..44]
+  end
 end

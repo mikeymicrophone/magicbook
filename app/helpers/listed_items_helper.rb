@@ -12,7 +12,9 @@ module ListedItemsHelper
             'To put a list in this item, select it here:'
           end +
           listed_item_form.collection_select(:content_id, List.all, :id, :name, {:include_blank => true}, {:id => 'listed_item_content_id'}) +
-          listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type')
+          listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type') +
+          tag.br +
+          link_to('Put a paragraph in the list', paragraphs_for_listed_items_path, :remote => true)
         end
       end +
       div_for(listed_item, :privacy_options_for) do
@@ -55,7 +57,12 @@ module ListedItemsHelper
         mark_up listed_item.expression
       end +
       if listed_item.content.present?
-        display_list listed_item.content
+        case listed_item.content
+        when List
+          display_list listed_item.content
+        when Paragraph
+          paragraph_display listed_item.content
+        end
       else
         ''.html_safe
       end
@@ -91,5 +98,9 @@ module ListedItemsHelper
     else
       list.published_items
     end
+  end
+  
+  def paragraph_picker paragraphs
+    select_tag 'listed_item[content_id]', options_from_collection_for_select(paragraphs, :id, :lead), :include_blank => true
   end
 end

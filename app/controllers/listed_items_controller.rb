@@ -64,6 +64,12 @@ class ListedItemsController < ApplicationController
     end
   end
   
+  def paragraphs_for
+    @books = Book.all
+    @editions = @books.map &:current_edition
+    @paragraphs = @editions.compact.map(&:paragraphs).flatten.sort_by &:text
+  end
+  
   def listed_item_params
     params.require(:listed_item).permit(:designation, :expression, :content_type, :content_id, :ordering, :privacy)
   end

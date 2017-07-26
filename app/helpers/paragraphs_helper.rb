@@ -16,4 +16,10 @@ module ParagraphsHelper
       paragraph.text
     end
   end
+  
+  def paragraph_display paragraph
+    div_with_data_for paragraph do
+      paragraph.text
+    end
+  end
 end

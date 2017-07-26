@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   resources :listed_items do
     collection do
       get :review
+      get :paragraphs_for
     end
     member do
       put :approve
