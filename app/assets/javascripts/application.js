@@ -13,4 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require autocard
+//= require gatherer_helper
 //= require_tree .

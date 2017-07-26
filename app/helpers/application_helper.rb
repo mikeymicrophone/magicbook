@@ -95,6 +95,10 @@ module ApplicationHelper
     tag.script :src => 'http://tappedout.net/tappedout.js'
   end
   
+  def autocard_plugin
+    tag.script :src => 'https://sites.google.com/site/themunsonsapps/mtg/autocard.js'
+  end
+  
   def markdown
     @renderer ||= Redcarpet::Render::HTML.new
     @markdown ||= Redcarpet::Markdown.new @renderer
