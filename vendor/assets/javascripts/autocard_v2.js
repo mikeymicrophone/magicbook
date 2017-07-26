@@ -2,7 +2,7 @@
 	@author themunsonsapps
 	@website http://themunsonsapps.blogspot.com
 	@twitter @themunsonsapps
-	@facebook http://www.facebook.com/pages/The-Munsons-Apps/161428533911544 Like us!
+	@facebook https://www.facebook.com/themunsonsapps Like us!
 	
 	script hosting: https://sites.google.com/site/themunsonsapps/mtg/autocard.js
 	script website: http://themunsonsapps.blogspot.com/2011/05/include-mtg-autocard-popup-in-your.html
@@ -14,7 +14,7 @@
 	  URL_START = "http://themunsonsapps.blogspot.com";
 	</script>
 
-	<script src="https://sites.google.com/site/themunsonsapps/mtg/autocard.js" type="text/javascript"></script>
+	<script src="https://sites.google.com/site/themunsonsapps/mtg/autocard_standalone_v2.js" type="text/javascript"></script>
 	<!-- MTG AUTOCARD END -->
 	
 
@@ -29,7 +29,7 @@
 	  URL_START_IMG = "http://magiccards.info/scans";
 	</script>
 
-	<script src="https://sites.google.com/site/themunsonsapps/mtg/autocard.js" type="text/javascript"></script>
+	<script src="https://sites.google.com/site/themunsonsapps/mtg/autocard_standalone_v2.js" type="text/javascript"></script>
 	<!-- MTG AUTOCARD END -->
 	
 	this will trigger getting the img directly from the link and regardless the card Name: 
@@ -44,13 +44,39 @@ var URL_START;
 var URL_START_IMG;
 var URL_START_IMG_DEFAULT = "http://magiccards.info/scans";
 var URL_START_DEFAULT = "http://www.mtg-forum.de/db/magiccard.php";
-var CSS_BORDER_STYLE = "border-bottom-left-radius:2em; border-bottom-right-radius:2em; border-top-right-radius:2em; border-top-left-radius:2em; background: #000000; border-color: #000000; border:2px solid; padding:10px; ";
-var GATHERER_HELPER = "/assets/gatherer_helper.js";
+var CSS_BORDER_STYLE = "";
+var GATHERER_HELPER = "https://sites.google.com/site/themunsonsapps/mtg/gatherer_helper_v2.js";
 var CSS_TAG = "mtgcard";
 var CARD_HEIGHT = 310;
 var CARD_WIDTH = 220;
-var BORDER_WIDTH = 13;
+var BORDER_WIDTH = 0;
 var body;
+
+var wizardsURL = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=';
+
+/**
+*	Wizards
+*/
+function getWizardsCardName(cardName){
+	return cardName.replace(/&#8217;/g,"").replace(/\?/g,"").replace(/\/g,"").replace(/\'/g,"").replace(/,/g," ").replace(/-/g," ").replace(/\s+/g," ").replace(/ /g,"_");
+}
+function getWizardsHtml(cardName){
+	return "<img src=\""+wizardsURL+getWizardsCardName(cardName)+".jpg\" onerror=\"this.onerror=null;this.onmouseout=null;this.onmouseover=null;this.src='mtg_card_back.jpg';\"/>";
+}
+
+function getWizardsSrc(cardName){
+	return wizardsURL+getWizardsCardName(cardName)+".jpg";
+}
+
+function getWizardsOnError(e){
+	return function(e) {
+		this.onerror=null;
+		this.onmouseout=null;
+		this.onmouseover=null;
+		this.src="https://sites.google.com/site/themunsonsapps/mtg/mtg_card_back.jpg";
+	};
+}
+
 
 function loadScript(url, callback){
     // adding the script tag to the head as suggested before
@@ -190,6 +216,5 @@ $(document).on('turbolinks:load', function() {
     }
   }
 });
-
 
 
