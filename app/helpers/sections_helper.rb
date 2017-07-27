@@ -1,6 +1,6 @@
 module SectionsHelper
-  def section_form chapter
-    form_with :model => chapter.sections.new, :id => dom_id(chapter, :append_section_to) do |section_form|
+  def section_form chapter, section = chapter.sections.new
+    form_with :model => section, :id => dom_id(chapter, :append_section_to) do |section_form|
       section_form.text_field(:heading, :placeholder => 'Section heading') +
       tag.br +
       section_form.text_area(:subheading, :placeholder => 'Section subheading') +

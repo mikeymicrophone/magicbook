@@ -20,6 +20,8 @@ class Edition < ApplicationRecord
       case excluded
       when Paragraph
         excluded_parameters = "paragraph_id is distinct from #{excluded.id}"
+      when Section
+        excluded_parameters = "section_id is distinct from #{excluded.id}"
       end
     end
     edition.table_of_contents.where(:book_id => book.id).where(excluded_parameters).each do |table_of_content|
