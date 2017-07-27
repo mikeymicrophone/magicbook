@@ -8,7 +8,7 @@ class Purchase < ApplicationRecord
   
   scope :fresh, lambda { where Purchase.arel_table[:created_at].gt 3.days.ago }
   
-  before_create :default_book
+  before_create :default_book, :populate_token
   after_create :process_payment, :attach_magician
   
   def attach_magician
@@ -50,5 +50,9 @@ class Purchase < ApplicationRecord
   
   def can_invite_muggles?
     invites_remaining.present? && fresh?
+  end
+  
+  def populate_token
+    self.token = SecureRandom.hex
   end
 end

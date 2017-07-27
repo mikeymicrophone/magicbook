@@ -44,7 +44,11 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :purchases
+  resources :purchases do
+    member do
+      get :claim
+    end
+  end
   resources :lists do
     resources :listed_items
     collection do

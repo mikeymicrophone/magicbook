@@ -3,7 +3,7 @@
     Your purchase gives you a license to share the book with four people!
   <% end %>
   <%= tag.p do %>
-    Enter their email addresses here.
+    Enter their email addresses here.  Or, you can <%= link_to 'share a link', claim_purchase_url(@purchase, :token => @purchase.token), :id => 'facebook_claim_sharer' %> that friends can follow to claim a copy!
     
     <%= form_with :url => submit_muggles_path, :id => 'muggle_form' do %>
       <% @purchase.invites_remaining.times do |i| %>
@@ -18,15 +18,15 @@
   <% end %>
   
   <%= tag.p do %>
-    If you need more time to locate email addresses, remember to return to this page within 3 days.  The link is in your inbox.
+    If you need more time to locate email addresses, return to this page within 3 days.  The link is in your inbox.
   <% end %>
   <%= tag.p do %>
     To give it to even more people, <%= link_to 'purchase another copy', root_url %>.
   <% end %>
-  <%= tag.p do %>
-    Nothing except your own good judgement will stop you from copying the pdf you've received.  However, recipients of unauthorized copies will not be able to access updates, and they will know how little you <i>didn't</i> spend on them :/
+  <%= tag.p :class => 'licensing_discussion' do %>
+    Nothing except your own judgement will stop you from copying the pdf you've received.  However, recipients of unauthorized copies will not be able to access updates or your lists, and they will know how little you <i>didn't</i> spend on them :/
   <% end %>
-  <%= tag.p do %>
-    If you choose to copy the pdf, I won't be mad.  My goal is to make these online resources worth more than the price I've asked.  I understand, though, that sometimes money is tight!
+  <%= tag.p :class => 'licensing_discussion' do %>
+    My goal is to make these online resources worth more than the price.  I understand that money is tight.  If you can't spend another $2, you can still invite your friend to read the <%= link_to 'lists', lists_path %> on the site.
   <% end %>
 <% end %>

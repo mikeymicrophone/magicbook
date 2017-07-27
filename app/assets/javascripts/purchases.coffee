@@ -1,3 +1,10 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$(document).on 'turbolinks:load', ->
+  $('.inviting').on 'click', '#facebook_claim_sharer', (event) ->
+    event.preventDefault()
+    FB.ui {
+      method: 'share'
+      href: $(this).attr 'href'
+    }, (response) ->
+      alert 'Thank you. You can still invite muggles via email until your quota is filled.'
+      return
+    return

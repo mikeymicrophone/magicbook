@@ -1,0 +1,15 @@
+<% if @muggling %>
+  <p>
+    To gain access to this book, <%= link_to 'Sign in with Facebook', '/auth/facebook' %>.
+  </p>
+  
+  <p>
+    You'll receive a pdf in your email, and have access to read online.
+  </p>
+  
+  <p>
+    The book is updated every week.  You'll have access to all future updates.
+  </p>
+<% else %>
+  That license has been claimed by four other muggles.  For $2 you can <%= link_to 'purchase one', root_url %> and invite four of your own muggles.
+<% end %>

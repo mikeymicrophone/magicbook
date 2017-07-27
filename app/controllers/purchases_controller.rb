@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  before_action :set_purchase, only: [:show, :edit, :update, :destroy]
+  before_action :set_purchase, only: [:show, :edit, :update, :destroy, :claim]
 
   def index
     @purchases = if current_magician
@@ -54,6 +54,15 @@ class PurchasesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to purchases_url, notice: 'Purchase was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def claim
+    if @purchase.can_invite_muggles? && @purchase.token == params[:token]
+      session[:muggling] = params[:id]
+      @muggling = true
+    else
+      @muggling = false
     end
   end
 
