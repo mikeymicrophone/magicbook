@@ -40,7 +40,7 @@ module ListsHelper
     end
   end
   
-  def open_graph_tags list
+  def open_graph_tags_for list
     tag.div :class => 'open_graph_tags' do
       tag.meta(:property => 'og:url', :content => list_url(list)) +
       tag.meta(:property => 'og:type', :content => 'article') +
