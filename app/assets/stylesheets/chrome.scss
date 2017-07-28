@@ -6,13 +6,20 @@
     font-family: Cabin;
     font-size: 1.3em;
   }
-}
-
-#site_logo {
-  width: 60%;
   
-  &:hover {
-    background-color: #ED88F3;
+  #site_title {
+    display: inline-block;
+    width: 60%;
+    
+    #site_logo {
+      width: 100%;
+      transition: background-color 4s;
+      border-radius: 10px;
+  
+      &:hover {
+        background-color: #ED88F3;
+      }
+    }
   }
 }
 

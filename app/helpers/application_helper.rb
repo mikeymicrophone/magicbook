@@ -46,7 +46,9 @@ module ApplicationHelper
   
   def site_logo
     tag.div :id => 'logo_holder' do
-      link_to(image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo'), root_url) +
+      tag.div(:class => 'hex', :id => 'site_title') do
+        link_to(image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo', :class => 'hex'), root_url)
+      end +
       tag.div(:id => 'site_subtitle') do
         "$2 books and crowd-sourced listicles about Magic"
       end
