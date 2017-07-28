@@ -10,6 +10,7 @@
   #site_title {
     display: inline-block;
     width: 60%;
+    -webkit-clip-path: polygon( 6% 0%, 94% 0%, 100% 50%, 94% 100%, 6% 100%, 0% 50% );
     
     #site_logo {
       width: 100%;
