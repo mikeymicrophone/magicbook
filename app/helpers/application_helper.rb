@@ -57,6 +57,12 @@ module ApplicationHelper
     mail_to ENV['CUSTOMER_SUPPORT_EMAIL_ADDRESS'], 'Contact Us', :encode => 'javascript'
   end
   
+  def footer_call_to_action
+    tag.div :class => 'footer_links' do
+      wwemc_purchase "I value my intellectual life.  I want to challenge myself."
+    end
+  end
+  
   def footer_links
     tag.div :class => 'footer_links' do
       link_to('More Info', wwemc_path) +
