@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :paragraphs do
     member do
       get :append
+      put :delay
     end
   end
   resources :sections do

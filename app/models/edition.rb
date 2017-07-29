@@ -15,6 +15,7 @@ class Edition < ApplicationRecord
   
   def copy_contents_from edition, book, options = {}
     excluded_parameters = ""
+    delayed_content_type = nil
     if options[:exclude]
       excluded = options[:exclude]
       case excluded
@@ -24,10 +25,31 @@ class Edition < ApplicationRecord
         excluded_parameters = "section_id is distinct from #{excluded.id}"
       end
     end
+    if options[:delay]
+      delayed = options[:delay]
+      case delayed
+      when Paragraph
+        delayed_content_type = 'paragraph_id'
+        delayed_content_id = delayed.id
+        delayed_parent_type = 'section_id'
+        delayed_parent_scope = :sectionish
+      end
+    end
     edition.table_of_contents.where(:book_id => book.id).where(excluded_parameters).each do |table_of_content|
-      attrs = table_of_content.attributes.except 'edition_id', 'id'
+      attrs = table_of_content.attributes.except 'id', 'created_at', 'updated_at', 'flags'
       next if attrs['chapter_id'].blank?
-      table_of_contents.create attrs
+      if delayed_content_type
+        if attrs[delayed_content_type] == delayed_content_id
+          query = attrs.except delayed_content_type, 'ordering'
+          parent = TableOfContent.send(delayed_parent_scope).where(query).first
+          query.delete delayed_parent_type
+          query['ordering'] = parent.ordering + 1
+          subsequent_parent = TableOfContent.send(delayed_parent_scope).where(query).first
+          attrs[delayed_parent_type] = subsequent_parent.send(delayed_parent_type)
+          attrs['ordering'] = nil
+        end
+      end
+      table_of_contents.create attrs.except('edition_id')
     end
   end
   

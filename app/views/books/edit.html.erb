@@ -34,6 +34,7 @@
               <%= div_with_data_for paragraph do %>
                 <%= mark_up paragraph.text %>
                 <%= focus_append_on paragraph %>
+                <%= link_to 'delay', delay_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true %>
                 <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
                 <%= link_to 'remove', paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :delete, :remote => true %>
                 <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
