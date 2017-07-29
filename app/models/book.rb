@@ -27,4 +27,12 @@ class Book < ApplicationRecord
   def self.featured
     find(ENV['DEFAULT_BOOK_IDS'])
   end
+  
+  def to_param
+    "#{id}-#{permalink}"
+  end
+
+  def permalink
+    title.gsub(/[^a-z1-9]+/i, '-')
+  end
 end

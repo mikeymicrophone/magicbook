@@ -37,4 +37,12 @@ class List < ApplicationRecord
   def published_items
     ordered_items.published
   end
+  
+  def to_param
+    "#{id}-#{permalink}"
+  end
+
+  def permalink
+    name.gsub(/[^a-z1-9]+/i, '-')
+  end
 end
