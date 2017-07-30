@@ -8,11 +8,12 @@ class ListedItem < ApplicationRecord
   
   scope :ordered, lambda { order :ordering }
   scope :randomized, lambda { order 'random()' }
-  scope :remaining, lambda { where.not :privacy => [:rejected, :removed] }
+  scope :remaining, lambda { where.not :privacy => [:rejected, :removed, :suggested] }
   scope :for_my_muggles, lambda { where :privacy => [:unreviewed, :unreviewed_secret, :published, :secret] }
   scope :for_muggles, lambda { where :privacy => [:unreviewed, :published] }
   scope :published, lambda { where :privacy => :published }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
+  scope :suggested, lambda { where :privacy => :suggested }
   
   before_create :sequence
   before_update :remove_from_sequence

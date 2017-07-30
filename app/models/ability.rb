@@ -22,7 +22,7 @@ class Ability
       can :free, Chapter
       can :index, Book
       can :new, ListedItem
-      can :create, ListedItem, :privacy => 'suggested'
+      can :create, ListedItem, :privacy => ListedItem.privacies[:suggested]
     end
   end
 end

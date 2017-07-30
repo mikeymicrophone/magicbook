@@ -12,6 +12,7 @@
     <% @listed_items.each do |listed_item| %>
       <%= listed_item_display listed_item %>
     <% end %>
+    <%= submission_reviewer_for @list %>
   <% end %>
 
   <%= div_for @list, :new_item_adder_for %>

@@ -40,6 +40,18 @@ module ListsHelper
     end
   end
   
+  def submission_reviewer_for list
+    if list.magician == current_magician
+      if list.listed_items.suggested.present?
+        div_for list, :submission_reviewer_for do 
+          list.listed_items.suggested.map do |listed_item|
+            listed_item_accepter listed_item
+          end.join.html_safe
+        end
+      end
+    end
+  end
+  
   def open_graph_tags_for list
     tag.div :class => 'open_graph_tags' do
       tag.meta(:property => 'og:url', :content => list_url(list)) +

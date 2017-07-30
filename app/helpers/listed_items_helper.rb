@@ -98,6 +98,15 @@ module ListedItemsHelper
     end
   end
   
+  def listed_item_accepter listed_item
+    div_for listed_item, :accepter_for do
+      link_to('approve for public', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed}), :method => :put, :remote => true, :class => 'suggestion_approval accept') +
+      link_to('approve for my muggles', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_private}), :method => :put, :remote => true, :class => 'suggestion_approval accept_secret') +
+      link_to('reject', listed_item_path(listed_item, :listed_item => {:privacy => :rejected}), :method => :put, :remote => true, :class => 'suggestion_approval reject') +
+      listed_item_display(listed_item)
+    end
+  end
+  
   def visible_items_for list
     if current_magician
       list.ordered_items

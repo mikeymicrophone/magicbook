@@ -125,6 +125,27 @@
   box-shadow: 0px 3px 25px #888888
 }
 
+.submission_reviewer_for_list {
+  
+  .accepter_for_listed_item {
+    a.suggestion_approval {
+      padding: 2px 10%;
+      
+      &.accept {
+        color: #309D0E;
+      }
+      
+      &.accept_secret {
+        color: #F49440;
+      }
+      
+      &.reject {
+        color: #B20526;
+      }
+    }
+  }
+}
+
 .new_item_adder_for_list {
   margin: 45px;
   
