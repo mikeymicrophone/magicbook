@@ -1,4 +1,4 @@
-<%= div_with_data_for @book do %>
+<%= div_with_data_for @book, :class => 'editing' do %>
   <%= content_tag :header do %>
     <%= @book.title %>
   <% end %>

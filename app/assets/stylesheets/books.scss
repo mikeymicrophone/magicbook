@@ -1,7 +1,15 @@
-.focus_tool {
-  display: inline-block;
-  img {
-    width: 13px;
+.book.editing {
+  
+  textarea {
+    width: 400px;
+    height: 100px;
+  }
+  
+  .focus_tool {
+    display: inline-block;
+    img {
+      width: 13px;
+    }
   }
 }
 

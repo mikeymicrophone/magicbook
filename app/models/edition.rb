@@ -35,7 +35,7 @@ class Edition < ApplicationRecord
         delayed_parent_scope = :sectionish
       end
     end
-    edition.table_of_contents.where(:book_id => book.id).where(excluded_parameters).each do |table_of_content|
+    edition.table_of_contents.where(:book_id => book.id).where(excluded_parameters).order(:chapter_id, :section_id, :paragraph_id, :citation_id, 'ordering desc').reverse.each do |table_of_content|
       attrs = table_of_content.attributes.except 'id', 'created_at', 'updated_at', 'flags'
       next if attrs['chapter_id'].blank?
       if delayed_content_type
