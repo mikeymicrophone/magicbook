@@ -45,7 +45,7 @@ var URL_START_IMG;
 var URL_START_IMG_DEFAULT = "http://magiccards.info/scans";
 var URL_START_DEFAULT = "http://www.mtg-forum.de/db/magiccard.php";
 var CSS_BORDER_STYLE = "";
-var GATHERER_HELPER = "https://sites.google.com/site/themunsonsapps/mtg/gatherer_helper_v2.js";
+var GATHERER_HELPER = "/assets/gatherer_helper_v2.js";
 var CSS_TAG = "mtgcard";
 var CARD_HEIGHT = 310;
 var CARD_WIDTH = 220;
