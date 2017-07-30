@@ -66,6 +66,6 @@ class ListsController < ApplicationController
   end
   
   def list_params
-    params.require(:list).permit :name, :description, :mode, :privacy
+    params.require(:list).permit :name, :description, :mode, :privacy, :suggestability
   end
 end

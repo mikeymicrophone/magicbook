@@ -37,6 +37,21 @@
       </order>
     <% end %>
     
+    <%= div_for @list, :suggestion_options_for do %>
+      <policy>
+        <%= list_form.radio_button :suggestability, :defer %>
+        <%= list_form.label :suggestability_defer, 'No suggestions please' %>
+      </policy>
+      <policy>
+        <%= list_form.radio_button :suggestability, :languish %>
+        <%= list_form.label :suggestability_languish, 'Allow suggestions but do not notify me' %>
+      </policy>
+      <policy>
+        <%= list_form.radio_button :suggestability, :notify %>
+        <%= list_form.label :suggestability_notify, 'Notify me' %>
+      </policy>
+    <% end %>
+    
     <%= div_for @list, :submission_of do %>
       <%= list_form.submit %>
     <% end %>

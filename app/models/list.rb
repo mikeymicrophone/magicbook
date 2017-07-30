@@ -4,9 +4,11 @@ class List < ApplicationRecord
   
   enum :mode => [:ordered, :randomized, :numbered]
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
+  enum :suggestability => [:defer, :notify, :languish]
   
   attr_default :mode, 'ordered'
   attr_default :privacy, 'unreviewed'
+  attr_default :suggestability, 'notify'
   
   validates :name, :presence => true
   
