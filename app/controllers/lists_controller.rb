@@ -21,6 +21,7 @@ class ListsController < ApplicationController
     else
       @list.published_items
     end
+    @html_title = @list.name
   end
   
   def edit
