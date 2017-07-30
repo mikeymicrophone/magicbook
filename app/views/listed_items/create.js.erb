@@ -1,2 +1,7 @@
-$('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('<%=j listed_item_display @listed_item %>');
-$('#form_for_listed_item')[0].reset();
+<% if current_magician %>
+  $('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('<%=j listed_item_display @listed_item %>');
+  $('#form_for_listed_item')[0].reset();
+<% else %>
+  $('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('Thank you for submitting!  The magician who created the list will have to accept the submission, and then an admin will approve it.');//'<%=j listed_item_display @listed_item %>');
+  $('#form_for_listed_item')[0].reset();
+<% end %>

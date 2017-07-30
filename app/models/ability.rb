@@ -10,9 +10,10 @@ class Ability
       can :submit, Muggle
       can :free, Chapter
       can :manage, List
-      can :review, List
-      can :approve, List
-      can :reject, List
+      can :manage, ListedItem
+      cannot :review, :all
+      cannot :approve, :all
+      cannot :reject, :all
     elsif user.is_a? Muggle
       can :read, :all
       can :free, Chapter
@@ -20,6 +21,8 @@ class Ability
       can :read, List
       can :free, Chapter
       can :index, Book
+      can :new, ListedItem
+      can :create, ListedItem, :privacy => 'suggested'
     end
   end
 end

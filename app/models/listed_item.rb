@@ -2,7 +2,7 @@ class ListedItem < ApplicationRecord
   belongs_to :list
   belongs_to :content, :polymorphic => true, :optional => true
   
-  enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
+  enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed, :suggested]
   
   attr_default :privacy, 'unreviewed'
   

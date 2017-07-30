@@ -18,21 +18,29 @@ module ListedItemsHelper
         end
       end +
       div_for(listed_item, :privacy_options_for) do
-        tag.privacy do
-          listed_item_form.radio_button(:privacy, :draft) +
-          listed_item_form.label(:privacy, :draft)
-        end +
-        tag.privacy do
-          listed_item_form.radio_button(:privacy, :unreviewed) +
-          listed_item_form.label(:privacy_unreviewed, 'public')
-        end +
-        tag.privacy do
-          listed_item_form.radio_button(:privacy, :unreviewed_secret) +
-          listed_item_form.label(:privacy_unreviewed_secret, 'just for my muggles')
+        if current_magician
+          tag.privacy do
+            listed_item_form.radio_button(:privacy, :draft) +
+            listed_item_form.label(:privacy, :draft)
+          end +
+          tag.privacy do
+            listed_item_form.radio_button(:privacy, :unreviewed) +
+            listed_item_form.label(:privacy_unreviewed, 'public')
+          end +
+          tag.privacy do
+            listed_item_form.radio_button(:privacy, :unreviewed_secret) +
+            listed_item_form.label(:privacy_unreviewed_secret, 'just for my muggles')
+          end
+        else
+          listed_item_form.hidden_field :privacy, :value => 'suggested'
         end
       end +
       div_for(listed_item, :submission_of) do
-        listed_item_form.submit '~>ready to add this<~'
+        if current_magician
+          listed_item_form.submit '~>ready to add this<~'
+        else
+          listed_item_form.submit '~>ready to suggest this<~'
+        end
       end +
       tag.div(:class => 'instructions') do
         "You can use Markdown for formatting, links, and HTML.  Submissions are subject to approval.  Present material that is legal and tasteful."

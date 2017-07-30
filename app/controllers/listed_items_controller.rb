@@ -1,4 +1,6 @@
 class ListedItemsController < ApplicationController
+  load_and_authorize_resource :except => :create
+  
   def new
     @list = List.find params[:list_id]
   end
@@ -6,7 +8,7 @@ class ListedItemsController < ApplicationController
   def create
     @listed_item = ListedItem.new listed_item_params
     @listed_item.list_id = params[:list_id]
-    @listed_item.save
+    @listed_item.save if can? :create, @listed_item
   end
   
   def edit
