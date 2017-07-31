@@ -61,7 +61,6 @@ class ParagraphsController < ApplicationController
         table_of_content.update_attribute :paragraph_id, @new_paragraph.id
       end
     end
-    redirect_to edit_book_path @book
   end
   
   def destroy
@@ -74,7 +73,6 @@ class ParagraphsController < ApplicationController
     @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
     TableOfContent.create :book => @book, :edition => @new_edition
     @new_edition.copy_contents_from @edition, @book, :exclude => @paragraph
-    redirect_to edit_book_path @book
   end
   
   def paragraph_params

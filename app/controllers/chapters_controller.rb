@@ -33,6 +33,12 @@ class ChaptersController < ApplicationController
     @next_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).where(:ordering => @table_of_content.ordering + 1).take&.chapter
   end
   
+  def edit
+    @book = Book.find params[:book_id]
+    @edition = Edition.find params[:edition_id]
+    @chapter = Chapter.find params[:id]
+  end
+  
   def chapter_params
     params.require(:chapter).permit(:title, :subtitle)
   end

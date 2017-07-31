@@ -1,0 +1,8 @@
+<%= tag.div :class => 'book editing' do %>
+  <% if edition = @edition %>
+    <%= div_with_data_for edition do %>
+      <% chapter = @chapter %>
+      <%= render :partial => 'edit', :locals => {:chapter => @chapter, :edition => @edition, :book => @book} %>
+    <% end %>
+  <% end %>
+<% end %>
