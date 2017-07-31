@@ -18,7 +18,8 @@
           <%= content_tag :header, :class => 'chapter_subtitle' do %>
             <%= chapter.subtitle %>
           <% end %>
-          <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
+          <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).each do |section_table_of_content| %>
+            <% section = section_table_of_content.section %>
             <%= div_with_data_for section do %>
               <%= div_for section, :data_on do %>
                 <%= content_tag :header, :class => 'section_heading' do %>
@@ -30,22 +31,28 @@
               <% end %>
               <%= link_to 'edit', edit_section_path(section, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :remote => true %>
               <%= link_to 'remove', section_path(section, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :method => :delete, :remote => true %>
-              <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
+              <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).each do |paragraph_table_of_content| %>
+                <% paragraph = paragraph_table_of_content.paragraph %>
                 <%= div_with_data_for paragraph do %>
                   <%= mark_up paragraph.text %>
                   
                   <%= div_for paragraph, :controls_for, :class => 'controls' do %>
                     <%= focus_append_on paragraph %>
-                    <%= link_to 'delay', delay_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'move to next section' %>
-                    <%= link_to 'promote', promote_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'put before previous paragraph' %>
+                    <%= link_to 'delay', delay_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'move to next section' if TableOfContent.sectionish.where(:edition => edition, :chapter => chapter, :ordering => section_table_of_content.ordering + 1).present? %>
+                    <%= link_to 'promote', promote_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'put before previous paragraph' if TableOfContent.paragraphish.where(:edition => edition, :chapter => chapter, :section => section, :ordering => paragraph_table_of_content.ordering - 1).present? %>
                     <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
                     <%= link_to 'remove', paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :delete, :remote => true %>
                   <% end %>
                   
                   <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
                     <%= div_with_data_for citation do %>
-                      <%= citation.finding %>
-                      <%= citation.source %>
+                      <%= div_for citation, :finding_of do %>
+                        <%= citation.finding %>
+                      <% end %>
+                      <%= link_to 'hide', "javascript: $('##{dom_id(citation)}').hide()", :class => 'citation_hider' %>
+                      <%= div_for citation, :source_of do %>
+                        <%= citation.source %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>

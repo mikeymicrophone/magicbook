@@ -1,3 +1,24 @@
-// Place all the styles related to the citations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.citation.div_with_data {
+  width: 60%;
+  font-family: Cabin;
+  font-size: 0.65em;
+  border: 1px solid #BEC0C0;
+  
+  
+  .finding_of_citation {
+    display: inline-block;
+  }
+  
+  .source_of_citation {
+    float: right;
+    font-style: italic;
+    display: inline-block;
+  }
+  
+  .citation_hider {
+    font-size: 0.8em;
+    float: right;
+    margin-top: -13px;
+    color: #BBBDBD;
+  }
+}

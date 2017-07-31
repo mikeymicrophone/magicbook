@@ -20,8 +20,13 @@
           <%= mark_up paragraph.text %>
           <% @book.table_of_contents.in_edition(@edition).in_chapter(@chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
             <%= div_with_data_for citation do %>
-              <%= citation.finding %>
-              <%= citation.source %>
+              <%= div_for citation, :finding_of do %>
+                <%= citation.finding %>
+              <% end %>
+              <%= link_to 'hide', "javascript: $('##{dom_id(citation)}').hide()", :class => 'citation_hider' %>
+              <%= div_for citation, :source_of do %>
+                <%= citation.source %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>

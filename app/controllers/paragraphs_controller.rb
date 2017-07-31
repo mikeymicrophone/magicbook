@@ -9,7 +9,7 @@ class ParagraphsController < ApplicationController
   
   def append
     @paragraph = Paragraph.find params[:id]
-    @paragraph.section = Section.find params[:id]
+    @paragraph.section = Section.find params[:sectionId]
     @paragraph.chapter = Chapter.find params[:chapterId]
     @paragraph.edition = Edition.find params[:editionId]
     @paragraph.book = Book.find params[:bookId]
@@ -17,7 +17,6 @@ class ParagraphsController < ApplicationController
   end
   
   def delay
-    # @table_of_content = TableOfContent.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:section_id], :paragraph_id => params[:id], :citation_id => nil)
     @paragraph = Paragraph.find params[:id]
     @edition = Edition.find params[:edition_id]
     @book = Book.find params[:book_id]

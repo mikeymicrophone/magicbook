@@ -121,6 +121,6 @@ module ApplicationHelper
   end
   
   def selected_fonts
-    ['Anton', 'Cabin', 'Cinzel', 'Dosis', 'Josefin Sans', 'Noto Sans']
+    ['Advent Pro', 'Antic', 'Anton', 'Cabin', 'Changa', 'Cinzel', 'Crushed', 'Dosis', 'Jaldi', 'Josefin Sans', 'Noto Sans', 'Righteous', 'Syncopate']
   end
 end
