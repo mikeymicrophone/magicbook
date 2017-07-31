@@ -35,8 +35,11 @@ class ChaptersController < ApplicationController
   
   def edit
     @book = Book.find params[:book_id]
-    @edition = Edition.find params[:edition_id]
+    @edition = @book.editions.last
     @chapter = Chapter.find params[:id]
+    @table_of_content = @book.table_of_contents.chapterish.where(:edition => @edition, :chapter => @chapter).take
+    @previous_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).where(:ordering => @table_of_content.ordering - 1).take&.chapter
+    @next_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).where(:ordering => @table_of_content.ordering + 1).take&.chapter
   end
   
   def chapter_params

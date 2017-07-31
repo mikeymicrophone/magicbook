@@ -17,6 +17,7 @@
         <% end %>
       <% end %>
       <%= div_for section, :controls_for, :class => 'controls' do %>
+        <%= link_to 'promote', promote_section_path(section, :book_id => book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :method => :put, :remote => true, :title => "put before previous section (at #{section_table_of_content.ordering})" if TableOfContent.sectionish.where(:edition => edition, :chapter => chapter, :ordering => section_table_of_content.ordering - 1).present? %>
         <%= link_to 'edit', edit_section_path(section, :book_id => book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :remote => true %>
         <%= link_to 'remove', section_path(section, :book_id => book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :method => :delete, :remote => true %>
       <% end %>

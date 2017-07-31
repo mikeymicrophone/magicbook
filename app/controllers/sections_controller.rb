@@ -41,6 +41,17 @@ class SectionsController < ApplicationController
     redirect_to edit_book_path @book
   end
   
+  def promote
+    @section = Section.find params[:id]
+    @edition = Edition.find params[:edition_id]
+    @book = Book.find params[:book_id]
+    
+    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
+    TableOfContent.create :book => @book, :edition => @new_edition
+    @new_edition.copy_contents_from @edition, @book, :promote => @section
+  end
+  
+  
   def destroy
     @section = Section.find params[:id]
     @chapter = Chapter.find params[:chapter_id]

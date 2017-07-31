@@ -1,7 +1,9 @@
-<%= tag.div :class => 'book editing' do %>
+<%= div_with_data_for @book, :class => 'editing' do %>
   <% if edition = @edition %>
     <%= div_with_data_for edition do %>
       <% chapter = @chapter %>
+      <%= link_to 'Previous Chapter', edit_chapter_path(@previous_chapter, :book_id => @book.id), :class => 'previous_chapter' if @previous_chapter %>
+      <%= link_to 'Next Chapter', edit_chapter_path(@next_chapter, :book_id => @book.id), :class => 'next_chapter' if @next_chapter %>
       <%= render :partial => 'edit', :locals => {:chapter => @chapter, :edition => @edition, :book => @book} %>
     <% end %>
   <% end %>

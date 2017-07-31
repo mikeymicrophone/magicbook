@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :sections do
     member do
       get :append
+      put :promote
     end
   end
   resources :chapters do

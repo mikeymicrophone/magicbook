@@ -13,7 +13,7 @@
       <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).each do |chapter_table_of_content| %>
         <% chapter = chapter_table_of_content.chapter %>
         <%= div_for chapter, :controls_for, :class => 'controls' do %>
-          <%= link_to "edit chapter #{chapter_table_of_content.ordering}", edit_chapter_path(chapter, :edition_id => edition, :book_id => @book) %>
+          <%= link_to "edit chapter #{chapter_table_of_content.ordering}", edit_chapter_path(chapter, :book_id => @book) %>
         <% end %>
         <%= render :partial => 'chapters/edit', :locals => {:chapter => chapter, :edition => edition, :book => @book} %>
       <% end %>
