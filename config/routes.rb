@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     member do
       get :append
       put :delay
+      put :promote
     end
   end
   resources :sections do

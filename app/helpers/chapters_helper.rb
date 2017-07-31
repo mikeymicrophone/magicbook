@@ -11,12 +11,14 @@ module ChaptersHelper
   end
   
   def chapter_control chapter
-    div_with_data_for chapter do
+    div_with_data_for chapter, :class => 'read_by_chapter' do
       focus_append_on(chapter) +
-      tag.header do
+      tag.header(:class => 'chapter_title') do
         chapter.title
       end +
-      chapter.subtitle
+      tag.header(:class => 'chapter_subtitle') do
+        chapter.subtitle
+      end
     end
   end
 end

@@ -27,6 +27,16 @@ class ParagraphsController < ApplicationController
     @new_edition.copy_contents_from @edition, @book, :delay => @paragraph
   end
   
+  def promote
+    @paragraph = Paragraph.find params[:id]
+    @edition = Edition.find params[:edition_id]
+    @book = Book.find params[:book_id]
+    
+    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
+    TableOfContent.create :book => @book, :edition => @new_edition
+    @new_edition.copy_contents_from @edition, @book, :promote => @paragraph
+  end
+  
   def edit
     @section = Section.find params[:section_id]
     @section.chapter = Chapter.find params[:chapter_id]

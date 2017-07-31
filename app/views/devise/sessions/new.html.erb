@@ -1,7 +1,7 @@
 <div class="login_area">
   <div class="authentication_form">
     <div id="login_form">
-      <h2>Magician Log in</h2>
+      <h2><%= resource_name.capitalize %> Log in</h2>
       <h3>(if you purchased the book)</h3>
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>

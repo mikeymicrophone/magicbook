@@ -2,58 +2,63 @@
   <%= content_tag :header do %>
     <%= @book.title %>
   <% end %>
-  <% edition = @book.editions.last %>
-  <%= div_with_data_for edition do %>
-    <%= content_tag :header do %>
-      version <%= edition.version %>
-    <% end %>
-    <% if edition.release.blank? %>
-      <%= link_to 'release!', release_edition_path(edition), :method => :put %>
-    <% end %>
-    <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
-      <%= div_with_data_for chapter, :class => 'read_by_chapter' do %>
-        <%= content_tag :header, :class => 'chapter_title' do %>
-          <%= chapter.title %>
-        <% end %>
-        <%= content_tag :header, :class => 'chapter_subtitle' do %>
-          <%= chapter.subtitle %>
-        <% end %>
-        <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
-          <%= div_with_data_for section do %>
-            <%= div_for section, :data_on do %>
-              <%= content_tag :header, :class => 'section_heading' do %>
-                <%= section.heading %>
+  <% if edition = @book.editions.last %>
+    <%= div_with_data_for edition do %>
+      <%= content_tag :header do %>
+        version <%= edition.version %>
+      <% end %>
+      <% if edition.release.blank? %>
+        <%= link_to 'release!', release_edition_path(edition), :method => :put %>
+      <% end %>
+      <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).map(&:chapter).each do |chapter| %>
+        <%= div_with_data_for chapter, :class => 'read_by_chapter' do %>
+          <%= content_tag :header, :class => 'chapter_title' do %>
+            <%= chapter.title %>
+          <% end %>
+          <%= content_tag :header, :class => 'chapter_subtitle' do %>
+            <%= chapter.subtitle %>
+          <% end %>
+          <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
+            <%= div_with_data_for section do %>
+              <%= div_for section, :data_on do %>
+                <%= content_tag :header, :class => 'section_heading' do %>
+                  <%= section.heading %>
+                <% end %>
+                <%= content_tag :header, :class => 'section_subheading' do %>
+                  <%= section.subheading %>
+                <% end %>
               <% end %>
-              <%= content_tag :header, :class => 'section_subheading' do %>
-                <%= section.subheading %>
-              <% end %>
-            <% end %>
-            <%= link_to 'edit', edit_section_path(section, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :remote => true %>
-            <%= link_to 'remove', section_path(section, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :method => :delete, :remote => true %>
-            <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
-              <%= div_with_data_for paragraph do %>
-                <%= mark_up paragraph.text %>
-                <%= focus_append_on paragraph %>
-                <%= link_to 'delay', delay_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true %>
-                <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
-                <%= link_to 'remove', paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :delete, :remote => true %>
-                <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
-                  <%= div_with_data_for citation do %>
-                    <%= citation.finding %>
-                    <%= citation.source %>
+              <%= link_to 'edit', edit_section_path(section, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :remote => true %>
+              <%= link_to 'remove', section_path(section, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :format => :js), :method => :delete, :remote => true %>
+              <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).map(&:paragraph).each do |paragraph| %>
+                <%= div_with_data_for paragraph do %>
+                  <%= mark_up paragraph.text %>
+                  
+                  <%= div_for paragraph, :controls_for, :class => 'controls' do %>
+                    <%= focus_append_on paragraph %>
+                    <%= link_to 'delay', delay_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'move to next section' %>
+                    <%= link_to 'promote', promote_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'put before previous paragraph' %>
+                    <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
+                    <%= link_to 'remove', paragraph_path(paragraph, :book_id => @book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :delete, :remote => true %>
+                  <% end %>
+                  
+                  <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
+                    <%= div_with_data_for citation do %>
+                      <%= citation.finding %>
+                      <%= citation.source %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
+              <%= focus_append_on section %>
             <% end %>
-            <%= focus_append_on section %>
           <% end %>
+          <%= focus_append_on chapter %>
         <% end %>
-        <%= focus_append_on chapter %>
       <% end %>
+      <%= focus_append_on edition %>
     <% end %>
-    <%= focus_append_on edition %>
-  <% end %>
-  <% if @book.editions.empty? %>
+  <% else %>
     <%= link_to 'Begin first edition', new_edition_path(:book_id => @book.id) %>
   <% end %>
 <% end %>

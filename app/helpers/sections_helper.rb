@@ -14,10 +14,12 @@ module SectionsHelper
   def section_control section
     div_with_data_for section do
       focus_append_on(section) +
-      tag.header do
+      tag.header(:class => 'section_heading') do
         section.heading
       end +
-      section.subheading
+      tag.header(:class => 'section_subheading') do
+        section.subheading
+      end
     end
   end
 end
