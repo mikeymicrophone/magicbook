@@ -12,14 +12,13 @@ module ParagraphsHelper
   
   def paragraph_control paragraph
     div_with_data_for paragraph do
-      focus_append_on(paragraph) +
-      paragraph.text
+      mark_up paragraph.text
     end
   end
   
   def paragraph_display paragraph
     div_with_data_for paragraph do
-      paragraph.text
+      mark_up paragraph.text
     end
   end
 end
