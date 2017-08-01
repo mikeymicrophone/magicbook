@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     member do
       get :append
       put :release
+      put :freeze
     end
   end
   resources :books do

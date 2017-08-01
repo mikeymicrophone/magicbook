@@ -7,6 +7,7 @@
       <%= content_tag :header do %>
         version <%= edition.version %>
       <% end %>
+      <%= link_to 'freeze', freeze_edition_path(edition, :book_id => @book), :method => :put %>
       <% if edition.release.blank? %>
         <%= link_to 'release!', release_edition_path(edition, :book_id => @book), :method => :put %>
       <% end %>

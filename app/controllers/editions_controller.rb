@@ -36,6 +36,16 @@ class EditionsController < ApplicationController
     redirect_to edit_book_path @book
   end
   
+  def freeze
+    @edition = Edition.find params[:id]
+    @book = Book.find params[:book_id]
+
+    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch.next
+    TableOfContent.create :book => @book, :edition => @new_edition
+    @new_edition.copy_contents_from @edition, @book
+    redirect_to edit_book_path @book
+  end
+  
   def edition_params
     params.require(:edition).permit(:major, :minor, :patch)
   end
