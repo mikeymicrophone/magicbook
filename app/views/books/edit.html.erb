@@ -2,13 +2,13 @@
   <%= content_tag :header do %>
     <%= @book.title %>
   <% end %>
-  <% if edition = @book.editions.last %>
+  <% if edition = @edition %>
     <%= div_with_data_for edition do %>
       <%= content_tag :header do %>
         version <%= edition.version %>
       <% end %>
       <% if edition.release.blank? %>
-        <%= link_to 'release!', release_edition_path(edition), :method => :put %>
+        <%= link_to 'release!', release_edition_path(edition, :book_id => @book), :method => :put %>
       <% end %>
       <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).each do |chapter_table_of_content| %>
         <% chapter = chapter_table_of_content.chapter %>

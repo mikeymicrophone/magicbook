@@ -27,7 +27,13 @@ class EditionsController < ApplicationController
   def release
     @edition = Edition.find params[:id]
     @edition.update_attribute :release, Time.now
-    head :ok
+    @book = Book.find params[:book_id]
+    @book.update_attribute :version, @edition.version
+
+    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor.next, :patch => 0
+    TableOfContent.create :book => @book, :edition => @new_edition
+    @new_edition.copy_contents_from @edition, @book
+    redirect_to edit_book_path @book
   end
   
   def edition_params

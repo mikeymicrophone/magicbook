@@ -6,7 +6,7 @@
   by <%= @book.author %>
 <% end %>
 
-<% edition = @book.editions.last %>
+<% edition = @book.editions.published.last %>
 <% if edition %>
   <%= div_with_data_for edition, :class => 'syllabus' do %>
     <%= content_tag :header, :class => 'edition' do %>
