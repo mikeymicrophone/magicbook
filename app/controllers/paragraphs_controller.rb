@@ -27,13 +27,6 @@ class ParagraphsController < ApplicationController
   end
   
   def promote
-    # @paragraph = Paragraph.find params[:id]
-    # @edition = Edition.find params[:edition_id]
-    # @book = Book.find params[:book_id]
-    #
-    # @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
-    # TableOfContent.create :book => @book, :edition => @new_edition
-    # @new_edition.copy_contents_from @edition, @book, :promote => @paragraph
     @table_of_content = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :paragraph_id => params[:id]).first
     @previous_position = @table_of_content.ordering
     @previous_table_of_content = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => @table_of_content.chapter_id, :section_id => @table_of_content.section_id, :ordering => @previous_position.pred).first
@@ -69,15 +62,13 @@ class ParagraphsController < ApplicationController
   end
   
   def destroy
-    @paragraph = Paragraph.find params[:id]
-    @section = Section.find params[:section_id]
-    @chapter = Chapter.find params[:chapter_id]
-    @edition = Edition.find params[:edition_id]
-    @book = Book.find params[:book_id]
-    
-    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
-    TableOfContent.create :book => @book, :edition => @new_edition
-    @new_edition.copy_contents_from @edition, @book, :exclude => @paragraph
+    @table_of_content = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:section_id], :paragraph_id => params[:id]).first
+    @position = @table_of_content.ordering
+    @table_of_content.destroy
+    @subsequent = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:section_id]).where(TableOfContent.arel_table[:ordering].gt(@position))
+    @subsequent.each do |table_of_content|
+      table_of_content.update_attribute :ordering, table_of_content.ordering.pred
+    end
   end
   
   def paragraph_params
