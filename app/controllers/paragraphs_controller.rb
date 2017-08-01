@@ -48,21 +48,8 @@ class ParagraphsController < ApplicationController
   
   def update
     @paragraph = Paragraph.find params[:id]
+    @paragraph.update_attributes paragraph_params
     @section = Section.find params[:section]
-    @edition = Edition.find params[:edition]
-    @book = Book.find params[:book]
-    
-    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
-    TableOfContent.create :book => @book, :edition => @new_edition
-    @new_edition.copy_contents_from @edition, @book
-    
-    @new_paragraph = Paragraph.create paragraph_params
-    
-    @new_edition.table_of_contents.each do |table_of_content|
-      if table_of_content.paragraph_id == @paragraph.id
-        table_of_content.update_attribute :paragraph_id, @new_paragraph.id
-      end
-    end
   end
   
   def destroy

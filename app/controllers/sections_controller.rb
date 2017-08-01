@@ -24,21 +24,8 @@ class SectionsController < ApplicationController
   
   def update
     @section = Section.find params[:id]
-    @edition = Edition.find params[:edition]
-    @book = Book.find params[:book]
-    
-    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
-    TableOfContent.create :book => @book, :edition => @new_edition
-    @new_edition.copy_contents_from @edition, @book
-    
-    @new_section = Section.create section_params
-    
-    @new_edition.table_of_contents.each do |table_of_content|
-      if table_of_content.section_id == @section.id
-        table_of_content.update_attribute :section_id, @new_section.id
-      end
-    end
-    redirect_to edit_book_path @book
+    @chapter = Chapter.find params[:chapter]
+    @section.update_attributes section_params
   end
   
   def promote
@@ -50,17 +37,14 @@ class SectionsController < ApplicationController
   end
   
   def destroy
-    @section = Section.find params[:id]
-    @chapter = Chapter.find params[:chapter_id]
-    @edition = Edition.find params[:edition_id]
-    @book = Book.find params[:book_id]
-    
-    @new_edition = Edition.create :major => @edition.major, :minor => @edition.minor, :patch => @edition.patch + 1
-    TableOfContent.create :book => @book, :edition => @new_edition
-    @new_edition.copy_contents_from @edition, @book, :exclude => @section
-    redirect_to edit_book_path @book
+    @table_of_content = TableOfContent.sectionish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:id]).first
+    @position = @table_of_content.ordering
+    @table_of_content.destroy
+    @subsequent = TableOfContent.sectionish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id]).where(TableOfContent.arel_table[:ordering].gt(@position))
+    @subsequent.each do |table_of_content|
+      table_of_content.update_attribute :ordering, table_of_content.ordering.pred
+    end
   end
-  
   
   def section_params
     params.require(:section).permit(:heading, :subheading)
