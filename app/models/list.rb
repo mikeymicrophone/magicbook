@@ -15,7 +15,7 @@ class List < ApplicationRecord
   scope :randomized, lambda { order 'random()' }
   scope :published, lambda { where :privacy => :published }
   scope :visible, lambda { where :privacy => [:unreviewed, :published] }
-  scope :visible_to, lambda { |muggle| where :privacy => [:unreviewed_secret, :secret], :magician_id => muggle.magician_id }
+  scope :visible_to, lambda { |magician| where :privacy => [:unreviewed_secret, :secret], :magician_id => magician.id }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   scope :in_draft, lambda { where :privacy => :draft }
   

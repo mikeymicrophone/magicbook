@@ -36,9 +36,9 @@ class ListsController < ApplicationController
   
   def index
     @lists = if current_magician
-      List.randomized.visible + current_magician.lists.in_draft
+      List.randomized.visible + List.randomized.visible_to(current_magician) + current_magician.lists.in_draft
     elsif current_muggle
-      List.randomized.visible + List.randomized.visible_to(current_muggle)
+      List.randomized.visible + List.randomized.visible_to(current_muggle.magician)
     else
       List.randomized.published
     end
