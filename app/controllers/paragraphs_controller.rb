@@ -47,8 +47,10 @@ class ParagraphsController < ApplicationController
   end
   
   def update
-    @paragraph = Paragraph.find params[:id]
-    @paragraph.update_attributes paragraph_params
+    @table_of_contents = TableOfContent.where(:book_id => params[:book], :edition_id => params[:edition], :chapter_id => params[:chapter], :section_id => params[:section], :paragraph_id => params[:id])
+    
+    @new_paragraph = Paragraph.create paragraph_params
+    @table_of_contents.each { |table_of_content| table_of_content.update_attribute :paragraph_id, @new_paragraph.id }
     @section = Section.find params[:section]
   end
   

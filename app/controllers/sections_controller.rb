@@ -23,9 +23,10 @@ class SectionsController < ApplicationController
   end
   
   def update
-    @section = Section.find params[:id]
+    @table_of_contents = TableOfContent.where(:book_id => params[:book], :edition_id => params[:edition], :chapter_id => params[:chapter], :section_id => params[:id])
+    @new_section = Section.create section_params
+    @table_of_contents.each { |table_of_content| table_of_content.update_attribute :section_id, @new_section.id }
     @chapter = Chapter.find params[:chapter]
-    @section.update_attributes section_params
   end
   
   def promote
