@@ -12,3 +12,8 @@
     <% end %>
   <% end %>
 <% end %>
+
+<%= form_with :url => ramp_magicians_path do |ramp_form| %>
+  <%= ramp_form.email_field :email %>
+  <%= ramp_form.submit :ramp %>
+<% end %>

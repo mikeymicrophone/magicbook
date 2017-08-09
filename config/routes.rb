@@ -32,6 +32,9 @@ Rails.application.routes.draw do
     end
   end
   resources :magicians, :only => [:index, :show] do
+    collection do
+      post :ramp
+    end
     resources :books, :only => :index
   end
   resources :purchased_books

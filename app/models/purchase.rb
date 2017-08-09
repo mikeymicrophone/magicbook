@@ -4,7 +4,7 @@ class Purchase < ApplicationRecord
   has_many :books, :through => :purchased_books
   has_many :muggles
   
-  attr_accessor :fulfill
+  attr_accessor :fulfill, :ramp
   
   scope :fresh, lambda { where Purchase.arel_table[:created_at].gt 3.days.ago }
   
@@ -17,6 +17,12 @@ class Purchase < ApplicationRecord
   end
   
   def process_payment
+    if ramp
+      @fulfill = true
+      self.stripe_token = 'ramp'
+      return
+    end
+    
     charge = Stripe::Charge.create(
       :amount => price,
       :currency => "usd",
