@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :chapters do
     member do
       get :append
+      put :promote
     end
   end
   resources :magicians, :only => [:index, :show] do

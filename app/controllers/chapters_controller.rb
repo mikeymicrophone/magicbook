@@ -42,6 +42,14 @@ class ChaptersController < ApplicationController
     @next_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).where(:ordering => @table_of_content.ordering + 1).take&.chapter
   end
   
+  def promote
+    @table_of_content = TableOfContent.chapterish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:id]).first
+    @previous_position = @table_of_content.ordering
+    @previous_table_of_content = TableOfContent.chapterish.where(:book_id => params[:book_id], :edition_id => @table_of_content.edition_id, :ordering => @previous_position.pred).first
+    @table_of_content.update_attribute :ordering, @previous_position.pred
+    @previous_table_of_content.update_attribute :ordering, @previous_position
+  end
+  
   def chapter_params
     params.require(:chapter).permit(:title, :subtitle)
   end
