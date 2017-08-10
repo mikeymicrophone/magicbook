@@ -7,20 +7,39 @@
     margin-bottom: 15px;
     font-size: 1.75em;
     
-    &.two, &.eight {
+    &.two {
+      margin-left: 10%;
+    }
+    
+    &.three {
       margin-left: 20%;
     }
     
-    &.three, &.seven {
+    &.four {
+      margin-left: 30%;
+    }
+    
+    &.five {
       text-align: center;
     }
     
-    &.four, &.five, &.six {
+    &.six {
       text-align: right;
+      margin-right: 30%;
     }
     
-    &.four, &.six {
+    &.seven {
+      text-align: right;
       margin-right: 20%;
+    }
+    
+    &.eight {
+      text-align: right;
+      margin-right: 10%;
+    }
+    
+    &.nine {
+      text-align: right;
     }
     
     a:hover {

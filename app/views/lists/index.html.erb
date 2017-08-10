@@ -1,6 +1,6 @@
 <div id="lists">
   <% @lists.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight) do %>
+    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
       <%= link_to list.name, list %>
       <%= publish_controls_for list %>
     <% end %>
