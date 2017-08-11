@@ -95,6 +95,17 @@ module ApplicationHelper
     end
   end
   
+  def open_graph_tags
+    tag.div :class => 'open_graph_tags' do
+      tag.meta(:property => 'og:url', :content => root_url) +
+      tag.meta(:property => 'og:type', :content => 'website') +
+      tag.meta(:property => 'og:title', :content => 'Ways We Mage') +
+      tag.meta(:property => 'og:description', :content => '$2 ebooks and crowd-sourced listicles about Magic') +
+      tag.meta(:property => 'og:image', :content => asset_path('ways-we-mage-logo-vertical.png')) +
+      tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
+    end
+  end
+  
   def facebook_quote_plugin
     tag.div :class => 'fb-quote'
   end
