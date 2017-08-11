@@ -101,7 +101,7 @@ module ApplicationHelper
       tag.meta(:property => 'og:type', :content => 'website') +
       tag.meta(:property => 'og:title', :content => 'Ways We Mage') +
       tag.meta(:property => 'og:description', :content => '$2 ebooks and crowd-sourced listicles about Magic') +
-      tag.meta(:property => 'og:image', :content => asset_path('ways-we-mage-logo-vertical.png')) +
+      tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
       tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
     end
   end
