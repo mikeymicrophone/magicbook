@@ -6,7 +6,7 @@ module PurchasesHelper
         :amount => '200',
         :name => 'Ways We Mage',
         :description => 'Ways We Enjoy Magic Cards',
-        :image => 'https://stripe.com/img/documentation/checkout/marketplace.png',
+        :image => asset_url(image_path('ways-we-mage-logo-vertical.png')),
         :locale => 'auto',
         :label => text,
         :bitcoin => true
