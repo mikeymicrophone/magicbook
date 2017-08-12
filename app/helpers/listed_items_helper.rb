@@ -13,8 +13,8 @@ module ListedItemsHelper
           end +
           listed_item_form.collection_select(:content_id, List.all, :id, :name, {:include_blank => true}, {:id => 'listed_item_content_id'}) +
           listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type') +
-          tag.br +
-          link_to('Put a paragraph in the list', paragraphs_for_listed_items_path, :remote => true)
+          tag.br# +
+          # link_to('Put a paragraph in the list', paragraphs_for_listed_items_path, :remote => true)
         end
       end +
       div_for(listed_item, :privacy_options_for) do
