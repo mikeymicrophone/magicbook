@@ -9,45 +9,45 @@
     
     <%= div_for @list, :privacy_options_for do %>
       <privacy>
-        <%= list_form.radio_button :privacy, :draft %>
-        <%= list_form.label :privacy, :draft %>
+        <%= list_form.radio_button :privacy, :draft, :id => 'list_privacy_draft' %>
+        <%= list_form.label :privacy_draft, 'Draft' %>
       </privacy>
       <privacy>
-        <%= list_form.radio_button :privacy, :unreviewed %>
+        <%= list_form.radio_button :privacy, :unreviewed, :id => 'list_privacy_unreviewed' %>
         <%= list_form.label :privacy_unreviewed, 'Public' %>
       </privacy>
       <privacy>
-        <%= list_form.radio_button :privacy, :unreviewed_secret %>
+        <%= list_form.radio_button :privacy, :unreviewed_secret, :id => 'list_privacy_unreviewed_secret' %>
         <%= list_form.label :privacy_unreviewed_secret, 'Just for my muggles' %>
       </privacy>
     <% end %>
     
     <%= div_for @list, :sorting_options_for do %>
       <order>
-        <%= list_form.radio_button :mode, :numbered %>
-        <%= list_form.label :mode, :numbered %>
+        <%= list_form.radio_button :mode, :numbered, :id => 'list_mode_numbered' %>
+        <%= list_form.label :mode_numbered, 'Numbered' %>
       </order>
       <order>
-        <%= list_form.radio_button :mode, :ordered %>
-        <%= list_form.label :mode, :ordered %>
+        <%= list_form.radio_button :mode, :ordered, :id => 'list_mode_ordered' %>
+        <%= list_form.label :mode_ordered, 'Ordered' %>
       </order>
       <order>
-        <%= list_form.radio_button :mode, :randomized %>
-        <%= list_form.label :mode, :randomized %>
+        <%= list_form.radio_button :mode, :randomized, :id => 'list_mode_randomized' %>
+        <%= list_form.label :mode_randomized, 'Randomized' %>
       </order>
     <% end %>
     
     <%= div_for @list, :suggestion_options_for do %>
       <policy>
-        <%= list_form.radio_button :suggestability, :defer %>
+        <%= list_form.radio_button :suggestability, :defer, :id => 'list_suggestability_defer' %>
         <%= list_form.label :suggestability_defer, 'No suggestions please' %>
       </policy>
       <policy>
-        <%= list_form.radio_button :suggestability, :languish %>
+        <%= list_form.radio_button :suggestability, :languish, :id => 'list_suggestability_languish' %>
         <%= list_form.label :suggestability_languish, 'Allow suggestions but do not notify me' %>
       </policy>
       <policy>
-        <%= list_form.radio_button :suggestability, :notify %>
+        <%= list_form.radio_button :suggestability, :notify, :id => 'list_suggestability_notify' %>
         <%= list_form.label :suggestability_notify, 'Notify me' %>
       </policy>
     <% end %>

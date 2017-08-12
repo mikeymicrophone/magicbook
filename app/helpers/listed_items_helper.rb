@@ -20,16 +20,16 @@ module ListedItemsHelper
       div_for(listed_item, :privacy_options_for) do
         if current_magician
           tag.privacy do
-            listed_item_form.radio_button(:privacy, :draft) +
-            listed_item_form.label(:privacy, :draft)
+            listed_item_form.radio_button(:privacy, :draft, :id => 'listed_item_privacy_draft') +
+            listed_item_form.label(:privacy_draft, 'Draft')
           end +
           tag.privacy do
-            listed_item_form.radio_button(:privacy, :unreviewed) +
-            listed_item_form.label(:privacy_unreviewed, 'public')
+            listed_item_form.radio_button(:privacy, :unreviewed, :id => 'listed_item_privacy_unreviewed') +
+            listed_item_form.label(:privacy_unreviewed, 'Public')
           end +
           tag.privacy do
-            listed_item_form.radio_button(:privacy, :unreviewed_secret) +
-            listed_item_form.label(:privacy_unreviewed_secret, 'just for my muggles')
+            listed_item_form.radio_button(:privacy, :unreviewed_secret, :id => 'listed_item_privacy_unreviewed_secret') +
+            listed_item_form.label(:privacy_unreviewed_secret, 'Just for my muggles')
           end
         else
           listed_item_form.hidden_field :privacy, :value => 'suggested'
