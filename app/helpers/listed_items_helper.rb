@@ -42,7 +42,7 @@ module ListedItemsHelper
           listed_item_form.submit '~>ready to suggest this<~'
         end
       end +
-      tag.div(:class => 'instructions') do
+      tag.div(:class => 'instructions center') do
         "You can use Markdown for formatting, links, and HTML.  Submissions are subject to approval.  Present material that is legal and tasteful."
       end
     end

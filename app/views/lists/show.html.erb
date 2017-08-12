@@ -20,12 +20,22 @@
     <%= submission_reviewer_for @list %>
   <% end %>
 
-  <%= div_for @list, :new_item_adder_for %>
+  <%= div_for @list, :new_item_adder_for, :class => 'hidden' %>
 
   <% if current_magician == @list.magician %>
-    <%= link_to 'Add an item', new_list_listed_item_path(@list), :remote => true %>
+    <%= link_to new_list_listed_item_path(@list), :remote => true do %>
+      <%= div_for @list, :item_adder_button_for, :class => 'center' do %>
+        Add an item
+      <% end %>
+    <% end %>
   <% else %>
-    <%= link_to 'Suggest an item', new_list_listed_item_path(@list, :suggest => true), :remote => true unless @list.suggestability == 'defer' %>
+    <% unless @list.suggestability == 'defer' %>
+      <%= link_to new_list_listed_item_path(@list, :suggest => true), :remote => true do %>
+        <%= div_for @list, :item_adder_button_for, :class => 'center' do %>
+          Suggest an item
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
 <%= open_graph_tags_for @list %>
