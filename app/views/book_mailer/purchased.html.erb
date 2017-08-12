@@ -3,7 +3,7 @@
 </p>
 
 <p>
-  Your purchase includes a license to gift this book to four muggles.  You may have already entered some.  If you want to add more, be sure to return to this page within the next 72 hours: <%= invite_muggles_url :purchase_id => @purchase.id %>
+  Your purchase includes a license to gift this book to four muggles.  You may have already entered some.  If you want to add more, be sure to return to this page within the next 72 hours: <%= link_to 'invite muggles', invite_muggles_url(:purchase_id => @purchase.id) %>
 </p>
 
 <p>

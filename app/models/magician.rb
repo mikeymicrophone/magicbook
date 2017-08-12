@@ -5,7 +5,7 @@ class Magician < ApplicationRecord
   has_many :identifiers
   has_many :lists
   
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
+  devise :database_authenticatable, :token_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
 
   def needs_access_technique?
     encrypted_password.blank?
