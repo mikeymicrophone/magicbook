@@ -14,5 +14,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require autocard_v2
-//= require gatherer_helper_v2
 //= require_tree .
