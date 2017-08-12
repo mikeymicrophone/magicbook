@@ -9,7 +9,7 @@ class ListedItemsController < ApplicationController
     @listed_item = ListedItem.new listed_item_params
     @listed_item.list_id = params[:list_id]
     @listed_item.save if can? :create, @listed_item
-    ListMailer.suggested(@listed_item.id).deliver if @listed_item.privacy == 'suggested' && @list.suggestability == 'notify'
+    ListMailer.suggested(@listed_item.id).deliver if @listed_item.privacy == 'suggested' && @listed_item.list.suggestability == 'notify'
   end
   
   def edit
