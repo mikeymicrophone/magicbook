@@ -47,6 +47,7 @@ gem 'awesome_print'
 gem 'record_tag_helper'
 
 gem 'devise'
+gem 'devise-token_authenticatable'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 # gem 'omniauth-amazon'
@@ -66,6 +67,9 @@ gem 'attr_default'
 
 gem 'google-analytics-rails'
 gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
+
+# gem 'prawn'
+# gem 'markdown_prawn', :github => 'vanboom/markdown_prawn'
 
 gem 'resque'
 gem 'resque_mailer'
