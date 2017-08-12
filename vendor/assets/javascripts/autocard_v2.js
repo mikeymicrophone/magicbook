@@ -77,26 +77,6 @@ function getWizardsOnError(e){
 	};
 }
 
-
-function loadScript(url, callback){
-    // adding the script tag to the head as suggested before
-   var head= document.getElementsByTagName('head')[0];
-   var script= document.createElement('script');
-   script.type= 'text/javascript';
-   script.src= url;
-
-   // then bind the event to the callback function 
-   // there are several events for cross browser compatibility
-   script.onreadystatechange = callback;
-   script.onload = callback
-
-   // fire the loading
-   head.appendChild(script);
-};
-
-function callbackFunction(e){
-};
-
 function showImgPopup(element){
 		var imgSrc = "";
 
@@ -172,10 +152,33 @@ function getOffset( el ) {
 	return isNaN(el) ? 0:el;
 }
 
-$(document).on('turbolinks:load', function() {
-  // loading gatherer helper script
-  loadScript(GATHERER_HELPER,callbackFunction);
+var wizardsURL = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=';
 
+/**
+*	Wizards
+*/
+function getWizardsCardName(cardName){
+	return cardName.replace(/&#8217;/g,"").replace(/\/g,"").replace(/\’/g,"'").replace(/-/g," ").replace(/\s+/g," ").replace(/ /g,"%20");
+}
+function getWizardsHtml(cardName){
+	return "<img src=\""+wizardsURL+getWizardsCardName(cardName)+".jpg\" onerror=\"this.onerror=null;this.onmouseout=null;this.onmouseover=null;this.src='mtg_card_back.jpg';\"/>";
+}
+
+function getWizardsSrc(cardName){
+	return wizardsURL+getWizardsCardName(cardName);
+}
+
+function getWizardsOnError(e){
+	return function(e) {
+		this.onerror=null;
+		this.onmouseout=null;
+		this.onmouseover=null;
+		this.src="https://sites.google.com/site/themunsonsapps/mtg/mtg_card_back.jpg";
+	};
+}
+
+
+$(document).on('turbolinks:load', function() {
   // placeholder creation
   hover = document.createElement("div");
   hover.id = "hoverpopup";
