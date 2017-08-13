@@ -13,7 +13,9 @@ module ListedItemsHelper
           end +
           listed_item_form.collection_select(:content_id, List.all, :id, :name, {:include_blank => true}, {:id => 'listed_item_content_id'}) +
           listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type') +
-          tag.br# +
+          tag.br +
+          '<iframe width="280" height="160" src="https://www.youtube.com/embed/rqnN_VOo_8I" frameborder="0" allowfullscreen></iframe>'.html_safe
+          # +
           # link_to('Put a paragraph in the list', paragraphs_for_listed_items_path, :remote => true)
         end
       end +
