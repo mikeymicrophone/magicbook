@@ -1,6 +1,6 @@
 module ListedItemsHelper
   def listed_item_form list, listed_item = list.listed_items.new
-    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for) do |listed_item_form|
+    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for), :class => 'form_for_listed_item' do |listed_item_form|
       tag.div do
         tag.div(:class => 'inline') do
           listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :id => 'listed_item_designation') +

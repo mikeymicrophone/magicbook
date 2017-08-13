@@ -1,5 +1,5 @@
 $(document).on 'DOMNodeInserted', ->
-  $('#form_for_listed_item').off().on 'change', '#listed_item_content_id', ->
+  $('.form_for_listed_item').off().on 'change', '#listed_item_content_id', ->
     if($('#listed_item_content_type').val() == '')
       $('#listed_item_content_type').val 'List'
 
