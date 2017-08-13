@@ -1,6 +1,6 @@
 module PurchasesHelper
   def wwemc_purchase text
-    form_for Purchase.new do |f|
+    form_for(Purchase.new) do |f|
       tag.script :src => 'https://checkout.stripe.com/checkout.js', :class => 'stripe-button', :data => {
         :key => ENV['STRIPE_PUBLISHABLE_KEY'],
         :amount => '200',
@@ -11,6 +11,9 @@ module PurchasesHelper
         :label => text,
         :bitcoin => true
       }
+    end +
+    tag.div(:class => 'center') do
+      facebook_share_button
     end
   end
   

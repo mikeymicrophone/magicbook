@@ -110,6 +110,10 @@ module ApplicationHelper
     tag.div :class => 'fb-quote'
   end
   
+  def facebook_share_button
+    tag.div :class => "fb-share-button", :data => {:href => root_url, :layout => 'button'}
+  end
+  
   def tapped_out_plugin
     tag.script :src => 'http://tappedout.net/tappedout.js'
   end
