@@ -11,3 +11,5 @@ $(document).on 'turbolinks:load', ->
   
   $('#lists').on 'click', 'em', ->
     $(this).next().slideToggle(888)
+  
+  $(document).trigger 'autocard'

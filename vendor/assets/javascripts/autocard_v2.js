@@ -177,8 +177,7 @@ function getWizardsOnError(e){
 	};
 }
 
-
-$(document).on('turbolinks:load', function() {
+$(document).on('autocard', function() {
   // placeholder creation
   hover = document.createElement("div");
   hover.id = "hoverpopup";
@@ -213,11 +212,10 @@ $(document).on('turbolinks:load', function() {
     		}
     		showImgPopup(sourceElement);
     	}
-    	elem.onmouseout  = function(){
+    	elem.onmouseout = function(){
     		hideImgPopup();
     	}
     }
   }
 });
-
 

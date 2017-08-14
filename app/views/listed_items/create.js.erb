@@ -1,6 +1,7 @@
 <% if current_magician %>
   $('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('<%=j listed_item_display @listed_item %>');
   $('#form_for_listed_item')[0].reset();
+  $(document).trigger('autocard');
 <% else %>
   $('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('<p class="center">Thank you for submitting!  The magician who created the list will have to accept the submission, and then an admin will approve it.</p>');//'<%=j listed_item_display @listed_item %>');
   $('#form_for_listed_item')[0].reset();

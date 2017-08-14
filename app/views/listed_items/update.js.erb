@@ -2,4 +2,5 @@
   $('#<%=j dom_id @listed_item %>').remove();
 <% else %>
   $('#<%=j dom_id(@listed_item, :form_for) %>').replaceWith('<%=j listed_item_display @listed_item %>');
+  $(document).trigger('autocard');
 <% end %>
