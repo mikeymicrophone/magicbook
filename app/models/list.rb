@@ -10,7 +10,7 @@ class List < ApplicationRecord
   attr_default :privacy, 'unreviewed'
   attr_default :suggestability, 'notify'
   
-  validates :name, :presence => true, :uniqueness => true
+  validates :name, :presence => true#, :uniqueness => true
   
   scope :recent, lambda { order 'created_at desc' }
   scope :alphabetical, lambda { order :name }
