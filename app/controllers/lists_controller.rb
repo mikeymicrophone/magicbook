@@ -26,6 +26,9 @@ class ListsController < ApplicationController
     else
       @list.published_items
     end
+    if params[:sort] == 'alpha'
+      @listed_items = @listed_items.sort_by { |listed_item| Rails::Html::FullSanitizer.new.sanitize listed_item.designation }
+    end
     @html_title = @list.name
   end
   
