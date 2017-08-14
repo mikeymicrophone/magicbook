@@ -1,3 +1,8 @@
+<div id="list_navigation" class="header_links">
+  <%= link_to 'Newest', :sort => 'recent' %>
+  <%= link_to 'Alpha', :sort => 'alpha' %>
+  <%= begin_list_link %>
+</div>
 <div id="lists">
   <% @lists.each do |list| %>
     <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>

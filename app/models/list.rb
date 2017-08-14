@@ -12,6 +12,8 @@ class List < ApplicationRecord
   
   validates :name, :presence => true, :uniqueness => true
   
+  scope :recent, lambda { order 'created_at desc' }
+  scope :alphabetical, lambda { order :name }
   scope :randomized, lambda { order 'random()' }
   scope :published, lambda { where :privacy => :published }
   scope :visible, lambda { where :privacy => [:unreviewed, :published] }

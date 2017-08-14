@@ -45,12 +45,19 @@ class ListsController < ApplicationController
   end
   
   def index
-    @lists = if current_magician
-      List.randomized.visible + List.randomized.visible_to(current_magician) + current_magician.lists.in_draft
-    elsif current_muggle
-      List.randomized.visible + List.randomized.visible_to(current_muggle.magician)
+    if params[:sort] == 'alpha'
+      sorting_scope = :alphabetical
+    elsif params[:sort] == 'recent'
+      sorting_scope = :recent
     else
-      List.randomized.published
+      sorting_scope = :randomized
+    end
+    @lists = if current_magician
+      List.send(sorting_scope).visible + List.send(sorting_scope).visible_to(current_magician) + current_magician.lists.in_draft
+    elsif current_muggle
+      List.send(sorting_scope).visible + List.send(sorting_scope).visible_to(current_muggle.magician)
+    else
+      List.send(sorting_scope).published
     end
   end
   
