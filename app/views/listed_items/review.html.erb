@@ -1,5 +1,7 @@
 <% @listed_items.each do |listed_item| %>
   <%= listed_item_display listed_item %>
+  [in <%= link_to listed_item.list.name, listed_item.list %>]
+  <%= tag.br %>
   <%= link_to 'approve', approve_listed_item_path(listed_item), :method => :put %>
   <%= link_to 'reject', reject_listed_item_path(listed_item), :method => :put %>
 <% end %>
