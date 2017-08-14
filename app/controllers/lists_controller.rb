@@ -35,8 +35,13 @@ class ListsController < ApplicationController
   
   def update
     @list = List.find params[:id]
-    @list.update_attributes list_params
-    redirect_to @list
+    if @list.update_attributes list_params
+      redirect_to @list
+    else
+      if @list.errors[:name].present?
+        render 'name_was_taken.js.erb'
+      end
+    end
   end
   
   def index
