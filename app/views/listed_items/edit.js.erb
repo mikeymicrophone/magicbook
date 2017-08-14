@@ -1,1 +1,2 @@
 $('#<%=j dom_id(@listed_item) %>').replaceWith('<%=j listed_item_form @listed_item.list, @listed_item %>');
+$(document).trigger('list_item_adder_shown');

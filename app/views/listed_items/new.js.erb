@@ -1,1 +1,2 @@
 $('#<%=j dom_id(@list, :new_item_adder_for) %>').append('<%=j listed_item_form @list %>').slideDown(1400);
+$(document).trigger('list_item_adder_shown');
