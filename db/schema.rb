@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812025217) do
+ActiveRecord::Schema.define(version: 20170814064120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20170812025217) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "suggestability"
+    t.integer "pin"
     t.index ["magician_id"], name: "index_lists_on_magician_id"
   end
 

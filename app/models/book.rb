@@ -33,6 +33,6 @@ class Book < ApplicationRecord
   end
 
   def permalink
-    title.gsub(/[^a-z1-9]+/i, '-')
+    title.gsub(/[^a-z0-9]+/i, '-')
   end
 end

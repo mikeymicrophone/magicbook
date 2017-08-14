@@ -5,6 +5,7 @@ class List < ApplicationRecord
   enum :mode => [:ordered, :randomized, :numbered]
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
   enum :suggestability => [:defer, :notify, :languish]
+  enum :pin => [:example, :prominent, :suggestion_seeking, :deferred]
   
   attr_default :mode, 'ordered'
   attr_default :privacy, 'unreviewed'
@@ -47,6 +48,6 @@ class List < ApplicationRecord
   end
 
   def permalink
-    name.gsub(/[^a-z1-9]+/i, '-')
+    name.gsub(/[^a-z0-9]+/i, '-')
   end
 end

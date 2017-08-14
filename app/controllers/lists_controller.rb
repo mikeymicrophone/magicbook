@@ -45,6 +45,10 @@ class ListsController < ApplicationController
   end
   
   def index
+    @examples = List.example
+    @prominent = List.prominent
+    @suggestion_seeking = List.suggestion_seeking
+    @deferred = List.deferred
     if params[:sort] == 'alpha'
       sorting_scope = :alphabetical
     elsif params[:sort] == 'recent'
@@ -59,6 +63,7 @@ class ListsController < ApplicationController
     else
       List.send(sorting_scope).published
     end
+    @lists = @lists - (@examples + @prominent + @suggestion_seeking + @deferred)
   end
   
   def review
@@ -83,6 +88,6 @@ class ListsController < ApplicationController
   end
   
   def list_params
-    params.require(:list).permit :name, :description, :mode, :privacy, :suggestability
+    params.require(:list).permit :name, :description, :mode, :privacy, :suggestability, :pin
   end
 end

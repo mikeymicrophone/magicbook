@@ -40,6 +40,17 @@ module ListsHelper
     end
   end
   
+  def pin_controls_for list
+    if current_scribe
+      tag.div :class => 'right' do
+        link_to('e', list_path(list, :list => {:pin => 'example'}), :method => :put, :remote => true) +
+        link_to('p', list_path(list, :list => {:pin => 'prominent'}), :method => :put, :remote => true) +
+        link_to('s', list_path(list, :list => {:pin => 'suggestion_seeking'}), :method => :put, :remote => true) +
+        link_to('d', list_path(list, :list => {:pin => 'deferred'}), :method => :put, :remote => true)
+      end
+    end
+  end
+  
   def submission_reviewer_for list
     if list.magician == current_magician
       if list.listed_items.suggested.present?

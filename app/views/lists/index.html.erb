@@ -3,12 +3,46 @@
   <%= link_to 'Alpha', :sort => 'alpha' %>
   <%= begin_list_link %>
 </div>
+
 <div id="lists">
+  <% @examples.each do |list| %>
+    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+      <%= link_to list.name, list %>
+      <%= publish_controls_for list %>
+      <%= pin_controls_for list %>
+    <% end %>
+  <% end %>
+
+  <% @prominent.each do |list| %>
+    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+      <%= link_to list.name, list %>
+      <%= publish_controls_for list %>
+      <%= pin_controls_for list %>
+    <% end %>
+  <% end %>
+
   <% @lists.each do |list| %>
     <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
       <%= link_to list.name, list %>
       <%= publish_controls_for list %>
+      <%= pin_controls_for list %>
     <% end %>
   <% end %>
   <%= begin_list_link %>
+  
+  <% @suggestion_seeking.each do |list| %>
+    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+      <%= link_to list.name, list %>
+      <%= publish_controls_for list %>
+      <%= pin_controls_for list %>
+    <% end %>
+  <% end %>
+  
+  <% @deferred.each do |list| %>
+    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+      <%= link_to list.name, list %>
+      <%= publish_controls_for list %>
+      <%= pin_controls_for list %>
+    <% end %>
+  <% end %>
 </div>
