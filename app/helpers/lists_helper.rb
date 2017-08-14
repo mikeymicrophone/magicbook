@@ -1,15 +1,20 @@
 module ListsHelper
   def display_list list
     div_for list do
-      div_for(list, :name_of) do
-        list.name
-      end +
-      if list.description?
-        div_for list, :description_of do
-          mark_up list.description
+      div_for(list, :masthead_of) do
+        div_for(list, :name_of) do
+          list.name
+        end +
+        if list.description?
+          div_for list, :description_of do
+            mark_up list.description
+          end
+        else
+          ''.html_safe
+        end +
+        div_for(list, :edit_tool_for) do
+          link_to 'suggest an addition', list, :class => 'edit_list_link' if list.suggestability != 'defer'
         end
-      else
-        ''.html_safe
       end +
       div_for(list, :listed_items_in) do
         visible_items_for(list).map do |listed_item|
