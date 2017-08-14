@@ -5,17 +5,19 @@
 </div>
 
 <div id="lists">
-  <em>examples of list formatting</em>
-  <section>
-    <% @examplary.each do |list| %>
-      <%= div_for list, :class => cycle(:three, :five, :seven, :five) do %>
-        <%= link_to list.name, list %>
-        <%= publish_controls_for list %>
-        <%= pin_controls_for list %>
+  <% if params[:page].blank? %>
+    <em>examples of list formatting</em>
+    <section>
+      <% @examplary.each do |list| %>
+        <%= div_for list, :class => cycle(:three, :five, :seven, :five) do %>
+          <%= link_to list.name, list %>
+          <%= publish_controls_for list %>
+          <%= pin_controls_for list %>
+        <% end %>
       <% end %>
-    <% end %>
-  </section>
-  <%= tag.br %><%= tag.br %>
+    </section>
+    <%= tag.br %><%= tag.br %>
+  <% end %>
 
   <em>pinned lists</em>
   <section>
@@ -40,6 +42,7 @@
     <% end %>
     <%= begin_list_link %>
   </section>
+  <%= paginate @lists %>
   <%= tag.br %><%= tag.br %>
   
   <em>seeking suggestions</em>
@@ -54,14 +57,16 @@
   </section>
   <%= tag.br %><%= tag.br %>
   
-  <em>out of the way</em>
-  <section>
-    <% @deferred.each do |list| %>
-      <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
-        <%= link_to list.name, list %>
-        <%= publish_controls_for list %>
-        <%= pin_controls_for list %>
+  <% if @lists.last_page? %>
+    <em>out of the way</em>
+    <section>
+      <% @deferred.each do |list| %>
+        <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+          <%= link_to list.name, list %>
+          <%= publish_controls_for list %>
+          <%= pin_controls_for list %>
+        <% end %>
       <% end %>
-    <% end %>
-  </section>
+    </section>
+  <% end %>
 </div>

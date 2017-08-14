@@ -67,6 +67,7 @@ class ListsController < ApplicationController
       List.send(sorting_scope).published
     end
     @lists = @lists - (@examplary + @prominent + @suggestion_seeking + @deferred)
+    @lists = Kaminari.paginate_array(@lists).page(params[:page]).per(27)
   end
   
   def review
