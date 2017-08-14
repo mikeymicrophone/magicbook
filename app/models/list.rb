@@ -10,7 +10,7 @@ class List < ApplicationRecord
   attr_default :privacy, 'unreviewed'
   attr_default :suggestability, 'notify'
   
-  validates :name, :presence => true
+  validates :name, :presence => true, :uniqueness => true
   
   scope :randomized, lambda { order 'random()' }
   scope :published, lambda { where :privacy => :published }

@@ -8,8 +8,13 @@ class ListsController < ApplicationController
   def create
     @list = List.new list_params
     @list.magician = current_magician
-    @list.save
-    redirect_to @list
+    if @list.save
+      redirect_to @list
+    else
+      if @list.errors[:name].present?
+        render 'name_was_taken.js.erb'
+      end
+    end
   end
   
   def show
