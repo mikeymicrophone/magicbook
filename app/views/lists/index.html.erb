@@ -5,22 +5,25 @@
 </div>
 
 <div id="lists">
-  <% @examples.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+  <em>examples of list formatting</em>
+  <% @examplary.each do |list| %>
+    <%= div_for list, :class => cycle(:three, :five, :seven, :five) do %>
       <%= link_to list.name, list %>
       <%= publish_controls_for list %>
       <%= pin_controls_for list %>
     <% end %>
   <% end %>
 
+  <em>pinned lists</em>
   <% @prominent.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+    <%= div_for list, :class => cycle(:one, :nine) do %>
       <%= link_to list.name, list %>
       <%= publish_controls_for list %>
       <%= pin_controls_for list %>
     <% end %>
   <% end %>
 
+  <em>shuffled</em>
   <% @lists.each do |list| %>
     <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
       <%= link_to list.name, list %>
@@ -29,15 +32,18 @@
     <% end %>
   <% end %>
   <%= begin_list_link %>
+  <%= tag.br %><%= tag.br %>
   
+  <em>seeking suggestions</em>
   <% @suggestion_seeking.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+    <%= div_for list, :class => cycle(:two, :four, :six, :eight) do %>
       <%= link_to list.name, list %>
       <%= publish_controls_for list %>
       <%= pin_controls_for list %>
     <% end %>
   <% end %>
   
+  <em>out of the way</em>
   <% @deferred.each do |list| %>
     <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
       <%= link_to list.name, list %>

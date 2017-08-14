@@ -5,7 +5,7 @@ class List < ApplicationRecord
   enum :mode => [:ordered, :randomized, :numbered]
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
   enum :suggestability => [:defer, :notify, :languish]
-  enum :pin => [:example, :prominent, :suggestion_seeking, :deferred]
+  enum :pin => [:examplary, :prominent, :suggestion_seeking, :deferred]
   
   attr_default :mode, 'ordered'
   attr_default :privacy, 'unreviewed'

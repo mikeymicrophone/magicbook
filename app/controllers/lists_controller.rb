@@ -45,7 +45,7 @@ class ListsController < ApplicationController
   end
   
   def index
-    @examples = List.example
+    @examplary = List.examplary
     @prominent = List.prominent
     @suggestion_seeking = List.suggestion_seeking
     @deferred = List.deferred
@@ -63,7 +63,7 @@ class ListsController < ApplicationController
     else
       List.send(sorting_scope).published
     end
-    @lists = @lists - (@examples + @prominent + @suggestion_seeking + @deferred)
+    @lists = @lists - (@examplary + @prominent + @suggestion_seeking + @deferred)
   end
   
   def review

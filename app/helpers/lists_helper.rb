@@ -43,7 +43,7 @@ module ListsHelper
   def pin_controls_for list
     if current_scribe
       tag.div :class => 'right' do
-        link_to('e', list_path(list, :list => {:pin => 'example'}), :method => :put, :remote => true) +
+        link_to('e', list_path(list, :list => {:pin => 'examplary'}), :method => :put, :remote => true) +
         link_to('p', list_path(list, :list => {:pin => 'prominent'}), :method => :put, :remote => true) +
         link_to('s', list_path(list, :list => {:pin => 'suggestion_seeking'}), :method => :put, :remote => true) +
         link_to('d', list_path(list, :list => {:pin => 'deferred'}), :method => :put, :remote => true)
