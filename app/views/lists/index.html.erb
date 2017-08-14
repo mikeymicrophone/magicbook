@@ -6,49 +6,62 @@
 
 <div id="lists">
   <em>examples of list formatting</em>
-  <% @examplary.each do |list| %>
-    <%= div_for list, :class => cycle(:three, :five, :seven, :five) do %>
-      <%= link_to list.name, list %>
-      <%= publish_controls_for list %>
-      <%= pin_controls_for list %>
+  <section>
+    <% @examplary.each do |list| %>
+      <%= div_for list, :class => cycle(:three, :five, :seven, :five) do %>
+        <%= link_to list.name, list %>
+        <%= publish_controls_for list %>
+        <%= pin_controls_for list %>
+      <% end %>
     <% end %>
-  <% end %>
+  </section>
+  <%= tag.br %><%= tag.br %>
 
   <em>pinned lists</em>
-  <% @prominent.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :nine) do %>
-      <%= link_to list.name, list %>
-      <%= publish_controls_for list %>
-      <%= pin_controls_for list %>
+  <section>
+    <% @prominent.each do |list| %>
+      <%= div_for list, :class => cycle(:one, :nine) do %>
+        <%= link_to list.name, list %>
+        <%= publish_controls_for list %>
+        <%= pin_controls_for list %>
+      <% end %>
     <% end %>
-  <% end %>
+  </section>
+  <%= tag.br %><%= tag.br %>
 
-  <em>shuffled</em>
-  <% @lists.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
-      <%= link_to list.name, list %>
-      <%= publish_controls_for list %>
-      <%= pin_controls_for list %>
+  <em><%= params[:sort] || 'shuffled' %></em>
+  <section>
+    <% @lists.each do |list| %>
+      <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+        <%= link_to list.name, list %>
+        <%= publish_controls_for list %>
+        <%= pin_controls_for list %>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= begin_list_link %>
+    <%= begin_list_link %>
+  </section>
   <%= tag.br %><%= tag.br %>
   
   <em>seeking suggestions</em>
-  <% @suggestion_seeking.each do |list| %>
-    <%= div_for list, :class => cycle(:two, :four, :six, :eight) do %>
-      <%= link_to list.name, list %>
-      <%= publish_controls_for list %>
-      <%= pin_controls_for list %>
+  <section>
+    <% @suggestion_seeking.each do |list| %>
+      <%= div_for list, :class => cycle(:two, :four, :six, :eight) do %>
+        <%= link_to list.name, list %>
+        <%= publish_controls_for list %>
+        <%= pin_controls_for list %>
+      <% end %>
     <% end %>
-  <% end %>
+  </section>
+  <%= tag.br %><%= tag.br %>
   
   <em>out of the way</em>
-  <% @deferred.each do |list| %>
-    <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
-      <%= link_to list.name, list %>
-      <%= publish_controls_for list %>
-      <%= pin_controls_for list %>
+  <section>
+    <% @deferred.each do |list| %>
+      <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
+        <%= link_to list.name, list %>
+        <%= publish_controls_for list %>
+        <%= pin_controls_for list %>
+      <% end %>
     <% end %>
-  <% end %>
+  </section>
 </div>

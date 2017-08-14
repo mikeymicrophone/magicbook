@@ -48,10 +48,6 @@ class ListsController < ApplicationController
   end
   
   def index
-    @examplary = List.examplary
-    @prominent = List.prominent
-    @suggestion_seeking = List.suggestion_seeking
-    @deferred = List.deferred
     if params[:sort] == 'alpha'
       sorting_scope = :alphabetical
     elsif params[:sort] == 'recent'
@@ -59,6 +55,10 @@ class ListsController < ApplicationController
     else
       sorting_scope = :randomized
     end
+    @examplary = List.examplary.send(sorting_scope)
+    @prominent = List.prominent.send(sorting_scope)
+    @suggestion_seeking = List.suggestion_seeking.send(sorting_scope)
+    @deferred = List.deferred.send(sorting_scope)
     @lists = if current_magician
       List.send(sorting_scope).visible + List.send(sorting_scope).visible_to(current_magician) + current_magician.lists.in_draft
     elsif current_muggle
