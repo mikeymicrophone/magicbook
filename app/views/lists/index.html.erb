@@ -6,7 +6,7 @@
 
 <div id="lists">
   <% if params[:page].blank? %>
-    <em>examples of list formatting</em>
+    <em>examples of list formatting<span>&lt;- get to know the tools</span></em>
     <section>
       <% @examplary.each do |list| %>
         <%= div_for list, :class => cycle(:three, :five, :seven, :five) do %>
@@ -16,10 +16,9 @@
         <% end %>
       <% end %>
     </section>
-    <%= tag.br %><%= tag.br %>
   <% end %>
 
-  <em>pinned lists</em>
+  <em>pinned lists<span>&lt;- be sure to take a look</span></em>
   <section>
     <% @prominent.each do |list| %>
       <%= div_for list, :class => cycle(:one, :nine) do %>
@@ -29,9 +28,8 @@
       <% end %>
     <% end %>
   </section>
-  <%= tag.br %><%= tag.br %>
 
-  <em><%= params[:sort] || 'shuffled' %></em>
+  <em><%= params[:sort] || 'shuffled' %><span>&lt;- the bulk of lists are found here</span></em>
   <section>
     <% @lists.each do |list| %>
       <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
@@ -40,12 +38,10 @@
         <%= pin_controls_for list %>
       <% end %>
     <% end %>
-    <%= begin_list_link %>
+    <%= paginate @lists %>
   </section>
-  <%= paginate @lists %>
-  <%= tag.br %><%= tag.br %>
   
-  <em>seeking suggestions</em>
+  <em>seeking suggestions<span>&lt;- share your knowledge of community and culture!</span></em>
   <section>
     <% @suggestion_seeking.each do |list| %>
       <%= div_for list, :class => cycle(:two, :four, :six, :eight) do %>
@@ -55,10 +51,9 @@
       <% end %>
     <% end %>
   </section>
-  <%= tag.br %><%= tag.br %>
   
   <% if @lists.last_page? %>
-    <em>out of the way</em>
+    <em>out of the way<span>&lt;- these aren't as public-facing but still receive suggestions sometimes</span></em>
     <section>
       <% @deferred.each do |list| %>
         <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
