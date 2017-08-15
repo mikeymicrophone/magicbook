@@ -30,4 +30,6 @@
   </section>
   <%= wwemc_purchase "That's worth more than $2" %>
 </section>
-<%= open_graph_tags %>
+<% content_for :open_graph do %>
+  <%= open_graph_tags %>
+<% end %>

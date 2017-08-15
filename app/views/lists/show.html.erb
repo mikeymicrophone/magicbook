@@ -39,5 +39,7 @@
     <% end %>
   <% end %>
 <% end %>
-<%= open_graph_tags_for @list %>
+<% content_for :open_graph do %>
+  <%= open_graph_tags_for @list %>
+<% end %>
 <%= facebook_quote_plugin %>

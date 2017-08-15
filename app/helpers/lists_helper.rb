@@ -69,13 +69,11 @@ module ListsHelper
   end
   
   def open_graph_tags_for list
-    tag.div :class => 'open_graph_tags' do
-      tag.meta(:property => 'og:url', :content => list_url(list)) +
-      tag.meta(:property => 'og:type', :content => 'article') +
-      tag.meta(:property => 'og:title', :content => list.name) +
-      tag.meta(:property => 'og:description', :content => list.description) +
-      tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
-      tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
-    end
+    tag.meta(:property => 'og:url', :content => list_url(list)) +
+    tag.meta(:property => 'og:type', :content => 'article') +
+    tag.meta(:property => 'og:title', :content => list.name) +
+    tag.meta(:property => 'og:description', :content => list.description) +
+    tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
+    tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
   end
 end
