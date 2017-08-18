@@ -182,6 +182,14 @@
     
     .editing_tools_for_listed_item {
       float: right;
+      opacity: 0;
+    }
+    
+    &:hover {
+      .editing_tools_for_listed_item {
+        opacity: 0.4;
+        transition: opacity 10s;
+      }
     }
   }
 }
