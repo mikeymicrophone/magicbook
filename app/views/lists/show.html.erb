@@ -41,5 +41,8 @@
 <% end %>
 <% content_for :open_graph do %>
   <%= open_graph_tags_for @list %>
+  <% if current_magician == @list.magician %>
+    <meta name="turbolinks-cache-control" content="no-cache">
+  <% end %>
 <% end %>
 <%= facebook_quote_plugin %>
