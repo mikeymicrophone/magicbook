@@ -1,0 +1,2 @@
+Fabricator(:card) do
+end

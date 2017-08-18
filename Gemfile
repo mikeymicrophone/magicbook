@@ -78,6 +78,9 @@ gem 'rollbar'
 gem 'oj'
 
 gem 'kaminari'
+gem 'mtg_sdk'
+gem 'awesome_print'
+gem 'flag_shih_tzu'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
