@@ -81,7 +81,7 @@ module ListedItemsHelper
   
   def listed_item_editing_tools_for listed_item
     if current_magician == listed_item.list.magician
-      div_for listed_item, :editing_tools_for do
+      div_for listed_item, :editing_tools_for, :data => {:turbolinks => false} do
         if listed_item.list.mode != 'randomized'
           link_to('move up', move_up_listed_item_path(listed_item, :format => :js), :method => :put, :remote => true, :class => 'list_item_ordering') + tag.br
         else
