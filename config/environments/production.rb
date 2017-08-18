@@ -3,6 +3,8 @@ Rails.application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
+  
+  config.force_ssl = true
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -64,7 +66,7 @@ Rails.application.configure do
     :user_name => ENV["MANDRILL_USERNAME"],
     :password  => ENV["MANDRILL_PASSWORD"], # SMTP password is any valid API key
     :authentication => 'login', # Mandrill supports 'plain' or 'login'
-    :domain => 'mikeymicrophone.com' # your domain to identify your server when connecting
+    :domain => 'wayswemage.com' # your domain to identify your server when connecting
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
