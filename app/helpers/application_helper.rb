@@ -124,7 +124,7 @@ module ApplicationHelper
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '#{ENV['FACEBOOK_PIXEL_ID']}');
-    fbq('track', 'PageView');"
+    fbq('track', 'PageView');".html_safe
     end +
     tag.noscript do
       tag.img :height =>"1", :width => "1", :style => "display:none", 
