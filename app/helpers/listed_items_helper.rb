@@ -87,7 +87,7 @@ module ListedItemsHelper
         else
           ''.html_safe
         end +
-        link_to('edit', edit_listed_item_path(listed_item, :format => :js), :remote => true, :class => 'list_item_edit_link') +
+        link_to('edit', edit_listed_item_path(listed_item), :remote => true, :class => 'list_item_edit_link') +
         link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}, :format => :js), :method => :put, :remote => true) +
         if listed_item.list.mode != 'randomized'
           tag.br + link_to('move down', move_down_listed_item_path(listed_item, :format => :js), :method => :put, :remote => true, :class => 'list_item_ordering')
