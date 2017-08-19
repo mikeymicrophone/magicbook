@@ -11,13 +11,19 @@
   
   .chapter_title {
     text-align: center;
-    font-family: Anton;
+    font-family: Fondamento;
     font-size: 2.2em;
   }
   
+  .subtitle_of_chapter {
+    text-align: center;
+  }
+  
   .chapter_subtitle {
+    display: inline-block;
     text-align: center;
     font-family: Dosis;
+    max-width: 58%;
   }
   
   .section_heading {

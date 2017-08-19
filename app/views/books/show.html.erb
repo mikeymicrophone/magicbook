@@ -17,16 +17,6 @@
         <%= content_tag :header, :class => 'chapter_title' do %>
           <%= link_to chapter.title, chapter_path(chapter, :book_id => @book.id, :edition_id => edition.id), :title => chapter.subtitle  %>
         <% end %>
-        <% @book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).map(&:section).each do |section| %>
-          <%= div_with_data_for section do %>
-            <%= content_tag :header, :class => 'section_heading' do %>
-              <%= section.heading %>
-            <% end %>
-            <%= content_tag :header, :class => 'section_subheading' do %>
-              <%= section.subheading %>
-            <% end %>
-          <% end %>
-        <% end %>
       <% end %>
     <% end %>
   <% end %>

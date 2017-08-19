@@ -154,7 +154,8 @@ module ApplicationHelper
   end
   
   def selected_fonts
-    ['Advent Pro', 'Antic', 'Anton', 'Cabin', 'Changa', 'Cinzel', 'Crushed', 'Dosis', 'Jaldi', 'Josefin Sans', 'Noto Sans', 'Righteous', 'Syncopate']
+    # ['Fontdiner Swanky', 'Goudy Bookletter 1911', 'IM Fell French Canon SC', 'IM Fell Great Primer SC', Modern Antiqua', 'UnifrakturCook', 'Vast Shadow']
+    ['Advent Pro', 'Antic', 'Anton', 'Cabin', 'Changa', 'Cinzel', 'Crushed', 'Dosis', 'Fondamento', 'Jaldi', 'Josefin Sans', 'Noto Sans', 'Righteous', 'Syncopate']
   end
   
   def clearboth
