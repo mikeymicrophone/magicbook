@@ -2,5 +2,5 @@
   $('#<%=j dom_id(@card_inclusion.piece, :expression_of) %>').prepend('<%=j card_display @card %>');
   $('#<%=j dom_id(@card_inclusion.piece, :card_includer_for) %>')[0].reset()
 <% else %>
-
+  $('#<%=j dom_id(@card_inclusion.piece, :card_includer_for) %>').prepend('This card was not found. Check the spelling?');
 <% end %>
