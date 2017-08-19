@@ -1,0 +1,6 @@
+<%= form_with :model => @card_inclusion do |card_inclusion_form| %>
+  <%= card_inclusion_form.text_field :card_name %>
+  <%= card_inclusion_form.submit :include %>
+  <%= card_inclusion_form.hidden_field :piece_id, :value => @piece.id %>
+  <%= card_inclusion_form.hidden_field :piece_type, :value => @piece.class.name %>
+<% end %>

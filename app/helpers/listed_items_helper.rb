@@ -64,7 +64,12 @@ module ListedItemsHelper
       end +
       listed_item_editing_tools_for(listed_item) +
       div_for(listed_item, :expression_of) do
-        mark_up listed_item.expression
+        mark_up(listed_item.expression) +
+        listed_item.cards.map do |card|
+          div_for card do
+            image_tag card.image_url
+          end
+        end.join.html_safe
       end +
       if listed_item.content.present?
         case listed_item.content
@@ -87,6 +92,7 @@ module ListedItemsHelper
         else
           ''.html_safe
         end +
+        link_to('include card', new_card_inclusion_path(:listed_item_id => listed_item.id), :remote => true) +
         link_to('edit', edit_listed_item_path(listed_item), :remote => true, :class => 'list_item_edit_link') +
         link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}, :format => :js), :method => :put, :remote => true) +
         if listed_item.list.mode != 'randomized'

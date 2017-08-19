@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       put :move_down
     end
   end
+  resources :card_inclusions
   
   
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'

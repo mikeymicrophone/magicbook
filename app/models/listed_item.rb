@@ -1,6 +1,8 @@
 class ListedItem < ApplicationRecord
   belongs_to :list
   belongs_to :content, :polymorphic => true, :optional => true
+  has_many :card_inclusions, :as => :piece
+  has_many :cards, :through => :card_inclusions
   
   enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed, :suggested]
   

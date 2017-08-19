@@ -1,6 +1,9 @@
 class Card < ApplicationRecord
   include FlagShihTzu
   
+  has_many :card_inclusions
+  has_many :listed_items, :through => :card_inclusions
+  
   validates :name, :uniqueness => true
 
   has_flags 1 => :artifact,
