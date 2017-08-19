@@ -2,7 +2,7 @@ module ListedItemsHelper
   def listed_item_form list, listed_item = list.listed_items.new
     form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for), :class => 'form_for_listed_item' do |listed_item_form|
       tag.div do
-        tag.div(:class => 'inline') do
+        tag.div(:class => 'inline listed_item_content') do
           listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :id => 'listed_item_designation') +
           tag.br +
           listed_item_form.text_area(:expression, :placeholder => 'Expression (e.g. card, writing, link)', :id => 'listed_item_expression')
@@ -64,12 +64,10 @@ module ListedItemsHelper
         mark_up listed_item.designation
       end +
       div_for(listed_item, :expression_of) do
-        mark_up(listed_item.expression) +
         listed_item.cards.map do |card|
-          div_for card do
-            image_tag card.image_url
-          end
-        end.join.html_safe
+          card_display card
+        end.join.html_safe +
+        mark_up(listed_item.expression)
       end +
       clearboth +
       if listed_item.content.present?
@@ -83,10 +81,6 @@ module ListedItemsHelper
         ''.html_safe
       end
     end
-  end
-  
-  def clearboth
-    tag.div :class => 'clearboth'
   end
   
   def listed_item_editing_tools_for listed_item

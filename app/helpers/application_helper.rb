@@ -156,4 +156,8 @@ module ApplicationHelper
   def selected_fonts
     ['Advent Pro', 'Antic', 'Anton', 'Cabin', 'Changa', 'Cinzel', 'Crushed', 'Dosis', 'Jaldi', 'Josefin Sans', 'Noto Sans', 'Righteous', 'Syncopate']
   end
+  
+  def clearboth
+    tag.div :class => 'clearboth'
+  end
 end

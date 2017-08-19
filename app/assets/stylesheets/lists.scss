@@ -177,7 +177,7 @@
     
     .designation_of_listed_item {
       display: inline-block;
-      width: 100%;
+      width: 94%;
       font-size: 1.3em;
     }
     
@@ -252,10 +252,14 @@
 .form_for_listed_item {
   .inline {
     margin: 2%;
+    
+    &.listed_item_content {
+      width: 45%;
+    }
   }
   
   textarea {
-    width: 400px;
+    width: 80%;
     height: 100px;
     
     &#listed_item_designation {

@@ -1,0 +1,6 @@
+<% if @card_inclusion.persisted? %>
+  $('#<%=j dom_id(@card_inclusion.piece, :expression_of) %>').prepend('<%=j card_display @card %>');
+  $('#<%=j dom_id(@card_inclusion.piece, :card_includer_for) %>')[0].reset()
+<% else %>
+
+<% end %>
