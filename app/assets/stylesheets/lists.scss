@@ -183,13 +183,24 @@
     
     .editing_tools_for_listed_item {
       float: right;
+      display: none;
       opacity: 0;
     }
     
     &:hover {
       .editing_tools_for_listed_item {
         opacity: 0.4;
+        display: block;
         transition: opacity 10s;
+      }
+    }
+    
+    .expression_of_listed_item {
+      .card {
+        float: right;
+        img {
+          width: 150px;
+        }
       }
     }
   }

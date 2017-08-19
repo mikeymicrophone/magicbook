@@ -1,6 +1,7 @@
 class ListedItem < ApplicationRecord
   belongs_to :list
   belongs_to :content, :polymorphic => true, :optional => true
+  has_one :magician, :through => :list
   has_many :card_inclusions, :as => :piece
   has_many :cards, :through => :card_inclusions
   

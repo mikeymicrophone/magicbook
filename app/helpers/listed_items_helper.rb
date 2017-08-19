@@ -52,6 +52,7 @@ module ListedItemsHelper
   
   def listed_item_display listed_item
     div_for listed_item do
+      listed_item_editing_tools_for(listed_item) +
       if listed_item.list.mode == 'numbered'
         div_for listed_item, :number_of do
           listed_item.ordering.to_s
@@ -62,7 +63,6 @@ module ListedItemsHelper
       div_for(listed_item, :designation_of) do
         mark_up listed_item.designation
       end +
-      listed_item_editing_tools_for(listed_item) +
       div_for(listed_item, :expression_of) do
         mark_up(listed_item.expression) +
         listed_item.cards.map do |card|
@@ -71,6 +71,7 @@ module ListedItemsHelper
           end
         end.join.html_safe
       end +
+      clearboth +
       if listed_item.content.present?
         case listed_item.content
         when List
@@ -82,6 +83,10 @@ module ListedItemsHelper
         ''.html_safe
       end
     end
+  end
+  
+  def clearboth
+    tag.div :class => 'clearboth'
   end
   
   def listed_item_editing_tools_for listed_item

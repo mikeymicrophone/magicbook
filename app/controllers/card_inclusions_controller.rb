@@ -8,7 +8,7 @@ class CardInclusionsController < ApplicationController
     @card = Card.find_by :name => card_inclusion_params[:card_name]
     @card_inclusion = CardInclusion.new card_inclusion_params
     @card_inclusion.card = @card
-    @card_inclusion.save
+    @card_inclusion.save if @card_inclusion.piece.magician == current_magician
   end
   
   def card_inclusion_params
