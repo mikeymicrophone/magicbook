@@ -1,13 +1,21 @@
 <%= tag.div :class => 'inviting' do %>
+  <%= link_to '[Click here to read the book now]', book_path(@purchase.books.first) %>
+
   <%= tag.p do %>
-    Your purchase gives you a license to share the book with four people!
+    You can share the book with four people!
   <% end %>
   <%= tag.p do %>
-    Enter their email addresses here.  Or, you can <%= link_to 'share a link', claim_purchase_url(@purchase, :token => @purchase.token), :id => 'facebook_claim_sharer' %> that friends can follow to claim a copy!
+    Or, <%= link_to 'share a post', claim_purchase_url(@purchase, :token => @purchase.token), :id => 'facebook_claim_sharer' %> so Facebook friends can claim a copy.
     
+    <% if @purchase.invites_remaining == 0 %>
+      <%= tag.p do %>
+        To give it to even more people, <%= link_to 'purchase another copy', root_url %>.
+      <% end %>
+    <% end %>
+
     <%= form_with :url => submit_muggles_path, :id => 'muggle_form' do %>
       <% @purchase.invites_remaining.times do |i| %>
-        <%= text_field_tag "email_#{i + 1}" %>
+        <%= text_field_tag "email_#{i + 1}", nil, :placeholder => 'email address' %>
         <%= tag.br %>
       <% end %>
       <%= text_area_tag :message, nil, :placeholder => 'Add a message. This is how they can know who the gift is from.', :size => '60x5' %>
@@ -18,15 +26,16 @@
   <% end %>
   
   <%= tag.p do %>
-    If you need more time to locate email addresses, return to this page within 3 days.  The link is in your inbox.
-  <% end %>
-  <%= tag.p do %>
-    To give it to even more people, <%= link_to 'purchase another copy', root_url %>.
+    If you need more time, return to this page within 3 days.  The link is in your inbox.
   <% end %>
   <%= tag.p :class => 'licensing_discussion' do %>
-    Nothing except your own judgement will stop you from copying the pdf you've received.  However, recipients of unauthorized copies will not be able to access updates or your lists, and they will know how little you <i>didn't</i> spend on them :/
+    Nothing except your good judgement will stop you from copying the pdf you've received.  However, recipients of unauthorized copies will not be able to access updates or your lists, and they will know how little you <i>didn't</i> spend on them :/
   <% end %>
   <%= tag.p :class => 'licensing_discussion' do %>
     My goal is to make these online resources worth more than the price.  I understand that money is tight.  If you can't spend another $2, you can still invite your friend to read the <%= link_to 'lists', lists_path %> on the site.
+  <% end %>
+  
+  <%= tag.p :class => 'licensing_discussion' do %>
+    Thanks for your purchase, and be sure to stay in touch so we can keep strengthening the community together.
   <% end %>
 <% end %>
