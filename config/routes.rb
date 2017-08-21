@@ -50,6 +50,9 @@ Rails.application.routes.draw do
       collection do
         get :free
       end
+      member do
+        get :next
+      end
     end
   end
   resources :purchases do

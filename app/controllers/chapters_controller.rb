@@ -17,11 +17,21 @@ class ChaptersController < ApplicationController
     @book = Book.find params[:book_id]
     @edition = @book.current_edition
     @chapters = @book.current_edition.chapters
+    
     today = Date.today
     dividend = today.year + today.month + today.day
     divisor = @chapters.count
     free_chapter_position = dividend % divisor
-    @chapter = @book.table_of_contents.where(:edition_id => @edition, :section_id => nil).where.not(:chapter_id => nil).where(:ordering => free_chapter_position).first.chapter
+    @chapter = @book.table_of_contents.chapterish.find_by(:ordering => free_chapter_position).chapter
+    @table_of_content = @book.table_of_contents.chapterish.find_by(:edition => @edition, :chapter => @chapter)
+    @previous_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).find_by(:ordering => @table_of_content.ordering - 1)&.chapter
+    @next_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).find_by(:ordering => @table_of_content.ordering + 1)&.chapter
+  end
+  
+  def next
+    @book = Book.find params[:book_id]
+    @edition = Edition.find params[:edition_id]
+    @chapter = Chapter.find params[:id]
   end
   
   def show

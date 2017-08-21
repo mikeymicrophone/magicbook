@@ -1,6 +1,4 @@
 <%= div_with_data_for @chapter, :class => 'read_by_chapter' do %>
-  <%= link_to 'Previous Chapter', next_book_chapter_path(@book, @previous_chapter, :edition_id => @edition.id), :class => 'previous_chapter' if @previous_chapter %>
-  <%= link_to 'Next Chapter', next_book_chapter_path(@book, @next_chapter, :edition_id => @edition.id), :class => 'next_chapter' if @next_chapter %>
   <%= content_tag :header, :class => 'chapter_title' do %>
     <%= @chapter.title %>
   <% end %>
@@ -30,6 +28,4 @@
       <% end %>
     <% end %>
   <% end %>
-  <%= link_to 'Previous Chapter', next_book_chapter_path(@book, @previous_chapter, :edition_id => @edition.id), :class => 'previous_chapter' if @previous_chapter %>
-  <%= link_to 'Next Chapter', next_book_chapter_path(@book, @next_chapter, :edition_id => @edition.id), :class => 'next_chapter' if @next_chapter %>
 <% end %>

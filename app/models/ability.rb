@@ -21,7 +21,7 @@ class Ability
       cannot :read, Magician
     else
       can :read, List
-      can :free, Chapter
+      can [:free, :next], Chapter
       can :index, Book
       can :new, ListedItem
       can :create, ListedItem, :privacy => ListedItem.privacies[:suggested]
