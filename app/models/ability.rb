@@ -8,7 +8,7 @@ class Ability
       can :read, :all
       can :invite, Muggle
       can :submit, Muggle
-      can :free, Chapter
+      can [:free, :next], Chapter
       can :manage, List
       can :manage, ListedItem
       cannot :review, :all
@@ -17,7 +17,7 @@ class Ability
       cannot :read, Magician
     elsif user.is_a? Muggle
       can :read, :all
-      can :free, Chapter
+      can [:free, :next], Chapter
       cannot :read, Magician
     else
       can :read, List
