@@ -31,9 +31,9 @@ class ParagraphsController < ApplicationController
   end
   
   def promote
-    @table_of_content = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :paragraph_id => params[:id]).first
+    @table_of_content = TableOfContent.find params[:table_of_content_id]
     @previous_position = @table_of_content.ordering
-    @previous_table_of_content = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => @table_of_content.chapter_id, :section_id => @table_of_content.section_id, :ordering => @previous_position.pred).first
+    @previous_table_of_content = @table_of_content.previous
     @table_of_content.update_attribute :ordering, @previous_position.pred
     @previous_table_of_content.update_attribute :ordering, @previous_position
   end
@@ -58,8 +58,8 @@ class ParagraphsController < ApplicationController
     @table_of_content = TableOfContent.find params[:table_of_content_id]
     @position = @table_of_content.ordering
     @table_of_content.destroy
-    @subsequent = TableOfContent.paragraphish.where(:book_id => @table_of_content.book_id, :edition_id => @table_of_content.edition_id, :chapter_id => @table_of_content.chapter_id, :section_id => @table_of_content.section_id).where(TableOfContent.arel_table[:ordering].gt(@position))
-    @subsequent.each do |table_of_content|
+
+    @table_of_content.subsequent.each do |table_of_content|
       table_of_content.update_attribute :ordering, table_of_content.ordering.pred
     end
   end

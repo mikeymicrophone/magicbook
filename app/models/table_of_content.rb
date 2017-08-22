@@ -19,6 +19,8 @@ class TableOfContent < ApplicationRecord
   scope :in_section, lambda { |section| where :section_id => section.id }
   scope :in_paragraph, lambda { |paragraph| where :paragraph_id => paragraph.id }
   
+  scope :ordered, lambda { order :ordering }
+  
   def locate
     self.paragraph ||= citation&.paragraph
     self.section ||= citation&.section || paragraph&.section
@@ -41,5 +43,29 @@ class TableOfContent < ApplicationRecord
     else
       
     end
+  end
+  
+  def content
+    citation || paragraph || section || chapter || edition
+  end
+  
+  def content_identifier
+    (content.class.name.underscore + '_id').intern
+  end
+  
+  def content_attributes
+    {:book_id => book_id, :edition_id => edition_id, :chapter_id => chapter_id, :section_id => section_id, :paragraph_id => paragraph_id, :citation_id => citation_id}
+  end
+  
+  def subsequent
+    self.class.where(content_attributes.except content_identifier).where TableOfContent.arel_table[:ordering].gt(ordering)
+  end
+  
+  def prior
+    self.class.where(content_attributes.except content_identifier).where TableOfContent.arel_table[:ordering].lt(ordering)
+  end
+  
+  def previous
+    prior.ordered.last
   end
 end
