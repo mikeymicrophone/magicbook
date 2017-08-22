@@ -30,7 +30,7 @@
   </section>
 
   <em><%= params[:sort] || 'shuffled' %><span>&lt;- the bulk of lists are found here</span></em>
-  <section>
+  <section class="shown">
     <% @lists.each do |list| %>
       <%= div_for list, :class => cycle(:one, :two, :three, :four, :five, :six, :seven, :eight, :nine) do %>
         <%= link_to list.name, list %>

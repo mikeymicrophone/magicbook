@@ -78,6 +78,10 @@
   
   section {
     display: none;
+    
+    &.shown {
+      display: block;
+    }
   }
 }
 
