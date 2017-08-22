@@ -43,6 +43,10 @@ class List < ApplicationRecord
     ordered_items.published
   end
   
+  def name_part
+    name[0..50]
+  end
+  
   def to_param
     "#{id}-#{permalink}"
   end
