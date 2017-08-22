@@ -30,7 +30,7 @@
           
           <%= div_for paragraph, :controls_for, :class => 'controls' do %>
             <%= focus_append_on paragraph %>
-            <%= link_to 'delay', delay_paragraph_path(paragraph, :book_id => book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :method => :put, :remote => true, :title => 'move to next section' if TableOfContent.sectionish.where(:edition => edition, :chapter => chapter, :ordering => section_table_of_content.ordering + 1).present? %>
+            <%= link_to 'delay', delay_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :method => :put, :remote => true, :title => 'move to next section' if section_table_of_content.succeeding.present? %>
             <%= link_to 'promote', promote_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :method => :put, :remote => true, :title => "put before previous paragraph (at #{paragraph_table_of_content.ordering})" if TableOfContent.paragraphish.where(:edition => edition, :chapter => chapter, :section => section, :ordering => paragraph_table_of_content.ordering - 1).present? %>
             <%= link_to 'edit', edit_paragraph_path(paragraph, :book_id => book.id, :edition_id => edition.id, :chapter_id => chapter.id, :section_id => section.id, :format => :js), :remote => true %>
             <%= link_to 'remove', paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :method => :delete, :remote => true %>

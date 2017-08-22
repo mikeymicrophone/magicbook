@@ -53,19 +53,45 @@ class TableOfContent < ApplicationRecord
     (content.class.name.underscore + '_id').intern
   end
   
+  def content_hierarchy
+    {
+      :book_id => :edition_id,
+      :edition_id => :chapter_id,
+      :chapter_id => :section_id,
+      :section_id => :paragraph_id,
+      :paragraph_id => :citation_id
+    }
+  end
+  
+  def child_identifier
+    content_hierarchy[content_identifier]
+  end
+  
   def content_attributes
     {:book_id => book_id, :edition_id => edition_id, :chapter_id => chapter_id, :section_id => section_id, :paragraph_id => paragraph_id, :citation_id => citation_id}
   end
   
   def subsequent
-    self.class.where(content_attributes.except content_identifier).where TableOfContent.arel_table[:ordering].gt(ordering)
+    self.class.where.not(content_identifier => nil).where(content_attributes.except content_identifier).where TableOfContent.arel_table[:ordering].gt(ordering)
+  end
+  
+  def succeeding
+    subsequent.ordered.first
   end
   
   def prior
-    self.class.where(content_attributes.except content_identifier).where TableOfContent.arel_table[:ordering].lt(ordering)
+    self.class.where.not(content_identifier => nil).where(content_attributes.except content_identifier).where TableOfContent.arel_table[:ordering].lt(ordering)
   end
   
   def previous
     prior.ordered.last
+  end
+  
+  def parent
+    self.class.where(content_attributes.except content_identifier).find_by content_identifier => nil
+  end
+  
+  def last_child
+    self.class.where(content_attributes.except child_identifier).where.not(child_identifier => nil).ordered.last
   end
 end

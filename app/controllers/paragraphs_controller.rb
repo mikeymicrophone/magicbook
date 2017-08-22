@@ -17,14 +17,14 @@ class ParagraphsController < ApplicationController
   end
   
   def delay
-    @table_of_content = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:section_id], :paragraph_id => params[:id]).first
+    @table_of_content = TableOfContent.find params[:table_of_content_id]
     @position = @table_of_content.ordering
-    @section = TableOfContent.sectionish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:section_id]).first
-    @subsequent_section = TableOfContent.sectionish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :ordering => @section.ordering.next).first
-    @last_position = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => @subsequent_section.section_id).order(:ordering).last&.ordering.to_i
-    @table_of_content.update_attributes :section_id => @subsequent_section.section_id, :ordering => @last_position.next
+    @parent = @table_of_content.parent
+    @succeeding = @parent.succeeding
+    @last_position = @succeeding.last_child&.ordering.to_i
+    @subsequent = @table_of_content.subsequent
+    @table_of_content.update_attributes :section_id => @succeeding.section_id, :ordering => @last_position.next
     
-    @subsequent = TableOfContent.paragraphish.where(:book_id => params[:book_id], :edition_id => params[:edition_id], :chapter_id => params[:chapter_id], :section_id => params[:section_id]).where(TableOfContent.arel_table[:ordering].gt(@position))
     @subsequent.each do |table_of_content|
       table_of_content.update_attribute :ordering, table_of_content.ordering.pred
     end
