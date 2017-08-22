@@ -9,10 +9,7 @@ class SectionsController < ApplicationController
   
   def append
     @section = Section.find params[:id]
-    @section.chapter = Chapter.find params[:chapterId]
-    @section.edition = Edition.find params[:editionId]
-    @section.book = Book.find params[:bookId]
-    @paragraph = @section.paragraphs.new
+    @table_of_content = TableOfContent.find params[:table_of_content_id]
   end
   
   def edit

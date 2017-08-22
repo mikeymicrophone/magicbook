@@ -91,7 +91,27 @@ class TableOfContent < ApplicationRecord
     self.class.where(content_attributes.except content_identifier).find_by content_identifier => nil
   end
   
+  def children
+    self.class.where(content_attributes.except child_identifier).where.not(child_identifier => nil)
+  end
+  
   def last_child
-    self.class.where(content_attributes.except child_identifier).where.not(child_identifier => nil).ordered.last
+    children.ordered.last
+  end
+  
+  def descendent_identifiers
+    identifiers = [child_identifier]
+    while content_hierarchy[identifiers.last]
+      identifiers << content_hierarchy[identifiers.last]
+    end
+    identifiers
+  end
+  
+  def contained
+    self.class.where(content_attributes.except *descendent_identifiers)
+  end
+  
+  def descendents
+    contained.where.not :id => id
   end
 end

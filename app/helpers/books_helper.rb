@@ -28,4 +28,12 @@ module BooksHelper
       image_tag asset_path('write.svg'), :title => "Add to #{table_of_contents.class.name.underscore}"
     end
   end
+  
+  def append_to table_of_content
+    link_to send("append_#{table_of_content.content.class.name.underscore}_path", table_of_content.content, :table_of_content_id => table_of_content.id), :remote => true do
+      div_for table_of_content, :focus_tool_for, :class => :new_focus_tool do
+        image_tag asset_path('write.svg'), :title => "Add to #{table_of_content.content.class.name.underscore}"
+      end
+    end
+  end
 end
