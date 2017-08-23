@@ -25,6 +25,14 @@ class ListedItem < ApplicationRecord
     self.ordering = list.listed_items.remaining.ordered.last&.ordering.to_i + 1
   end
   
+  def plaintext_name
+    Rails::Html::FullSanitizer.new.sanitize mark_up(designation).chomp
+  end
+  
+  def url_name
+    plaintext_name.gsub(/[^a-z0-9]+/i, '-')
+  end
+  
   def remove_from_sequence
     if privacy_changed? && ['removed', 'rejected'].include?(privacy)
       previous_ordering = ordering

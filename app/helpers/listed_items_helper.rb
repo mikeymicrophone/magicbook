@@ -52,7 +52,6 @@ module ListedItemsHelper
   
   def listed_item_display listed_item
     div_for listed_item do
-      listed_item_editing_tools_for(listed_item) +
       if listed_item.list.mode == 'numbered'
         div_for listed_item, :number_of do
           listed_item.ordering.to_s
@@ -79,6 +78,11 @@ module ListedItemsHelper
         end
       else
         ''.html_safe
+      end +
+      div_for(listed_item, :footer_of) do
+        listed_item_editing_tools_for(listed_item) +
+        link_to('permalink', list_url(listed_item.list, :anchor => dom_id(listed_item), :item => listed_item.url_name), :class => 'right') +
+        clearboth
       end
     end
   end
@@ -87,18 +91,13 @@ module ListedItemsHelper
     if current_magician == listed_item.list.magician
       div_for listed_item, :editing_tools_for do
         if listed_item.list.mode != 'randomized'
-          link_to('move up', move_up_listed_item_path(listed_item), :method => :put, :remote => true, :class => 'list_item_ordering') + tag.br
-        else
-          ''.html_safe
-        end +
+          link_to('move up', move_up_listed_item_path(listed_item), :method => :put, :remote => true, :class => 'list_item_ordering') +
+          link_to('move down', move_down_listed_item_path(listed_item), :method => :put, :remote => true, :class => 'list_item_ordering') +
+          tag.br
+        end.to_s.html_safe +
         link_to('include card', new_card_inclusion_path(:listed_item_id => listed_item.id), :remote => true) +
         link_to('edit', edit_listed_item_path(listed_item), :remote => true, :class => 'list_item_edit_link') +
-        link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}, :format => :js), :method => :put, :remote => true) +
-        if listed_item.list.mode != 'randomized'
-          tag.br + link_to('move down', move_down_listed_item_path(listed_item), :method => :put, :remote => true, :class => 'list_item_ordering')
-        else
-          ''.html_safe
-        end
+        link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}, :format => :js), :method => :put, :remote => true)
       end
     else
       ''.html_safe

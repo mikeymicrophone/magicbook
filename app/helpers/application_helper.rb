@@ -140,15 +140,6 @@ module ApplicationHelper
     tag.script :src => 'https://sites.google.com/site/themunsonsapps/mtg/autocard.js'
   end
   
-  def markdown
-    @renderer ||= Redcarpet::Render::HTML.new
-    @markdown ||= Redcarpet::Markdown.new @renderer
-  end
-  
-  def mark_up content
-    markdown.render(content.to_s).html_safe
-  end
-  
   def google_fonts
     google_webfonts_init :google => selected_fonts
   end

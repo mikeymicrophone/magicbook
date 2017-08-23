@@ -187,14 +187,15 @@
     
     .editing_tools_for_listed_item {
       float: right;
-      display: none;
+    }
+    
+    .footer_of_listed_item {
       opacity: 0;
     }
     
     &:hover {
-      .editing_tools_for_listed_item {
+      .footer_of_listed_item {
         opacity: 0.4;
-        display: block;
         transition: opacity 10s;
       }
     }
