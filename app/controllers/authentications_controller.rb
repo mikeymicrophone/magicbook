@@ -16,7 +16,7 @@ class AuthenticationsController < ApplicationController
     elsif @muggle = Muggle.find_by(:email => auth['info']['email'])
       @identifier = @muggle.identifiers.create :provider => auth['provider'], :uid => auth['uid'], :email => auth['info']['email']
     elsif session[:muggling]
-      @purchase = Purchase.find params[:muggling]
+      @purchase = Purchase.find session[:muggling]
       if @purchase.can_invite_muggles?
         @muggle = @purchase.muggles.create :email => auth['info']['email'], :magician => @purchase.magician
       end
