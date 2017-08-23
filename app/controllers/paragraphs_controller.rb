@@ -5,7 +5,7 @@ class ParagraphsController < ApplicationController
     @paragraph = Paragraph.create paragraph_params
     @table_of_content = TableOfContent.find params[:table_of_content_id]
     @section = @table_of_content.section
-    TableOfContent.create @table_of_content.content_attributes.merge :paragraph_id => @paragraph.id
+    @paragraph_table_of_content = TableOfContent.create @table_of_content.content_attributes.merge :paragraph_id => @paragraph.id
   end
   
   def append
@@ -45,7 +45,8 @@ class ParagraphsController < ApplicationController
   end
   
   def update
-    @table_of_contents = TableOfContent.find(params[:table_of_content_id]).contained
+    @paragraph_table_of_content = TableOfContent.find(params[:table_of_content_id])
+    @table_of_contents = @paragraph_table_of_content.contained
     
     @new_paragraph = Paragraph.create paragraph_params
     @table_of_contents.each { |table_of_content| table_of_content.update_attribute :paragraph_id, @new_paragraph.id }

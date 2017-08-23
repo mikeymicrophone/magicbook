@@ -27,16 +27,9 @@
         <% paragraph = paragraph_table_of_content.paragraph %>
         <%= div_with_data_for paragraph do %>
           <%= mark_up paragraph.text %>
+          <%= edit_controls_for_paragraph paragraph_table_of_content %>
           
-          <%= div_for paragraph, :controls_for, :class => 'controls' do %>
-            <%= focus_append_on paragraph %>
-            <%= link_to 'delay', delay_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :method => :put, :remote => true, :title => 'move to next section' if section_table_of_content.succeeding.present? %>
-            <%= link_to 'promote', promote_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :method => :put, :remote => true, :title => "put before previous paragraph (at #{paragraph_table_of_content.ordering})" if TableOfContent.paragraphish.where(:edition => edition, :chapter => chapter, :section => section, :ordering => paragraph_table_of_content.ordering - 1).present? %>
-            <%= link_to 'edit', edit_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :remote => true %>
-            <%= link_to 'remove', paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content, :format => :js), :method => :delete, :remote => true %>
-          <% end %>
-          
-          <% book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).in_paragraph(paragraph).citationish.order(:ordering).map(&:citation).each do |citation| %>
+          <% paragraph_table_of_content.children.ordered.map(&:citation).each do |citation| %>
             <%= div_with_data_for citation do %>
               <%= div_for citation, :finding_of do %>
                 <%= citation.finding %>
