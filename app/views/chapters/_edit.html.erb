@@ -29,16 +29,8 @@
           <%= mark_up paragraph.text %>
           <%= edit_controls_for_paragraph paragraph_table_of_content %>
           
-          <% paragraph_table_of_content.children.ordered.map(&:citation).each do |citation| %>
-            <%= div_with_data_for citation do %>
-              <%= div_for citation, :finding_of do %>
-                <%= citation.finding %>
-              <% end %>
-              <%= link_to 'hide', "javascript: $('##{dom_id(citation)}').hide()", :class => 'citation_hider' %>
-              <%= div_for citation, :source_of do %>
-                <%= citation.source %>
-              <% end %>
-            <% end %>
+          <% paragraph_table_of_content.children.ordered.each do |citation_table_of_content| %>
+            <%= citation_control citation_table_of_content %>
           <% end %>
         <% end %>
       <% end %>

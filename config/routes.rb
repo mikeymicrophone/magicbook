@@ -11,7 +11,12 @@ Rails.application.routes.draw do
       post :submit
     end
   end
-  resources :citations
+  resources :citations do
+    member do
+      put :delay
+      put :promote
+    end
+  end
   resources :paragraphs do
     member do
       get :append

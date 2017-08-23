@@ -19,7 +19,7 @@ module ParagraphsHelper
     paragraph = paragraph_table_of_content.paragraph
     section_table_of_content = paragraph_table_of_content.parent
     div_for(paragraph, :controls_for, :class => 'controls') do
-      focus_append_on(paragraph) +
+      append_to(paragraph_table_of_content) +
       if section_table_of_content.succeeding.present?
         link_to('delay', delay_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), :method => :put, :remote => true, :title => 'move to next section')
       end.to_s.html_safe +

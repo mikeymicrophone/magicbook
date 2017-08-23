@@ -10,11 +10,7 @@ class ParagraphsController < ApplicationController
   
   def append
     @paragraph = Paragraph.find params[:id]
-    @paragraph.section = Section.find params[:sectionId]
-    @paragraph.chapter = Chapter.find params[:chapterId]
-    @paragraph.edition = Edition.find params[:editionId]
-    @paragraph.book = Book.find params[:bookId]
-    @citation = @paragraph.citations.new
+    @table_of_content = TableOfContent.find params[:table_of_content_id]
   end
   
   def delay
