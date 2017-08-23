@@ -13,4 +13,6 @@
 <% else %>
   That license has been claimed by four other muggles.  For $2 you can <%= link_to 'purchase one', root_url %> and invite four of your own muggles.
 <% end %>
-<%= open_graph_tags_for_purchase @purchase %>
+<% content_for :open_graph do %>
+  <%= open_graph_tags_for_purchase @purchase %>
+<% end %>
