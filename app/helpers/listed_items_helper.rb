@@ -44,6 +44,7 @@ module ListedItemsHelper
           listed_item_form.submit '~>ready to suggest this<~'
         end
       end +
+      listed_item_form.hidden_field(:replacing) +
       tag.div(:class => 'instructions center') do
         "You can use Markdown for formatting, links, and HTML.  Submissions are subject to approval.  Present material that is legal and tasteful."
       end
@@ -109,7 +110,7 @@ module ListedItemsHelper
         link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}, :format => :js), :method => :put, :remote => true)
       end
     else
-      ''.html_safe
+      link_to('suggest edit', suggest_revision_listed_item_path(listed_item), :remote => true)
     end
   end
   

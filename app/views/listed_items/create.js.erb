@@ -3,6 +3,11 @@
   $('#form_for_listed_item')[0].reset();
   $(document).trigger('autocard');
 <% else %>
-  $('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('<p class="center">Thank you for submitting!  The magician who created the list will have to accept the submission, and then an admin will approve it.</p>');//'<%=j listed_item_display @listed_item %>');
-  $('#form_for_listed_item')[0].reset();
+  <% if @listed_item.replacing.present? %>
+    $('#form_for_listed_item').replaceWith('<%=j listed_item_display @listed_item %>');
+    $('#<%=j dom_id(@listed_item) %>').prepend('<p class="center">Thank you for submitting!  This is what your edit looks like.  The magician who created the list will have to accept the submission, and then an admin will approve it.</p>')
+  <% else %>
+    $('#<%=j dom_id @listed_item.list, :listed_items_in %>').append('<p class="center">Thank you for submitting!  The magician who created the list will have to accept the submission, and then an admin will approve it.</p>');//'<%=j listed_item_display @listed_item %>');
+    $('#form_for_listed_item')[0].reset();
+  <% end %>
 <% end %>

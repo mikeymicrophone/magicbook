@@ -21,6 +21,13 @@ class ListedItemsController < ApplicationController
     end
   end
   
+  def suggest_revision
+    @existing_listed_item = ListedItem.find params[:id]
+    
+    @listed_item = ListedItem.new @existing_listed_item.attributes.slice('designation', 'expression', 'list_id', 'content_type', 'content_id').merge('replacing' => @existing_listed_item.id)
+    render :template => 'listed_items/edit.js.erb'
+  end
+  
   def update
     @listed_item = ListedItem.find params[:id]
     @listed_item.update_attributes listed_item_params
@@ -74,6 +81,6 @@ class ListedItemsController < ApplicationController
   end
   
   def listed_item_params
-    params.require(:listed_item).permit(:designation, :expression, :content_type, :content_id, :ordering, :privacy)
+    params.require(:listed_item).permit(:designation, :expression, :content_type, :content_id, :ordering, :privacy, :replacing)
   end
 end

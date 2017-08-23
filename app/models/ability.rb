@@ -23,7 +23,7 @@ class Ability
       can :read, List
       can [:free, :next], Chapter
       can :index, Book
-      can :new, ListedItem
+      can [:new, :suggest_revision], ListedItem
       can :create, ListedItem, :privacy => ListedItem.privacies[:suggested]
       cannot :read, Magician
     end

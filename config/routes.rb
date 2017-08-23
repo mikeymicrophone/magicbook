@@ -87,6 +87,7 @@ Rails.application.routes.draw do
       put :reject
       put :move_up
       put :move_down
+      get :suggest_revision
     end
   end
   resources :card_inclusions
