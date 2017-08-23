@@ -3,7 +3,7 @@
 </p>
 
 <p>
-  It's technically possible to put dirty words, etc, into these suggestions, so I've chosen not to email them out in detail.  To review the suggestions, view the list (while you are signed in): <%= link_to @list.title, list_url(@list) %>
+  It's technically possible to put dirty words, etc, into these suggestions, so I've chosen not to email them out in detail.  To review the suggestions, view the list: <%= link_to @list.name, list_url(@list, :auth_token => @magician.authentication_token) %>
 </p>
 
 <p>
