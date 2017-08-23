@@ -38,13 +38,11 @@ module PurchasesHelper
   end
   
   def open_graph_tags_for_purchase purchase
-    tag.div :class => 'open_graph_tags' do
-      tag.meta(:property => 'og:url', :content => claim_purchase_url(purchase)) +
-      tag.meta(:property => 'og:type', :content => 'website') +
-      tag.meta(:property => 'og:title', :content => purchase.books.first.title) +
-      tag.meta(:property => 'og:description', :content => '$2 books and crowd-sourced listicles about Magic') +
-      tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
-      tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
-    end
+    tag.meta(:property => 'og:url', :content => claim_purchase_url(purchase)) +
+    tag.meta(:property => 'og:type', :content => 'website') +
+    tag.meta(:property => 'og:title', :content => purchase.books.first.title) +
+    tag.meta(:property => 'og:description', :content => '$2 books and crowd-sourced listicles about Magic') +
+    tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
+    tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
   end
 end
