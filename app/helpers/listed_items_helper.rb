@@ -82,7 +82,16 @@ module ListedItemsHelper
       div_for(listed_item, :footer_of) do
         listed_item_editing_tools_for(listed_item) +
         link_to('permalink', list_url(listed_item.list, :anchor => dom_id(listed_item), :item => listed_item.url_name), :class => 'right') +
+        link_to('show formatting', "javascript:$('##{dom_id listed_item, :formatting_of}').slideToggle(888)") +
         clearboth
+      end +
+      div_for(listed_item, :formatting_of) do
+        div_for(listed_item, :formatting_of_designation_of) do
+          listed_item.designation
+        end +
+        div_for(listed_item, :formatting_of_expression_of) do
+          listed_item.expression
+        end
       end
     end
   end
