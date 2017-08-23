@@ -19,6 +19,7 @@ class AuthenticationsController < ApplicationController
       @purchase = Purchase.find session[:muggling]
       if @purchase.can_invite_muggles?
         @muggle = @purchase.muggles.create :email => auth['info']['email'], :magician => @purchase.magician
+        BookMailer.gifted(@purchase.id, @muggle.id, '').deliver if @muggle.valid?
       end
     end
     
