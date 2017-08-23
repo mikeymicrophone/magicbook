@@ -9,7 +9,7 @@ module ListedItemsHelper
         end +
         tag.div(:class => 'inline') do
           tag.div do
-            'To put a list in this item, select it here:'
+            'To put a nested list in this item, select it here:'
           end +
           listed_item_form.collection_select(:content_id, List.alphabetical, :id, :name_part, {:include_blank => true}, {:id => 'listed_item_content_id'}) +
           listed_item_form.hidden_field(:content_type, :id => 'listed_item_content_type') +
