@@ -20,7 +20,10 @@ class ParagraphsController < ApplicationController
     @succeeding = @parent.succeeding
     @last_position = @succeeding.last_child&.ordering.to_i
     @subsequent = @table_of_content.subsequent
-    @table_of_content.update_attributes :section_id => @succeeding.section_id, :ordering => @last_position.next
+    @table_of_content.contained.each do |table_of_content|
+      table_of_content.update_attribute :section_id, @succeeding.section_id
+    end
+    @table_of_content.update_attribute :ordering, @last_position.next
     
     @subsequent.each do |table_of_content|
       table_of_content.update_attribute :ordering, table_of_content.ordering.pred
@@ -51,7 +54,6 @@ class ParagraphsController < ApplicationController
   
   def destroy
     @table_of_content = TableOfContent.find params[:table_of_content_id]
-    @position = @table_of_content.ordering
     @table_of_content.destroy
 
     @table_of_content.subsequent.each do |table_of_content|

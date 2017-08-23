@@ -16,7 +16,7 @@
         <%= div_for chapter, :controls_for, :class => 'controls' do %>
           <%= link_to "edit chapter #{chapter_table_of_content.ordering}", edit_chapter_path(chapter, :book_id => @book) %>
         <% end %>
-        <%= render :partial => 'chapters/edit', :locals => {:chapter => chapter, :edition => edition, :book => @book} %>
+        <%= render :partial => 'chapters/edit', :locals => {:chapter => chapter, :edition => edition, :book => @book, :chapter_table_of_content => chapter_table_of_content} %>
       <% end %>
       <%= focus_append_on edition %>
     <% end %>

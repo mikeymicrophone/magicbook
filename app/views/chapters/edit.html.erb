@@ -5,7 +5,7 @@
       <%= link_to 'Previous Chapter', edit_chapter_path(@previous_chapter, :book_id => @book.id), :class => 'previous_chapter' if @previous_chapter %>
       <%= link_to 'Next Chapter', edit_chapter_path(@next_chapter, :book_id => @book.id), :class => 'next_chapter' if @next_chapter %>
       <%= link_to 'promote', promote_chapter_path(chapter, :book_id => @book.id, :edition_id => edition.id, :format => :js), :method => :put, :remote => true, :class => 'right', :title => "put before previous chapter (at #{@table_of_content.ordering})" if TableOfContent.chapterish.where(:edition => edition, :ordering => @table_of_content.ordering - 1).present? %>
-      <%= render :partial => 'edit', :locals => {:chapter => @chapter, :edition => @edition, :book => @book} %>
+      <%= render :partial => 'edit', :locals => {:chapter => @chapter, :edition => @edition, :book => @book, :chapter_table_of_content => @table_of_content} %>
     <% end %>
   <% end %>
 <% end %>

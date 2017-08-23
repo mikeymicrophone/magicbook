@@ -8,9 +8,8 @@ class ChaptersController < ApplicationController
   end
   
   def append
-    @chapter = Chapter.find params[:chapterId]
-    @chapter.edition = Edition.find params[:editionId]
-    @chapter.book = Book.find params[:bookId]
+    @chapter = Chapter.find params[:id]
+    @table_of_content = TableOfContent.find params[:table_of_content_id]
   end
   
   def free

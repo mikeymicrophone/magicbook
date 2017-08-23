@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :sections do
     member do
       get :append
+      put :delay
       put :promote
     end
   end
