@@ -81,9 +81,11 @@ module ListedItemsHelper
         ''.html_safe
       end +
       div_for(listed_item, :footer_of) do
-        listed_item_editing_tools_for(listed_item) +
         link_to('permalink', list_url(listed_item.list, :anchor => dom_id(listed_item), :item => listed_item.url_name), :class => 'right') +
-        link_to('show formatting', "javascript:$('##{dom_id listed_item, :formatting_of}').slideToggle(888)") +
+        unless listed_item.designation.blank? && listed_item.expression.blank?
+          listed_item_editing_tools_for(listed_item) +
+          link_to('show formatting', "javascript:$('##{dom_id listed_item, :formatting_of}').slideToggle(888)")
+        end.to_s.html_safe +
         clearboth
       end +
       div_for(listed_item, :formatting_of) do
