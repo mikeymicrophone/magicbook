@@ -4,4 +4,8 @@ class ApplicationController < ActionController::Base
   def current_user
     current_scribe || current_magician || current_muggle || "guest"
   end
+  
+  def after_sign_in_path_for user
+    books_path
+  end
 end
