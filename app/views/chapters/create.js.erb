@@ -1,2 +1,2 @@
-$('#<%=j dom_id @edition, :append_chapter_to %>').before('<%=j chapter_control @chapter %>');
+$('#<%=j dom_id @edition, :append_chapter_to %>').before('<%=j div_with_data_for(@chapter, :class => 'read_by_chapter') { chapter_control @chapter_table_of_content } %>');
 $('#<%=j dom_id @edition, :append_chapter_to %>')[0].reset();

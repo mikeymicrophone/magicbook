@@ -1,0 +1,4 @@
+$('#<%=j dom_id(@edition, :append_chapter_to) %>').replaceWith('<%=j chapter_control @chapter_table_of_content.reload %>');
+if (window.location.href.match(/edit_as/)) {
+  window.location = '<%=j edit_as_chapter_url(@new_chapter, :book_id => @chapter_table_of_content.book_id) %>';
+}

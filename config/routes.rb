@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     member do
       get :append
       put :promote
+      get :edit_as
     end
   end
   resources :magicians, :only => [:index, :show] do

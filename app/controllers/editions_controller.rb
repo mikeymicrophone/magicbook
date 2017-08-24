@@ -20,8 +20,8 @@ class EditionsController < ApplicationController
   end
   
   def append
-    @edition = Edition.find params[:editionId]
-    @edition.book = Book.find params[:bookId]
+    @edition = Edition.find params[:id]
+    @table_of_content = TableOfContent.find params[:table_of_content_id]
   end
   
   def release

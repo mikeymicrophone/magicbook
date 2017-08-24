@@ -21,6 +21,7 @@ class BooksController < ApplicationController
 
   def edit
     @edition = @book.editions.last
+    @edition_table_of_content = TableOfContent.editionish.find_by :book_id => @book, :edition_id => @edition
   end
 
   def create
