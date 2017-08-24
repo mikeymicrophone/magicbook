@@ -45,8 +45,11 @@
 
 .bookshelf_display_of_book {
   margin: 15%;
+  padding: 30px;
   font-size: 1.5em;
   font-family: Cabin;
+  border: 2px solid black;
+  box-shadow: 4px 8px 2px 0px;
   
   .title_of_book {
     font-size: 1.6em;
