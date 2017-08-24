@@ -23,3 +23,8 @@
     <% end %>
   <% end %>
 <% end %>
+<% if current_user == 'guest' %>
+  <%= tag.div :class => 'center' do %>
+    <%= wwemc_purchase 'Purchase for $2' %>
+  <% end %>
+<% end %>

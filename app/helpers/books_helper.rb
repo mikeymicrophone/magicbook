@@ -5,7 +5,7 @@ module BooksHelper
     elsif current_muggle
       link_to book.title, book
     else
-      link_to book.title, wwemc_path
+      link_to book.title, wwemc_path, :class => 'purchase_trigger'
     end
   end
   
@@ -19,7 +19,7 @@ module BooksHelper
     elsif current_muggle
       link_to 'Read this book online', book, :class => 'begin_reading_link'
     else
-      link_to 'Read this book online', root_url, :class => 'begin_reading_link', :data => {:confirm => "If you have purchased or received #{book.title}, log in to read it.  Otherwise, you can purchase it for $2!"}
+      link_to 'Read this book online', root_url, :class => 'begin_reading_link purchase_trigger', :data => {:confirm => "If you have purchased or received #{book.title}, log in to read it.  Otherwise, you can purchase it for $2!"}
     end
   end
   

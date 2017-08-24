@@ -10,3 +10,7 @@ $(document).on 'turbolinks:load', ->
       alert 'Thank you. You can still invite muggles via email until your quota is filled.'
       return
     return
+  
+  $('body').on 'click', '.purchase_trigger', (event) ->
+    event.preventDefault()
+    $('.stripe-button-el').click()
