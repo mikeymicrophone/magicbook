@@ -8,4 +8,6 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for user
     books_path
   end
+  
+  helper_method :current_user
 end

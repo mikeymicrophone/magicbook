@@ -1,3 +1,8 @@
+<% if current_user == 'guest' %>
+  <%= tag.div :class => :center do %>
+    <%= wwemc_purchase "Buy the book so you can make lists", :sharer => false %>
+  <% end %>
+<% end %>
 <div id="list_navigation" class="header_links">
   <%= link_to 'Newest', :sort => 'recent' %>
   <%= link_to 'Alpha', :sort => 'alpha' %>
@@ -65,3 +70,8 @@
     </section>
   <% end %>
 </div>
+<% if current_user == 'guest' %>
+  <%= tag.div :class => :center do %>
+    <%= wwemc_purchase "Buy the book; then you can make lists!" %>
+  <% end %>
+<% end %>

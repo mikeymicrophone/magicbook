@@ -1,5 +1,5 @@
 module PurchasesHelper
-  def wwemc_purchase text
+  def wwemc_purchase text, options = {}
     form_for(Purchase.new) do |f|
       tag.script :src => 'https://checkout.stripe.com/checkout.js', :class => 'stripe-button', :data => {
         :key => ENV['STRIPE_PUBLISHABLE_KEY'],
@@ -13,7 +13,7 @@ module PurchasesHelper
       }
     end +
     tag.div(:class => 'center') do
-      facebook_share_button
+      facebook_share_button unless options[:sharer] == false
     end
   end
   

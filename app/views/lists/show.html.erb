@@ -1,3 +1,8 @@
+<% if current_user == 'guest' %>
+  <%= tag.div :class => :center do %>
+    <%= wwemc_purchase "Buy the book so you can make lists" %>
+  <% end %>
+<% end %>
 <%= div_for @list do %>
   <%= div_for @list, :masthead_of do %>
     <%= div_for @list, :name_of do %>
@@ -43,3 +48,8 @@
   <%= open_graph_tags_for @list %>
 <% end %>
 <%= facebook_quote_plugin %>
+<% if current_user == 'guest' %>
+  <%= tag.div :class => :center do %>
+    <%= wwemc_purchase "Buy the book; then you can make lists!" %>
+  <% end %>
+<% end %>
