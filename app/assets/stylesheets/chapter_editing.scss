@@ -1,0 +1,29 @@
+.book.editing {
+  .chapter_form {
+    width: 100%;
+    text-align: center;
+  
+    input {
+      width: 100%;
+    }
+  
+    textarea {
+      font-size: 1em;
+      width: 100%;
+    }
+  }
+  
+  .section_form {
+    width: 100%;
+  
+    input {
+      width: 70%;
+    }
+  
+    textarea {
+      font-size: 1em;
+      width: 70%;
+      height: 20px;
+    }
+  }
+}

@@ -1,9 +1,9 @@
 module ChaptersHelper
   def chapter_form table_of_content, chapter = Chapter.new
-    form_with :model => chapter, :id => dom_id(table_of_content.edition, :append_chapter_to) do |chapter_form|
-      chapter_form.text_field(:title, :placeholder => 'Chapter title') +
+    form_with :model => chapter, :id => dom_id(table_of_content.edition, :append_chapter_to), :class => 'chapter_form' do |chapter_form|
+      chapter_form.text_field(:title, :placeholder => 'Chapter title', :class => 'chapter_title') +
       tag.br +
-      chapter_form.text_area(:subtitle, :placeholder => 'Chapter subtitle') +
+      chapter_form.text_area(:subtitle, :placeholder => 'Chapter subtitle', :class => 'chapter_subtitle') +
       chapter_form.submit(:Append) +
       hidden_field_tag(:table_of_content_id, nil, :value => table_of_content.id)
     end

@@ -1,9 +1,9 @@
 module SectionsHelper
   def section_form table_of_content, section = Section.new
-    form_with :model => section, :id => dom_id(table_of_content.chapter, :append_section_to) do |section_form|
-      section_form.text_field(:heading, :placeholder => 'Section heading') +
+    form_with :model => section, :id => dom_id(table_of_content.chapter, :append_section_to), :class => 'section_form' do |section_form|
+      section_form.text_field(:heading, :placeholder => 'Section heading', :class => 'section_heading') +
       tag.br +
-      section_form.text_area(:subheading, :placeholder => 'Section subheading') +
+      section_form.text_area(:subheading, :placeholder => 'Section subheading', :class => 'section_subheading') +
       section_form.submit(:Append) +
       hidden_field_tag(:table_of_content_id, nil, :value => table_of_content.id)
     end
