@@ -1,5 +1,5 @@
 <% @listed_items.each do |listed_item| %>
-  <%= div_for listed_item, :approval_interface_for do %>
+  <%= div_for listed_item, :approval_interface_for, :class => 'list' do %>
     <%= listed_item_display listed_item %>
     [in <%= link_to listed_item.list.name, listed_item.list %>]
     <%= tag.br %>

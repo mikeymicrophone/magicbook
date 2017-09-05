@@ -24,6 +24,23 @@ module ListsHelper
     end
   end
   
+  def list_masthead list
+    div_for list, :masthead_of do
+      div_for(list, :name_of) do
+        list.name
+      end +
+      if list.description?
+        div_for list, :description_of do
+          mark_up list.description
+        end
+      end.to_s +
+      div_for(list, :edit_tool_for) do
+        link_to 'edit', edit_list_path(list), :class => 'edit_list_link' if current_magician == list.magician
+        link_to 'sort', :sort => 'alpha'
+      end
+    end
+  end
+  
   def begin_list_link
     if current_magician
       link_to 'Begin new list', new_list_path, :id => 'new_list_link'
@@ -63,6 +80,17 @@ module ListsHelper
           list.listed_items.suggested.map do |listed_item|
             listed_item_accepter listed_item
           end.join.html_safe
+        end
+      end
+    end
+  end
+  
+  def reviewable_display_of list
+    div_for list do
+      list_masthead(list) +
+      div_for(list, :listed_items_in) do
+        list.listed_items.remaining.each do |listed_item|
+          listed_item_display listed_item
         end
       end
     end
