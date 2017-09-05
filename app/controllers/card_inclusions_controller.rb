@@ -19,7 +19,7 @@ class CardInclusionsController < ApplicationController
         end
         @card = card if card.persisted?
       rescue OpenURI::HTTPError
-        puts "Not found: #{card_name}"
+        puts "Not found: #{card_inclusion_params[:card_name]}"
       end
     end
     
