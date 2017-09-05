@@ -1,9 +1,11 @@
 <div id="lists">
   <% @lists.each do |list| %>
-    <%= div_for list do %>
+    <%= div_for list, :approval_interface_for do %>
       <%= link_to list.name, list %>
-      <%= link_to 'approve', approve_list_path(list), :method => :put %>
-      <%= link_to 'reject', reject_list_path(list), :method => :put %>
+      <%= list.description %>
+      <%= tag.br %>
+      <%= link_to 'approve', approve_list_path(list), :method => :put, :remote => true %>
+      <%= link_to 'reject', reject_list_path(list), :method => :put, :remote => true %>
     <% end %>
   <% end %>
 </div>

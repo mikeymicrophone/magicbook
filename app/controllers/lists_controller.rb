@@ -82,13 +82,11 @@ class ListsController < ApplicationController
     when 'unreviewed_secret'
       @list.update_attribute :privacy, 'secret'
     end
-    redirect_to :action => :review
   end
   
   def reject
     @list = List.find params[:id]
     @list.update_attribute :privacy, 'rejected'
-    redirect_to :action => :review
   end
   
   def list_params
