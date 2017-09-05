@@ -45,13 +45,11 @@ class ListedItemsController < ApplicationController
     when 'unreviewed_secret'
       @listed_item.update_attribute :privacy, 'secret'
     end
-    redirect_to :action => :review
   end
   
   def reject
     @listed_item = ListedItem.find params[:id]
     @listed_item.update_attribute :privacy, 'rejected'
-    redirect_to :action => :review
   end
   
   def move_up
