@@ -27,6 +27,15 @@ class AuthenticationsController < ApplicationController
       sign_in @magician || @muggle
       redirect_to root_url, :notice => 'Signed in!'
     end
+    
+    if @magician
+      if @scribe = Scribe.find_by(:email => @magician.email)
+        sign_in @scribe
+      end
+      if @muggle = Muggle.find_by(:email => @magician.email)
+        sign_in @muggle
+      end
+    end
   end
 
   def destroy
