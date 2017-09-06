@@ -37,14 +37,16 @@ class ListedItemsController < ApplicationController
   
   def update
     @listed_item = ListedItem.find params[:id]
-    @listed_item.update_attributes listed_item_params
     if current_scribe
+      @listed_item.attributes = listed_item_params
       if @listed_item.privacy == 'unreviewed'
         @listed_item.privacy = 'published'
       elsif @listed_item.privacy == 'unreviewed_secret'
         @listed_item.privacy = 'secret'
       end
       @listed_item.save
+    else
+      @listed_item.update_attributes listed_item_params
     end
   end
   
