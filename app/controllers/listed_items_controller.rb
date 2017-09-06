@@ -8,6 +8,13 @@ class ListedItemsController < ApplicationController
   def create
     @listed_item = ListedItem.new listed_item_params
     @listed_item.list_id = params[:list_id]
+    if current_scribe
+      if @listed_item.privacy == 'unreviewed'
+        @listed_item.privacy = 'published'
+      elsif @listed_item.privacy == 'unreviewed_secret'
+        @listed_item.privacy = 'secret'
+      end
+    end
     @listed_item.save if can? :create, @listed_item
     ListMailer.suggested(@listed_item.id).deliver if @listed_item.privacy == 'suggested' && @listed_item.list.suggestability == 'notify'
   end
@@ -31,6 +38,14 @@ class ListedItemsController < ApplicationController
   def update
     @listed_item = ListedItem.find params[:id]
     @listed_item.update_attributes listed_item_params
+    if current_scribe
+      if @listed_item.privacy == 'unreviewed'
+        @listed_item.privacy = 'published'
+      elsif @listed_item.privacy == 'unreviewed_secret'
+        @listed_item.privacy = 'secret'
+      end
+      @listed_item.save
+    end
   end
   
   def review
