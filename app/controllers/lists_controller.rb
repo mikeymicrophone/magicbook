@@ -34,6 +34,11 @@ class ListsController < ApplicationController
   
   def edit
     @list = List.find params[:id]
+    if @list.privacy == 'published'
+      @list.privacy = 'unreviewed'
+    elsif @list.privacy == 'secret'
+      @list.privacy = 'unreviewed_secret'
+    end
   end
   
   def update
