@@ -35,8 +35,10 @@ module ListsHelper
         end
       end.to_s +
       div_for(list, :edit_tool_for) do
-        link_to 'edit', edit_list_path(list), :class => 'edit_list_link' if current_magician == list.magician
-        link_to 'sort', :sort => 'alpha'
+        if current_magician == list.magician
+          link_to 'edit', edit_list_path(list), :class => 'edit_list_link'
+        end.to_s +
+        link_to('sort', :sort => 'alpha')
       end
     end
   end
