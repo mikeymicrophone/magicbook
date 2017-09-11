@@ -11,7 +11,8 @@
   <%= wwemc_purchase "I want the book" %>
   
   <% if current_user == "guest" %>
-    <%= form_with :url => ramp_magicians_path do |ramp_form| %>
+    <div id="ramp_confirm"></div>
+    <%= form_with :url => ramp_magicians_path, :id => 'ramp_form' do |ramp_form| %>
       <%= ramp_form.email_field :email, :placeholder => 'email' %>
       <%= ramp_form.submit "I'll take a free copy." %>
     <% end %>
