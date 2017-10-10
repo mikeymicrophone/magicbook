@@ -37,7 +37,7 @@ module ListsHelper
       div_for(list, :edit_tool_for) do
         if current_magician == list.magician
           link_to 'edit', edit_list_path(list), :class => 'edit_list_link'
-        end.to_s +
+        end.to_s.html_safe +
         link_to('sort', :sort => 'alpha')
       end
     end
