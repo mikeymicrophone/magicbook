@@ -32,7 +32,11 @@ class ListedItemsController < ApplicationController
     @existing_listed_item = ListedItem.find params[:id]
     
     @listed_item = ListedItem.new @existing_listed_item.attributes.slice('designation', 'expression', 'list_id', 'content_type', 'content_id').merge('replacing' => @existing_listed_item.id)
-    render :template => 'listed_items/edit.js.erb'
+    
+    respond_to do |format|
+      format.html { render :nothing => true }
+      format.js { render :template => 'listed_items/edit.js.erb' }
+    end
   end
   
   def update
