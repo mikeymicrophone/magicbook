@@ -44,8 +44,13 @@ namespace :cards do
           begin
             open("https://api.scryfall.com/cards/named?exact=#{card_name}") do |result|
               card_data = JSON.parse result.read
-              card.multiverse_id = card_data['multiverse_id']
-              card.image_url = card_data['image_uris']['png']
+              card.multiverse_id = card_data['multiverse_ids'].first
+              if card_data['image_uris']
+                card.image_url = card_data['image_uris']['png']
+              elsif card_data['card_faces']
+                face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
+                card.image_url = face['image_uris']['png']
+              end
               card.save
               puts card.inspect
             end
