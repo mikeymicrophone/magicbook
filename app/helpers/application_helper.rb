@@ -73,7 +73,8 @@ module ApplicationHelper
     tag.div :class => 'footer_links' do
       link_to('More Info', wwemc_path) +
       contact_us_link +
-      link_to('List FAQ', faq_lists_path)
+      link_to('List FAQ', faq_lists_path) +
+      link_to('Privacy', privacy_policy_path)
     end
   end
   

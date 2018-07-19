@@ -93,7 +93,7 @@ Rails.application.routes.draw do
   end
   resources :card_inclusions
   
-  
+  get '/privacy' => 'landings#privacy', :as => 'privacy_policy'
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
   get '/font_guide' => 'landings#font_guide'
   
