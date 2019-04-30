@@ -7,15 +7,15 @@ RSpec.describe Book, :type => :model do
     end
     
     it 'should know its major version' do
-      expect(@book.major_version).to be_kind_of Fixnum
+      expect(@book.major_version).to be_a Fixnum
     end
     
     it 'should know its minor version' do
-      expect(@book.minor_version).to be_kind_of Fixnum
+      expect(@book.minor_version).to be_a Fixnum
     end
     
     it 'should know its patch version' do
-      expect(@book.patch_version).to be_kind_of Fixnum
+      expect(@book.patch_version).to be_a Fixnum
     end
   end
 end
