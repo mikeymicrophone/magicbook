@@ -23,4 +23,6 @@ class Card < ApplicationRecord
             4 => :red,
             5 => :green,
             :column => 'colors'
+            
+  scope :unmultiversed, lambda { where :multiverse_id => nil }
 end

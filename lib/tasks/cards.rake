@@ -3,42 +3,50 @@ namespace :cards do
     
     desc 'Take all cards from the source and save them in the database'
     task :all => :environment do
-      source_file = open('http://mtgjson.com/json/AllCards.json')
+      puts 'accessing card file'
+      source_file = open('https://mtgjson.com/json/AllCards.json')
+      puts 'loaded card file'
       if source_file
         
         source_data = JSON.parse source_file.read
         source_data.each do |card_key, card_data|
-          card = Card.new
-          card.name = card_data['name']
-          card_data['types']&.each do |card_type|
-            if card_type == 'Eaturecray'
-              card_type = 'creature'
+          begin
+            card = Card.new
+            card.name = card_data['name']
+            card_data['types']&.each do |card_type|
+              if card_type == 'Eaturecray'
+                card_type = 'creature'
+              end
+              if card_type == 'Enchant'
+                card_type = 'Enchantment'
+                card.send "#{card_type.downcase}=", true
+                break
+              end
+              begin
+                card.send "#{card_type.downcase}=", true
+              rescue
+                puts "unrecognized type: #{card_type}"
+                puts card_data['name']
+              end
             end
-            if card_type == 'Enchant'
-              card_type = 'Enchantment'
-              card.send "#{card_type.downcase}=", true
-              break
+            card_data['colors']&.each do |card_color|
+              color = {'W' => 'white', 'U' => 'blue', 'B' => 'black', 'R' => 'red', 'G' => 'green'}[card_color]
+              card.send "#{color}=", true
             end
-            begin
-              card.send "#{card_type.downcase}=", true
-            rescue
-              puts "unrecognized type: #{card_type}"
-              puts card_data['name']
-            end
+            puts card_data['name']
+            card.converted_mana_cost = card_data['convertedManaCost']
+            card.save
+
+          rescue StandardError => e
+            puts e
           end
-          card_data['colors']&.each do |card_color|
-            card.send "#{card_color.downcase}=", true
-          end
-          
-          card.converted_mana_cost = card_data['cmc']
-          card.save
         end
       end
     end
     
     desc 'Add multiverse_id and image url to existing cards'
     task :images => :environment do
-      Card.find_in_batches(:batch_size => 2) do |group|
+      Card.unmultiversed.find_in_batches(:batch_size => 2) do |group|
         group.each do |card|
           card_name = card.name.gsub /[\W\s]/, ''
           begin
