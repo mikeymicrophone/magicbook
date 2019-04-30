@@ -54,7 +54,7 @@ module ApplicationHelper
         link_to(image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo', :class => 'hex'), root_url)
       end +
       tag.div(:id => 'site_subtitle') do
-        "$2 books and crowd-sourced listicles about Magic"
+        "$10 books and crowd-sourced listicles about Magic"
       end
     end
   end
