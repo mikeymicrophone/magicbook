@@ -10,24 +10,16 @@
   </section>
   <%= wwemc_purchase "I want the book" %>
   
-  <% if current_user == "guest" %>
-    <div id="ramp_confirm"></div>
-    <%= form_with :url => ramp_magicians_path, :id => 'ramp_form' do |ramp_form| %>
-      <%= ramp_form.email_field :email, :placeholder => 'email' %>
-      <%= ramp_form.submit "I'll take a free copy." %>
-    <% end %>
-  <% end %>
-  
   <section id="license">
     <section>
-      If you buy the book for $2, you get to send it to 4 friends.
+      When you buy the book, you get to send it to 4 friends.
     </section>
   
     <section>
       You'll receive a PDF and access to the online edition.  Since not everyone can make purchases online, we make a free <%= link_to 'chapter', free_book_chapters_path(Book.featured) %> available every day.
     </section>
   </section>
-  <%= wwemc_purchase "I have $2!" %>
+  <%= wwemc_purchase "I will buy the book!" %>
   <section id="explanation">
     <section>
       Magic: The Gathering was first played 25 years ago.  It rapidly spread, gradually developed, and after a couple big ups and downs, it has grown to a new peak.
@@ -37,7 +29,7 @@
       Magic is not one game, but a framework for various formats, each of which creates different trends and challenges.  Ways We Enjoy Magic Cards will help you and your loved ones find formats that are fun for every occasion.
     </section>
   </section>
-  <%= wwemc_purchase "That's worth more than $2" %>
+  <%= wwemc_purchase "Ready for fun." %>
 </section>
 <% content_for :open_graph do %>
   <%= open_graph_tags %>
