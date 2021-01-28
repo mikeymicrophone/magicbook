@@ -1,4 +1,4 @@
-ruby '3.0.0'
+ruby '2.7.2'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -65,9 +65,9 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
-  # gem 'listen'
+  gem 'listen'
   gem 'spring'
-  # gem 'spring-watcher-listen'
+  gem 'spring-watcher-listen'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
