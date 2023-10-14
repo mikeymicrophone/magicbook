@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '5.2.4.4'
-gem 'pg'
+gem 'pg', '1.5.4'
 gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
@@ -19,7 +19,6 @@ gem 'jbuilder'
 gem 'stripe'
 gem 'carrierwave'
 gem 'fog'
-gem 'awesome_print'
 gem 'record_tag_helper'
 
 gem 'devise'
@@ -51,7 +50,8 @@ gem 'rollbar'
 gem 'oj'
 
 gem 'kaminari'
-gem 'mtg_sdk'
+# gem 'mtg_sdk'
+gem 'json'
 gem 'awesome_print'
 gem 'flag_shih_tzu'
 
@@ -66,8 +66,8 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen'
-  gem 'spring'
-  gem 'spring-watcher-listen'
+  # gem 'spring'
+  # gem 'spring-watcher-listen'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

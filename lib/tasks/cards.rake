@@ -1,16 +1,18 @@
-namespace :cards do
+  namespace :cards do
   namespace :ingest do
     
     desc 'Take all cards from the source and save them in the database'
     task :all => :environment do
       puts 'accessing card file'
-      source_file = open('https://mtgjson.com/json/AllCards.json')
+      json_url = 'https://mtgjson.com/api/v5/AtomicCards.json'
+      source_file = URI.open json_url
       puts 'loaded card file'
       if source_file
         
         source_data = JSON.parse source_file.read
-        source_data.each do |card_key, card_data|
+        source_data['data'].each do |card_key, card_data_array|
           begin
+            card_data = card_data_array.first
             card = Card.new
             card.name = card_data['name']
             card_data['types']&.each do |card_type|
@@ -34,7 +36,7 @@ namespace :cards do
               card.send "#{color}=", true
             end
             puts card_data['name']
-            card.converted_mana_cost = card_data['convertedManaCost']
+            card.converted_mana_cost = card_data['manaValue']
             card.save
 
           rescue StandardError => e
@@ -50,14 +52,18 @@ namespace :cards do
         group.each do |card|
           card_name = card.name.gsub /[\W\s]/, ''
           begin
-            open("https://api.scryfall.com/cards/named?exact=#{card_name}") do |result|
+            URI.open("https://api.scryfall.com/cards/named?exact=#{card_name}") do |result|
               card_data = JSON.parse result.read
               card.multiverse_id = card_data['multiverse_ids'].first
               if card_data['image_uris']
                 card.image_url = card_data['image_uris']['png']
               elsif card_data['card_faces']
-                face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
-                card.image_url = face['image_uris']['png']
+                begin
+                  face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
+                  card.image_url = face['image_uris']['png']
+                rescue NoMethodError
+                  puts "Not matched faces: #{card.name}"
+                end
               end
               card.save
               puts card.inspect

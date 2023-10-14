@@ -5,7 +5,7 @@ default: &default
 
 development:
   <<: *default
-  database: magicbook_sourced
+  database: magicbook_sourced21
   # database: magicbook_ordered
 
 test:
