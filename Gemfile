@@ -6,10 +6,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '5.2.4.4'
+gem 'rails', '6.1.7.6'
 gem 'pg', '1.5.4'
 gem 'puma'
-gem 'sass-rails'
+gem 'sass-rails', '6.0'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
@@ -18,8 +18,8 @@ gem 'jbuilder'
 
 gem 'stripe'
 gem 'carrierwave'
-gem 'fog'
-gem 'record_tag_helper'
+gem 'fog-aws'
+gem 'record_tag_helper', '1.0.1'
 
 gem 'devise'
 gem 'devise-token_authenticatable'
@@ -38,13 +38,14 @@ gem 'redcarpet'
 gem 'actionview-encoded_mail_to'
 gem 'attr_default'
 gem 'google-analytics-rails'
-gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
+# gem 'google-webfonts-rails', :github => 'masarakki/google-webfonts-rails', :branch => 'for-rails5'
 
 # gem 'prawn'
 # gem 'markdown_prawn', :github => 'vanboom/markdown_prawn'
 
 gem 'resque'
-gem 'resque_mailer'
+gem 'resque_mailer', '2.4.3'
+gem 'net-http'
 
 gem 'rollbar'
 gem 'oj'
