@@ -1,4 +1,4 @@
-uri = ENV['REDIS_URL']
+uri = ENV['REDISCLOUD_URL']
 Resque.redis = uri #Redis.new(:host => uri.host, :port => uri.port, :password => uri.password, :thread_safe => true)
 
 Resque.before_fork do
