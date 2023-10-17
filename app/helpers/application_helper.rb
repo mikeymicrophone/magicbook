@@ -142,7 +142,9 @@ module ApplicationHelper
   end
   
   def google_fonts
-    # google_webfonts_init :google => selected_fonts
+    '<link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@100&family=Antic&family=Anton&family=Cabin&family=Changa:wght@300&family=Cinzel&family=Crushed&family=Dosis:wght@300&family=Fondamento&family=Jaldi&family=Josefin+Sans:wght@300&family=Noto+Sans:wght@200&family=Righteous&family=Syncopate&display=swap" rel="stylesheet">'.html_safe
   end
   
   def selected_fonts
