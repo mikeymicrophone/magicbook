@@ -15,7 +15,7 @@ class List < ApplicationRecord
   
   scope :recent, lambda { order 'created_at desc' }
   scope :alphabetical, lambda { order :name }
-  scope :randomized, lambda { order "(id * extract(epoch from updated_at) :: bigint) % #{Time.now.hour + 1}" }
+  scope :randomized, lambda { order "" }
   scope :published, lambda { where :privacy => :published }
   scope :visible, lambda { where :privacy => [:unreviewed, :published] }
   scope :visible_to, lambda { |magician| where :privacy => [:unreviewed_secret, :secret], :magician_id => magician.id }

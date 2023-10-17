@@ -142,7 +142,7 @@ module ApplicationHelper
   end
   
   def google_fonts
-    google_webfonts_init :google => selected_fonts
+    # google_webfonts_init :google => selected_fonts
   end
   
   def selected_fonts
