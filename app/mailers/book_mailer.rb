@@ -5,7 +5,7 @@ class BookMailer < ApplicationMailer
     @purchase = Purchase.find purchase_id
     @purchase.books.each do |book|
       if book.pdf&.file&.exists?
-        attachments["#{book.title}.pdf"] = open(book.pdf.file.url).read
+        attachments["#{book.title}.pdf"] = URI.open(book.pdf.file.url).read
       end
     end
 
@@ -18,7 +18,7 @@ class BookMailer < ApplicationMailer
     @purchase = Purchase.find purchase_id
     @purchase.books.each do |book|
       if book.pdf&.file&.exists?
-        attachments["#{book.title}.pdf"] = open(book.pdf.file.url).read
+        attachments["#{book.title}.pdf"] = URI.open(book.pdf.file.url).read
       end
     end
     
@@ -36,7 +36,7 @@ class BookMailer < ApplicationMailer
     @magician.ensure_authentication_token
     @purchase.books.each do |book|
       if book.pdf&.file&.exists?
-        attachments["#{book.title}.pdf"] = open(book.pdf.file.url).read
+        attachments["#{book.title}.pdf"] = URI.open(book.pdf.file.url).read
       end
     end
 
