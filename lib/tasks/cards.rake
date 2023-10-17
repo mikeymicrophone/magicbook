@@ -48,7 +48,7 @@
     
     desc 'Add multiverse_id and image url to existing cards'
     task :images => :environment do
-      Card.unmultiversed.find_in_batches(:batch_size => 2) do |group|
+      Card.find_in_batches(:batch_size => 2) do |group|
         group.each do |card|
           card_name = card.name.gsub /[\W\s]/, ''
           begin
@@ -59,8 +59,13 @@
                 card.image_url = card_data['image_uris']['png']
               elsif card_data['card_faces']
                 begin
-                  face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
-                  card.image_url = face['image_uris']['png']
+                  if card.name =~ /(.*)\/\//
+                    front_face_name = $1.chomp
+                    
+                  else
+                    face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
+                    card.image_url = face['image_uris']['png']
+                  end
                 rescue NoMethodError
                   puts "Not matched faces: #{card.name}"
                 end
