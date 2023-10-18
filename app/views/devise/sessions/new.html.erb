@@ -7,7 +7,7 @@
       <h2><%= resource_name.capitalize %> Log in</h2>
       <h3>(if you purchased the book)</h3>
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= form_for(resource, as: resource_name, url: session_url(resource_name)) do |f| %>
         <div class="field">
           <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true %>
@@ -40,7 +40,7 @@
       <h2>Muggle Log in</h2>
       <h3>(if you received the book)</h3>
     
-      <%= form_for(Muggle.new, as: :muggle, url: session_path(:muggle)) do |f| %>
+      <%= form_for(Muggle.new, as: :muggle, url: session_url(:muggle)) do |f| %>
         <div class="field">
           <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true %>
