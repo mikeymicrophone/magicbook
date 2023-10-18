@@ -5,10 +5,19 @@ class Magician < ApplicationRecord
   has_many :identifiers
   has_many :lists
   
-  devise :database_authenticatable, :token_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
+  devise :database_authenticatable, :token_authenticatable, :recoverable, :rememberable, :trackable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
 
   def needs_access_technique?
     encrypted_password.blank?
+  end
+  
+  def self.from_omniauth(auth)
+	  where(provider: auth.provider, uid: auth.uid).first_or_create do |magician|
+		magician.provider = auth.provider
+		magician.uid = auth.uid
+		magician.email = auth.info.email
+		magician.password = Devise.friendly_token[0,20]
+	  end
   end
   
  #  def self.reset_password_by_token(attributes={})

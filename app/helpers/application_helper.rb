@@ -7,7 +7,7 @@ module ApplicationHelper
     elsif current_muggle
       link_to('log out', destroy_muggle_session_path, :method => :delete, :id => 'lot_out')
     else
-      link_to('Sign in with Facebook', "/auth/facebook", :id => 'facebook_login') +
+      facebook_login_button +
       tag.br +
       link_to('Sign in with password', new_magician_session_path, :id => 'password_login')
     end
@@ -79,25 +79,7 @@ module ApplicationHelper
   end
   
   def facebook_initializer
-    tag.script do
-      %Q!window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '#{ENV['FACEBOOK_APP_ID']}',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v2.8'
-        });
-        FB.AppEvents.logPageView();   
-      };
-
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));!.html_safe
-    end
+    "<div id='fb-root'></div><script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=#{ENV['FACEBOOK_APP_ID']}' nonce='iA4eUord'></script>".html_safe
   end
   
   def open_graph_tags
@@ -107,6 +89,10 @@ module ApplicationHelper
     tag.meta(:property => 'og:description', :content => "$#{ENV['CURRENT_BOOK_PRICE'].to_i / 100} ebooks and crowd-sourced listicles about Magic") +
     tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
     tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
+  end
+  
+  def facebook_login_button
+    '<div class="fb-login-button" data-width="200" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="false"></div>'.html_safe
   end
   
   def facebook_quote_plugin

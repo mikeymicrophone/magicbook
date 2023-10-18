@@ -8,12 +8,12 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= google_analytics %>
     <%= google_fonts %>
-    <%= facebook_initializer %>
     <%= facebook_pixel %>
     <%= yield :open_graph %>
   </head>	
 	
   <body>
+		<%= facebook_initializer %>
     <%= site_logo %>
     <%= login_links %>
     <%= ways_we_mage_social_links %>

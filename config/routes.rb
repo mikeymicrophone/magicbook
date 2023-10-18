@@ -1,7 +1,7 @@
 require 'resque/server'
 Rails.application.routes.draw do
   devise_for :scribes, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
-  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords', :sessions => 'sessions'}
+  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords', :sessions => 'sessions', :omniauth_callbacks => 'callbacks'}
   devise_for :muggles, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
 
   resources :muggles do
