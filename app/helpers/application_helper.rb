@@ -9,7 +9,7 @@ module ApplicationHelper
     else
       facebook_login_button +
       tag.br +
-      link_to('Sign in with password', new_magician_session_path, :id => 'password_login')
+      link_to('Sign in', new_magician_session_path, :id => 'password_login')
     end
   end
   
