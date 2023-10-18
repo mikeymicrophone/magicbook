@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :faq
   
   def new
     @list = List.new
