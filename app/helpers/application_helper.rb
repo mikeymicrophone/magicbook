@@ -54,7 +54,7 @@ module ApplicationHelper
         link_to(image_tag(asset_path('ways we mage logo.png'), :id => 'site_logo', :class => 'hex'), root_url)
       end +
       tag.div(:id => 'site_subtitle') do
-        "$10 books and crowd-sourced listicles about Magic"
+        "$#{ENV['CURRENT_BOOK_PRICE'].to_i / 100} books and crowd-sourced listicles about Magic"
       end
     end
   end
@@ -104,7 +104,7 @@ module ApplicationHelper
     tag.meta(:property => 'og:url', :content => root_url) +
     tag.meta(:property => 'og:type', :content => 'website') +
     tag.meta(:property => 'og:title', :content => 'Ways We Mage') +
-    tag.meta(:property => 'og:description', :content => '$2 ebooks and crowd-sourced listicles about Magic') +
+    tag.meta(:property => 'og:description', :content => "$#{ENV['CURRENT_BOOK_PRICE'].to_i / 100} ebooks and crowd-sourced listicles about Magic") +
     tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
     tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
   end

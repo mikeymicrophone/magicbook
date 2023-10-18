@@ -3,7 +3,7 @@ module PurchasesHelper
     form_for(Purchase.new) do |f|
       tag.script :src => 'https://checkout.stripe.com/checkout.js', :class => 'stripe-button', :data => {
         :key => ENV['STRIPE_PUBLISHABLE_KEY'],
-        :amount => '1000',
+        :amount => ENV['CURRENT_BOOK_PRICE'],
         :name => 'Ways We Mage',
         :description => 'Ways We Enjoy Magic Cards',
         :image => asset_url(image_path('ways-we-mage-logo-vertical.png')),

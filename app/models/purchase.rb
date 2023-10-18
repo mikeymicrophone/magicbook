@@ -43,7 +43,7 @@ class Purchase < ApplicationRecord
   end
   
   def price
-    books.count * 200
+    books.count * ENV['CURRENT_BOOK_PRICE'].to_i
   end
   
   def invites_remaining

@@ -32,7 +32,7 @@
     Nothing except your good judgement will stop you from copying the pdf you've received.  However, recipients of unauthorized copies will not be able to access updates or your lists, and they will know how little you <i>didn't</i> spend on them :/
   <% end %>
   <%= tag.p :class => 'licensing_discussion' do %>
-    My goal is to make these online resources worth more than the price.  I understand that money is tight.  If you can't spend another $2, you can still invite your friend to read the <%= link_to 'lists', lists_path %> on the site.
+    My goal is to make these online resources worth more than the price.  I understand that money is tight.  If you can't spend another $<%= ENV['CURRENT_BOOK_PRICE'].to_i / 100%>, you can still invite your friend to read the <%= link_to 'lists', lists_path %> on the site.
   <% end %>
   
   <%= tag.p :class => 'licensing_discussion' do %>
