@@ -12,6 +12,12 @@
         To give it to even more people, <%= link_to 'purchase another copy', root_url %>.
       <% end %>
     <% end %>
+		
+		<%= tag.br %>
+		
+		<%= tag.header do %>
+		  To avoid spamming, please ensure that you have permission to send the book to these people.
+		<% end %>
 
     <%= form_with :url => submit_muggles_path, :id => 'muggle_form' do %>
       <% @purchase.invites_remaining.times do |i| %>
