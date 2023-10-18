@@ -43,7 +43,7 @@ gem 'google-analytics-rails'
 # gem 'prawn'
 # gem 'markdown_prawn', :github => 'vanboom/markdown_prawn'
 
-gem 'mailersend_rails', :github => 'mikeymicrophone/mailersend_rails'
+gem 'mailersend-ruby'
 
 gem 'resque'
 gem 'resque_mailer', '2.4.3'
