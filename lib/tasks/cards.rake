@@ -1,4 +1,4 @@
-  namespace :cards do
+namespace :cards do
   namespace :ingest do
     
     desc 'Take all cards from the source and save them in the database'
