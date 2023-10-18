@@ -6,8 +6,8 @@ class Muggle < ApplicationRecord
   
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable
          
-  before_validation :set_password_to_card_name
-  validate :number_of_invited_muggles, :time_since_purchase
+  before_validation :set_password_to_card_name, :on => :create
+  validate :number_of_invited_muggles, :time_since_purchase, :on => :create
   validates :email, :presence => true
   
   scope :recent, lambda { order 'created_at desc' }
