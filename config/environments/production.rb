@@ -71,7 +71,7 @@ Rails.application.configure do
     :port => 587,
     :user_name => ENV['MAILERSEND_SMTP_USERNAME'],
     :password => ENV['MAILERSEND_SMTP_PASSWORD'],
-    :tls => true
+    :enable_starttls_auto => true
   }
 
   # config.action_mailer.smtp_settings = {
