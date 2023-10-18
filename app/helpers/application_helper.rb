@@ -152,6 +152,20 @@ module ApplicationHelper
     ['Advent Pro', 'Antic', 'Anton', 'Cabin', 'Changa', 'Cinzel', 'Crushed', 'Dosis', 'Fondamento', 'Jaldi', 'Josefin Sans:300', 'Noto Sans', 'Righteous', 'Syncopate']
   end
   
+  def google_analytics
+    """
+      <!-- Google tag (gtag.js) -->
+      <script async src='https://www.googletagmanager.com/gtag/js?id=#{ENV['GOOGLE_ANALYTICS_MEASUREMENT_ID']}'></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '#{ENV['GOOGLE_ANALYTICS_MEASUREMENT_ID']}');
+      </script>
+    """.html_safe
+  end
+  
   def clearboth
     tag.div :class => 'clearboth'
   end

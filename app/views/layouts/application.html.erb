@@ -6,13 +6,13 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= analytics_init if GoogleAnalytics.valid_tracker? %>
+    <%= google_analytics %>
     <%= google_fonts %>
     <%= facebook_initializer %>
     <%= facebook_pixel %>
     <%= yield :open_graph %>
-  </head>
-
+  </head>	
+	
   <body>
     <%= site_logo %>
     <%= login_links %>
