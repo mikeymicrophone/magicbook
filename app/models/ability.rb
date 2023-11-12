@@ -20,6 +20,7 @@ class Ability
       can [:free, :next], Chapter
       cannot :read, Magician
     else
+      can :invite, Muggle
       can :read, List
       can [:free, :next], Chapter
       can :index, Book
