@@ -50,7 +50,7 @@ class ListedItemsController < ApplicationController
       end
       @listed_item.save
     else
-      @listed_item.update_attributes listed_item_params
+      @listed_item.update listed_item_params
     end
   end
   

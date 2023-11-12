@@ -15,7 +15,7 @@ class CitationsController < ApplicationController
     @succeeding = @parent.succeeding
     @last_position = @succeeding.last_child&.ordering.to_i
     @subsequent = @table_of_content.subsequent
-    @table_of_content.update_attributes :paragraph_id => @succeeding.paragraph_id, :ordering => @last_position.next
+    @table_of_content.update :paragraph_id => @succeeding.paragraph_id, :ordering => @last_position.next
     
     @subsequent.each do |table_of_content|
       table_of_content.update_attribute :ordering, table_of_content.ordering.pred

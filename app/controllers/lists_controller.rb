@@ -43,7 +43,7 @@ class ListsController < ApplicationController
   
   def update
     @list = List.find params[:id]
-    if @list.update_attributes list_params
+    if @list.update list_params
       redirect_to @list
     else
       if @list.errors[:name].present?
