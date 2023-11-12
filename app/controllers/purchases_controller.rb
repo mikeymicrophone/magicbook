@@ -28,8 +28,8 @@ class PurchasesController < ApplicationController
 
     if @purchase.fulfill
       sign_in @purchase.magician
-      # BookMailer.purchased(@purchase.id).deliver
-      BookMailersend.purchased(@purchase.id).send # likely put this in a background job
+      BookMailer.purchased(@purchase.id).deliver
+      # BookMailersend.purchased(@purchase.id).send # likely put this in a background job
       redirect_to invite_muggles_path(:purchase_id => @purchase.id)
     else
       render :text => "The purchase was not completed."
