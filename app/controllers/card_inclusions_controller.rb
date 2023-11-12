@@ -10,7 +10,7 @@ class CardInclusionsController < ApplicationController
     unless @card
       card = Card.new :name => card_inclusion_params[:card_name]
       begin
-        open("https://api.scryfall.com/cards/named?exact=#{card_inclusion_params[:card_name]}") do |result|
+        URI.open("https://api.scryfall.com/cards/named?exact=#{card_inclusion_params[:card_name]}") do |result|
           card_data = JSON.parse result.read
           card.multiverse_id = card_data['multiverse_id']
           card.image_url = card_data['image_uris']['png']
