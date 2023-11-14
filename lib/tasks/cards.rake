@@ -46,6 +46,51 @@ namespace :cards do
       end
     end
     
+    task :set, [:set_abbreviation] => :environment do |t, args|
+      set_abbreviation = args[:set_abbreviation]
+      puts "accessing set file"
+      json_url = "https://mtgjson.com/api/v5/#{set_abbreviation}.json"
+      source_file = URI.open json_url
+      puts 'loaded card file'
+      if source_file
+        
+        source_data = JSON.parse source_file.read
+        source_data['data']['cards'].each do |card_data|
+          begin
+            # card_data = card_data_array.first
+            card = Card.new
+            card.name = card_data['name']
+            card_data['types']&.each do |card_type|
+              if card_type == 'Eaturecray'
+                card_type = 'creature'
+              end
+              if card_type == 'Enchant'
+                card_type = 'Enchantment'
+                card.send "#{card_type.downcase}=", true
+                break
+              end
+              begin
+                card.send "#{card_type.downcase}=", true
+              rescue
+                puts "unrecognized type: #{card_type}"
+                puts card_data['name']
+              end
+            end
+            card_data['colors']&.each do |card_color|
+              color = {'W' => 'white', 'U' => 'blue', 'B' => 'black', 'R' => 'red', 'G' => 'green'}[card_color]
+              card.send "#{color}=", true
+            end
+            puts card_data['name']
+            card.converted_mana_cost = card_data['manaValue']
+            card.save
+
+          rescue StandardError => e
+            puts e
+          end
+        end
+      end
+    end
+    
     desc 'Add multiverse_id and image url to existing cards'
     task :images => :environment do
       Card.find_in_batches(:batch_size => 2) do |group|
