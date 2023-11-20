@@ -93,33 +93,40 @@ namespace :cards do
     
     desc 'Add multiverse_id and image url to existing cards'
     task :images => :environment do
-      Card.find_in_batches(:batch_size => 2) do |group|
+      Card.unmultiversed.find_in_batches(:batch_size => 2) do |group|
         group.each do |card|
-          card_name = card.name.gsub /[\W\s]/, ''
+          puts card.inspect
           begin
-            URI.open("https://api.scryfall.com/cards/named?exact=#{card_name}") do |result|
-              card_data = JSON.parse result.read
-              card.multiverse_id = card_data['multiverse_ids'].first
-              if card_data['image_uris']
-                card.image_url = card_data['image_uris']['png']
-              elsif card_data['card_faces']
-                begin
-                  if card.name =~ /(.*)\/\//
-                    front_face_name = $1.chomp
+            card_name = card.name.gsub /[\W\s]/, ''
+          rescue
+            
+          end
+          if card_name
+            begin
+              URI.open("https://api.scryfall.com/cards/named?exact=#{card_name}") do |result|
+                card_data = JSON.parse result.read
+                card.multiverse_id = card_data['multiverse_ids'].first
+                if card_data['image_uris']
+                  card.image_url = card_data['image_uris']['png']
+                elsif card_data['card_faces']
+                  begin
+                    if card.name =~ /(.*)\/\//
+                      front_face_name = $1.chomp
                     
-                  else
-                    face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
-                    card.image_url = face['image_uris']['png']
+                    else
+                      face = card_data['card_faces'].select { |face| face['name'] == card.name }.first
+                      card.image_url = face['image_uris']['png']
+                    end
+                  rescue NoMethodError
+                    puts "Not matched faces: #{card.name}"
                   end
-                rescue NoMethodError
-                  puts "Not matched faces: #{card.name}"
                 end
+                card.save
+                puts card.inspect
               end
-              card.save
-              puts card.inspect
+            rescue OpenURI::HTTPError
+              puts "Not found: #{card_name}"
             end
-          rescue OpenURI::HTTPError
-            puts "Not found: #{card_name}"
           end
         end
         sleep 0.1
