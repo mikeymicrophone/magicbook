@@ -17,6 +17,19 @@ module PurchasesHelper
     end
   end
   
+  def coaching_purchase text, price
+    tag.script :src => 'https://checkout.stripe.com/checkout.js', :class => 'stripe-button', :data => {
+      :key => ENV['STRIPE_PUBLISHABLE_KEY'],
+      :amount => price,
+      :name => 'Ways We Mage',
+      :description => 'Magic Coaching',
+      :image => asset_url(image_path('ways-we-mage-logo-vertical.png')),
+      :locale => 'auto',
+      :label => text,
+      :bitcoin => true
+    }
+  end
+  
   def add_muggles_link book
     if current_magician
       if current_magician.purchased_books.where(:book => book).present?
