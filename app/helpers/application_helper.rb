@@ -19,22 +19,26 @@ module ApplicationHelper
         link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
         link_to('Bookshelf', books_path, :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
+        link_to('Coaching', coaching_path, :class => 'bookshelf') +
+        link_to('Rank My Jank', rank_my_jank_path, :class => 'bookshelf')
       elsif current_magician
         link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
         link_to('Bookshelf', magician_books_path(current_magician), :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
+        link_to('Coaching', coaching_path, :class => 'bookshelf') +
+        link_to('Rank My Jank', rank_my_jank_path, :class => 'bookshelf')
       elsif current_muggle
         link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
         link_to('Bookshelf', muggle_books_path(current_muggle['id']), :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
+        link_to('Coaching', coaching_path, :class => 'bookshelf') +
+        link_to('Rank My Jank', rank_my_jank_path, :class => 'bookshelf')
       else
         link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
         link_to('Bookshelf', books_path, :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
+        link_to('Coaching', coaching_path, :class => 'bookshelf') +
+        link_to('Rank My Jank', rank_my_jank_path, :class => 'bookshelf')
       end
     end
   end

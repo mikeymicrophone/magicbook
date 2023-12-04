@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
   get '/coaching' => 'landings#coaching', :as => 'coaching'
+  get '/rank_my_jank' => 'landings#rank_my_jank', :as => 'rank_my_jank'
   
   get '/font_guide' => 'landings#font_guide'
   
