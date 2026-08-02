@@ -2,10 +2,10 @@ class List < ApplicationRecord
   belongs_to :magician
   has_many :listed_items
   
-  enum :mode => [:ordered, :randomized, :numbered]
-  enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
-  enum :suggestability => [:defer, :notify, :languish]
-  enum :pin => [:examplary, :prominent, :suggestion_seeking, :deferred]
+  enum :mode, [:ordered, :randomized, :numbered]
+  enum :privacy, [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]
+  enum :suggestability, [:defer, :notify, :languish]
+  enum :pin, [:examplary, :prominent, :suggestion_seeking, :deferred]
   
   attr_default :mode, 'ordered'
   attr_default :privacy, 'unreviewed'

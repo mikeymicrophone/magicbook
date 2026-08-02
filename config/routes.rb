@@ -107,7 +107,7 @@ Rails.application.routes.draw do
     get 'confirmations/establish_access', :to => 'confirmations#establish_access'
   end
   
-  get "/auth/:action/callback", :controller => "authentications", :constraints => { :action => /twitter|github|facebook/ }
+  get '/auth/facebook/callback', to: 'authentications#facebook'
   
   root :to => 'landings#home'
   mount Resque::Server.new, :at => "/resque"

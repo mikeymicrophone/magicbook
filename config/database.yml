@@ -11,3 +11,7 @@ development:
 test:
   <<: *default
   database: magicbook_test
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

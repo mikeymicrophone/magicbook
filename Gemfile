@@ -1,4 +1,4 @@
-ruby '3.3.5'
+ruby '4.0.5'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -6,10 +6,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '6.1.7.6'
-gem 'pg', '1.5.4'
+gem 'rails', '~> 8.1.3'
+gem 'pg'
 gem 'puma'
-gem 'sass-rails', '6.0'
+gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
@@ -19,10 +19,9 @@ gem 'jbuilder'
 gem 'stripe'
 gem 'carrierwave'
 gem 'fog-aws'
-gem 'record_tag_helper', '1.0.1'
+gem 'record_tag_helper'
 
 gem 'devise'
-gem 'devise-token_authenticatable'
 gem 'omniauth-facebook'
 # gem 'omniauth-twitter'
 # gem 'omniauth-amazon'
@@ -46,7 +45,7 @@ gem 'google-analytics-rails'
 # gem 'mailersend-ruby'
 
 gem 'resque'
-gem 'resque_mailer', '2.4.3'
+gem 'resque_mailer'
 gem 'net-http'
 
 gem 'rollbar'
@@ -59,7 +58,7 @@ gem 'awesome_print'
 gem 'flag_shih_tzu'
 
 group :development, :test do
-  gem 'byebug', platform: :mri
+  gem 'debug', platforms: %i[mri windows]
   gem 'rspec-rails'
   gem 'fabrication'
   gem 'faker'
@@ -73,4 +72,4 @@ group :development do
   # gem 'spring-watcher-listen'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[windows jruby]

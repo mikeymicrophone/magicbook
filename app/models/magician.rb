@@ -5,7 +5,17 @@ class Magician < ApplicationRecord
   has_many :identifiers
   has_many :lists
   
-  devise :database_authenticatable, :token_authenticatable, :recoverable, :rememberable, :trackable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
+
+  def ensure_authentication_token
+    return authentication_token if authentication_token.present?
+
+    update!(
+      authentication_token: SecureRandom.urlsafe_base64(32),
+      authentication_token_created_at: Time.current
+    )
+    authentication_token
+  end
 
   def needs_access_technique?
     encrypted_password.blank?

@@ -8,9 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Magicbook
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.0
-    Rails.application.config.action_view.form_with_generates_remote_forms = true
+    config.load_defaults 8.1
+    config.action_view.form_with_generates_remote_forms = true
 
     # Configuration for the application, engines, and railties goes here.
     #

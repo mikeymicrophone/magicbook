@@ -5,7 +5,7 @@ class ListedItem < ApplicationRecord
   has_many :card_inclusions, :as => :piece
   has_many :cards, :through => :card_inclusions
   
-  enum :privacy => [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed, :suggested]
+  enum :privacy, [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed, :suggested]
   
   attr_default :privacy, 'unreviewed'
   
