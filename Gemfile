@@ -1,4 +1,4 @@
-ruby '3.1.2'
+ruby '3.3.5'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -43,7 +43,7 @@ gem 'google-analytics-rails'
 # gem 'prawn'
 # gem 'markdown_prawn', :github => 'vanboom/markdown_prawn'
 
-gem 'mailersend-ruby'
+# gem 'mailersend-ruby'
 
 gem 'resque'
 gem 'resque_mailer', '2.4.3'
