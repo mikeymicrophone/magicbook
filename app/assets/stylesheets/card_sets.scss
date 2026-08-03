@@ -1,0 +1,58 @@
+.card-set-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.card-set-filters a {
+  border: 1px solid #888;
+  border-radius: 999px;
+  padding: .25rem .7rem;
+}
+
+.card-set-filters a.selected {
+  background: #333;
+  color: #fff;
+}
+
+.card-set-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+}
+
+.card-set-card {
+  border: 1px solid #bbb;
+  padding: .8rem;
+}
+
+.card-set-card h2 {
+  font-size: 1.1rem;
+  margin: 0 0 .5rem;
+}
+
+.card-set-card p {
+  margin: .25rem 0;
+}
+
+.card-printing-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+}
+
+.card-printing {
+  margin: 0;
+}
+
+.card-printing img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.card-printing figcaption {
+  font-size: .85rem;
+  padding-top: .3rem;
+}

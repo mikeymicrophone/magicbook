@@ -1,0 +1,22 @@
+<h1>Magic sets</h1>
+
+<nav class="card-set-filters" aria-label="Set categories">
+  <%= link_to 'Browse', card_sets_path, class: ('selected' if @selected_category == 'browseable') %>
+  <%= link_to 'All', card_sets_path(category: 'all'), class: ('selected' if @selected_category == 'all') %>
+  <% CardSet.categories.each_key do |category| %>
+    <%= link_to "#{category.humanize} (#{@category_counts[category] || 0})", card_sets_path(category: category), class: ('selected' if @selected_category == category) %>
+  <% end %>
+</nav>
+
+<div class="card-set-grid">
+  <% @card_sets.each do |card_set| %>
+    <article class="card-set-card">
+      <h2><%= link_to card_set.name, card_set %></h2>
+      <p><%= card_set.code.upcase %> · <%= card_set.category.humanize %></p>
+      <p><%= card_set.released_on&.strftime('%B %-d, %Y') || 'Release date unknown' %></p>
+      <p><%= pluralize(card_set.cards.count, 'card') %></p>
+    </article>
+  <% end %>
+</div>
+
+<%= paginate @card_sets %>

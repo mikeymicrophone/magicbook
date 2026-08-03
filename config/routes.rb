@@ -92,6 +92,7 @@ Rails.application.routes.draw do
     end
   end
   resources :card_inclusions
+  resources :card_sets, :only => [:index, :show], :param => :code
   
   get '/privacy' => 'landings#privacy', :as => 'privacy_policy'
   get '/data_deletion' => 'landings#data_deletion', :as => 'data_deletion'

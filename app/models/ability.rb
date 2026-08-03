@@ -22,6 +22,8 @@ class Ability
     else
       can :invite, Muggle
       can :read, List
+      can :read, CardSet
+      can :read, Card
       can [:free, :next], Chapter
       can :index, Book
       can [:new, :suggest_revision], ListedItem

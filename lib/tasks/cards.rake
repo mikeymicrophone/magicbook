@@ -1,5 +1,11 @@
 namespace :cards do
   namespace :ingest do
+
+    desc 'Synchronize paper card printings from Scryfall bulk data'
+    task :scryfall => :environment do
+      imported = CardCatalog::ScryfallBulkIngest.new.call
+      puts "Imported #{imported} canonical card printings"
+    end
     
     desc 'Take all cards from the source and save them in the database'
     task :all => :environment do

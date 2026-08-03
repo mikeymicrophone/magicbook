@@ -1,0 +1,17 @@
+<%= link_to '← All sets', card_sets_path %>
+
+<h1><%= @card_set.name %></h1>
+<p><%= @card_set.code.upcase %> · <%= @card_set.category.humanize %> · <%= @card_set.released_on&.strftime('%B %-d, %Y') %></p>
+
+<div class="card-printing-grid">
+  <% @cards.each do |card| %>
+    <figure class="card-printing">
+      <% if card.image_url.present? %>
+        <%= image_tag card.image_url, alt: card.name, loading: 'lazy' %>
+      <% end %>
+      <figcaption><%= card.name %><% if card.collector_number.present? %> · #<%= card.collector_number %><% end %></figcaption>
+    </figure>
+  <% end %>
+</div>
+
+<%= paginate @cards %>
