@@ -1,4 +1,6 @@
 class TableOfContent < ApplicationRecord
+  class ReorderError < StandardError; end
+
   belongs_to :book, :optional => true
   belongs_to :edition, :optional => true
   belongs_to :chapter, :optional => true
@@ -98,6 +100,49 @@ class TableOfContent < ApplicationRecord
   def last_child
     children.ordered.last
   end
+
+  # Reordering is performed against locked sibling rows so two editors cannot
+  # silently assign the same position or overwrite each other's swap.
+  def promote!
+    self.class.transaction do
+      current = locked_siblings.find(id)
+      previous = locked_siblings.where(TableOfContent.arel_table[:ordering].lt(current.ordering)).ordered.last
+      raise ReorderError, 'There is no previous item to promote' unless previous
+
+      current_ordering = current.ordering
+      current.update!(ordering: previous.ordering)
+      previous.update!(ordering: current_ordering)
+
+      previous
+    end
+  end
+
+  # Move this node and every contained descendent to the next parent at the
+  # same level (section -> next chapter, paragraph -> next section, etc.).
+  def delay!
+    self.class.transaction do
+      current = locked_siblings.find(id)
+      source_siblings = locked_siblings.to_a
+      parent = current.parent
+      raise ReorderError, 'There is no parent to move from' unless parent
+
+      parent.lock!
+      succeeding_parent = parent.succeeding
+      raise ReorderError, 'There is no following parent to move to' unless succeeding_parent
+
+      succeeding_parent.lock!
+      destination_parent_attribute = current.content_hierarchy.key(current.content_identifier)
+      destination_value = succeeding_parent.public_send(destination_parent_attribute)
+      last_destination_ordering = succeeding_parent.children.lock.ordered.last&.ordering.to_i
+      subsequent_source_siblings = source_siblings.select { |sibling| sibling.ordering > current.ordering }
+
+      current.contained.lock.find_each do |contained|
+        contained.update!(destination_parent_attribute => destination_value)
+      end
+      current.update!(ordering: last_destination_ordering + 1)
+      subsequent_source_siblings.each { |sibling| sibling.update!(ordering: sibling.ordering - 1) }
+    end
+  end
   
   def descendent_identifiers
     identifiers = [child_identifier]
@@ -113,5 +158,15 @@ class TableOfContent < ApplicationRecord
   
   def descendents
     contained.where.not :id => id
+  end
+
+  private
+
+  def sibling_scope
+    self.class.where.not(content_identifier => nil).where(content_attributes.except(content_identifier))
+  end
+
+  def locked_siblings
+    sibling_scope.lock
   end
 end

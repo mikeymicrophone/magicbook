@@ -1,19 +1,24 @@
-<%= link_to '← All sets', card_sets_path %>
+<main class="catalog-page card-set-page">
+  <%= link_to '← All sets', card_sets_path, class: 'catalog-back-link' %>
 
-<h1><%= @card_set.name %></h1>
-<p><%= @card_set.code.upcase %> · <%= @card_set.category.humanize %> · <%= @card_set.released_on&.strftime('%B %-d, %Y') %></p>
+  <header class="catalog-page-header">
+    <p class="catalog-kicker">Magic set</p>
+    <h1><%= @card_set.name %></h1>
+    <p class="catalog-meta"><%= @card_set.code.upcase %> · <%= @card_set.category.humanize %> · <%= @card_set.released_on&.strftime('%B %-d, %Y') %></p>
+  </header>
 
-<div class="card-printing-grid">
-  <% @cards.each do |card| %>
-    <figure class="card-printing">
-      <%= link_to card, class: 'card-printing-link' do %>
-        <% if card.image_url.present? %>
-          <%= image_tag card.image_url, alt: card.name, loading: 'lazy' %>
+  <div class="card-printing-grid">
+    <% @cards.each do |card| %>
+      <figure class="card-printing">
+        <%= link_to card, class: 'card-printing-link' do %>
+          <% if card.image_url.present? %>
+            <%= image_tag card.image_url, alt: card.name, loading: 'lazy' %>
+          <% end %>
+          <figcaption><%= card.name %><% if card.collector_number.present? %> · #<%= card.collector_number %><% end %></figcaption>
         <% end %>
-        <figcaption><%= card.name %><% if card.collector_number.present? %> · #<%= card.collector_number %><% end %></figcaption>
-      <% end %>
-    </figure>
-  <% end %>
-</div>
+      </figure>
+    <% end %>
+  </div>
 
-<%= paginate @cards %>
+  <%= paginate @cards %>
+</main>

@@ -12,6 +12,10 @@ class CardFunction < ApplicationRecord
 
   validates :name, :slug, presence: true, uniqueness: true
 
+  def to_param
+    slug
+  end
+
   def ancestor_ids
     found_ids = []
     frontier = parents.pluck(:id)
@@ -25,5 +29,26 @@ class CardFunction < ApplicationRecord
     end
 
     found_ids
+  end
+
+  def descendant_ids
+    found_ids = []
+    frontier = children.pluck(:id)
+
+    until frontier.empty?
+      found_ids.concat(frontier)
+      frontier = self.class.joins(:parent_relations)
+        .where(card_function_relations: { parent_function_id: frontier })
+        .where.not(id: found_ids)
+        .pluck(:id)
+    end
+
+    found_ids
+  end
+
+  def card_concepts_including_descendants
+    CardConcept.joins(:card_function_assignments)
+      .where(card_function_assignments: { card_function_id: [id, *descendant_ids] })
+      .distinct
   end
 end

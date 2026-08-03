@@ -1,6 +1,4 @@
 class BookMailer < ApplicationMailer
-  include Resque::Mailer
-  
   def purchased purchase_id
     @purchase = Purchase.find purchase_id
     @purchase.books.each do |book|

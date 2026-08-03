@@ -1,8 +1,9 @@
-<% if @card.card_set %>
-  <%= link_to "← #{@card.card_set.name}", card_set_path(@card.card_set) %>
-<% end %>
+<main class="catalog-page card-page">
+  <% if @card.card_set %>
+    <%= link_to "← #{@card.card_set.name}", card_set_path(@card.card_set), class: 'catalog-back-link' %>
+  <% end %>
 
-<article class="card-detail">
+  <article class="card-detail">
   <div>
     <h1><%= @card.name %></h1>
     <p>
@@ -13,6 +14,13 @@
       <% end %>
       <% if @card.collector_number.present? %> · #<%= @card.collector_number %><% end %>
     </p>
+
+    <% if @card.card_concept.card_functions.any? %>
+      <p class="card-function-links">
+        <strong>Functions:</strong>
+        <%= safe_join(@card.card_concept.card_functions.sort_by(&:name).map { |card_function| link_to card_function.name, card_function_path(card_function) }, ', ') %>
+      </p>
+    <% end %>
 
     <% if @card.image_url.present? %>
       <%= image_tag @card.image_url, alt: @card.name, class: 'card-detail-image' %>
@@ -31,4 +39,5 @@
       <p>No published lists include this printing yet.</p>
     <% end %>
   </section>
-</article>
+  </article>
+</main>

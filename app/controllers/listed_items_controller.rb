@@ -16,7 +16,7 @@ class ListedItemsController < ApplicationController
       end
     end
     @listed_item.save if can? :create, @listed_item
-    ListMailer.suggested(@listed_item.id).deliver if @listed_item.privacy == 'suggested' && @listed_item.list.suggestability == 'notify'
+    ListMailer.suggested(@listed_item.id).deliver_later if @listed_item.privacy == 'suggested' && @listed_item.list.suggestability == 'notify'
   end
   
   def edit

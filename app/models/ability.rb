@@ -24,6 +24,7 @@ class Ability
       can :read, List
       can :read, CardSet
       can :read, Card
+      can :read, CardFunction
       can [:free, :next], Chapter
       can :index, Book
       can [:new, :suggest_revision], ListedItem

@@ -16,6 +16,10 @@
     <%= div_for book, :author_of do %>
       by <%= book.author %>
     <% end %>
+
+    <%= div_for book, :price_of do %>
+      <%= book.formatted_price %>
+    <% end %>
     
     <%= div_for book, :actions_with do %>
       <%= begin_reading_link book %>
@@ -25,6 +29,6 @@
 <% end %>
 <% if current_user == 'guest' %>
   <%= tag.div :class => 'center' do %>
-    <%= wwemc_purchase 'Purchase for $10' %>
+    <%= wwemc_purchase "Purchase for #{Book.featured.formatted_price}" %>
   <% end %>
 <% end %>

@@ -1,0 +1,7 @@
+<%= turbo_stream.append dom_id(@table_of_content.paragraph, :citations) do %>
+  <%= citation_control @citation_table_of_content %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@table_of_content, :append_citation_form) do %>
+  <%= citation_append_control @table_of_content %>
+<% end %>

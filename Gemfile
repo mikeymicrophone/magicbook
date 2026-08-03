@@ -16,20 +16,14 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
+gem 'importmap-rails'
+gem 'stimulus-rails'
+gem 'turbo-rails'
 
 gem 'stripe'
 gem 'record_tag_helper'
 
 gem 'devise'
-gem 'omniauth-facebook'
-# gem 'omniauth-twitter'
-# gem 'omniauth-amazon'
-# gem 'omniauth-github'
-# gem 'omniauth-instagram'
-# gem 'omniauth-medium'
-# gem 'omniauth-pinterest'
-# gem 'omniauth-slack'
-# gem 'omniauth--twitch'
 
 gem 'cancancan'
 gem 'redcarpet'
@@ -43,8 +37,7 @@ gem 'google-analytics-rails'
 
 # gem 'mailersend-ruby'
 
-gem 'resque'
-gem 'resque_mailer'
+gem 'solid_queue'
 gem 'net-http'
 
 gem 'rollbar'
@@ -57,6 +50,7 @@ gem 'awesome_print'
 gem 'flag_shih_tzu'
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'debug', platforms: %i[mri windows]
   gem 'rspec-rails'
   gem 'fabrication'

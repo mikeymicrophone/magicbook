@@ -12,15 +12,9 @@
         <% end %>
       <% end %>
       <%= edit_controls_for_section section_table_of_content %>
-      <% book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).each do |paragraph_table_of_content| %>
-        <% paragraph = paragraph_table_of_content.paragraph %>
-        <%= div_with_data_for paragraph do %>
-          <%= mark_up paragraph.text %>
-          <%= edit_controls_for_paragraph paragraph_table_of_content %>
-          
-          <% paragraph_table_of_content.children.ordered.each do |citation_table_of_content| %>
-            <%= citation_control citation_table_of_content %>
-          <% end %>
+      <%= content_tag :div, id: dom_id(section_table_of_content, :paragraphs) do %>
+        <% book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).each do |paragraph_table_of_content| %>
+          <%= paragraph_control paragraph_table_of_content %>
         <% end %>
       <% end %>
       <%= append_to section_table_of_content %>

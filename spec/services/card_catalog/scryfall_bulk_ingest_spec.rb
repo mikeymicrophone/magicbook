@@ -26,9 +26,10 @@ RSpec.describe CardCatalog::ScryfallBulkIngest do
       'released_at' => '2001-06-04',
       'collector_number' => '128',
       'cmc' => 4,
+      'keywords' => ['Fuse'],
       'card_faces' => [
-        { 'colors' => ['R'], 'type_line' => 'Instant', 'image_uris' => { 'png' => 'https://example.test/fire.png' } },
-        { 'colors' => ['U'], 'type_line' => 'Instant', 'image_uris' => { 'png' => 'https://example.test/ice.png' } }
+        { 'colors' => ['R'], 'type_line' => 'Instant', 'oracle_text' => 'Fire deals 2 damage divided as you choose among one or two targets.', 'image_uris' => { 'png' => 'https://example.test/fire.png' } },
+        { 'colors' => ['U'], 'type_line' => 'Instant', 'oracle_text' => 'Tap target permanent. Draw a card.', 'image_uris' => { 'png' => 'https://example.test/ice.png' } }
       ],
       'promo' => false,
       'variation' => false,
@@ -57,6 +58,8 @@ RSpec.describe CardCatalog::ScryfallBulkIngest do
     expect(concept.preferred_printing).to be_red
     expect(concept.preferred_printing).to be_blue
     expect(concept.preferred_printing.collector_number).to eq('128')
+    expect(concept.oracle_text).to include('Fire deals 2 damage', 'Draw a card')
+    expect(concept.keywords).to eq(['Fuse'])
   end
 
   it 'excludes digital-only records' do

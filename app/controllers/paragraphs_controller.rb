@@ -6,6 +6,12 @@ class ParagraphsController < ApplicationController
     @table_of_content = TableOfContent.find params[:table_of_content_id]
     @section = @table_of_content.section
     @paragraph_table_of_content = TableOfContent.create @table_of_content.content_attributes.merge :paragraph_id => @paragraph.id
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_back fallback_location: edit_book_path(@table_of_content.book) }
+    end
   end
   
   def append
@@ -15,27 +21,14 @@ class ParagraphsController < ApplicationController
   
   def delay
     @table_of_content = TableOfContent.find params[:table_of_content_id]
-    @position = @table_of_content.ordering
-    @parent = @table_of_content.parent
-    @succeeding = @parent.succeeding
-    @last_position = @succeeding.last_child&.ordering.to_i
-    @subsequent = @table_of_content.subsequent
-    @table_of_content.contained.each do |table_of_content|
-      table_of_content.update_attribute :section_id, @succeeding.section_id
-    end
-    @table_of_content.update_attribute :ordering, @last_position.next
-    
-    @subsequent.each do |table_of_content|
-      table_of_content.update_attribute :ordering, table_of_content.ordering.pred
-    end
+    @table_of_content.delay!
+    @table_of_content.reload
   end
   
   def promote
     @table_of_content = TableOfContent.find params[:table_of_content_id]
-    @previous_position = @table_of_content.ordering
-    @previous_table_of_content = @table_of_content.previous
-    @table_of_content.update_attribute :ordering, @previous_position.pred
-    @previous_table_of_content.update_attribute :ordering, @previous_position
+    @previous_table_of_content = @table_of_content.promote!
+    @table_of_content.reload
   end
   
   def edit
@@ -46,18 +39,32 @@ class ParagraphsController < ApplicationController
   def update
     @paragraph_table_of_content = TableOfContent.find(params[:table_of_content_id])
     @table_of_contents = @paragraph_table_of_content.contained
+    @previous_paragraph = @paragraph
     
     @new_paragraph = Paragraph.create paragraph_params
     @table_of_contents.each { |table_of_content| table_of_content.update_attribute :paragraph_id, @new_paragraph.id }
     @section = @table_of_contents.first.section
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_back fallback_location: edit_book_path(@paragraph_table_of_content.book) }
+    end
   end
   
   def destroy
     @table_of_content = TableOfContent.find params[:table_of_content_id]
+    @removed_paragraph = @table_of_content.paragraph
     @table_of_content.destroy
 
     @table_of_content.subsequent.each do |table_of_content|
       table_of_content.update_attribute :ordering, table_of_content.ordering.pred
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_back fallback_location: edit_book_path(@table_of_content.book) }
     end
   end
   

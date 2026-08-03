@@ -1,6 +1,4 @@
 class ListMailer < ApplicationMailer
-  include Resque::Mailer
-  
   def suggested listed_item_id
     @listed_item = ListedItem.find listed_item_id
     @list = @listed_item.list

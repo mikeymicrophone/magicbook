@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: ENV.fetch('DELIVERY_EMAIL', 'Ways We Mage <hello@mail.wayswemage.com>')
   layout 'mailer'
 end

@@ -29,27 +29,14 @@ class SectionsController < ApplicationController
   
   def delay
     @table_of_content = TableOfContent.find params[:table_of_content_id]
-    @position = @table_of_content.ordering
-    @parent = @table_of_content.parent
-    @succeeding = @parent.succeeding
-    @last_position = @succeeding.last_child&.ordering.to_i
-    @subsequent = @table_of_content.subsequent
-    @table_of_content.contained.each do |table_of_content|
-      table_of_content.update_attribute :chapter_id, @succeeding.chapter_id
-    end
-    @table_of_content.update_attribute :ordering, @last_position.next
-    
-    @subsequent.each do |table_of_content|
-      table_of_content.update_attribute :ordering, table_of_content.ordering.pred
-    end
+    @table_of_content.delay!
+    @table_of_content.reload
   end
   
   def promote
     @table_of_content = TableOfContent.find params[:table_of_content_id]
-    @previous_position = @table_of_content.ordering
-    @previous_table_of_content = @table_of_content.previous
-    @table_of_content.update_attribute :ordering, @previous_position.pred
-    @previous_table_of_content.update_attribute :ordering, @previous_position
+    @previous_table_of_content = @table_of_content.promote!
+    @table_of_content.reload
   end
   
   def destroy

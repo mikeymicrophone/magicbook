@@ -1,0 +1,7 @@
+<%= turbo_stream.append dom_id(@table_of_content, :paragraphs) do %>
+  <%= paragraph_control @paragraph_table_of_content %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@table_of_content, :append_paragraph_form) do %>
+  <%= paragraph_append_control @table_of_content %>
+<% end %>

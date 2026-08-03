@@ -5,6 +5,6 @@ class MagiciansController < ApplicationController
   
   def ramp
     @purchase = Purchase.create :ramp => true, :email => params[:email]
-    BookMailer.ramped(@purchase.id).deliver
+    BookMailer.ramped(@purchase.id).deliver_later
   end
 end

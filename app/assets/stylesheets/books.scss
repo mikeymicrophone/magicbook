@@ -10,6 +10,62 @@
     float: right;
     font-size: 0.8em;
   }
+
+  .editor_controls.controls {
+    align-items: center;
+    border-top: 1px solid #d8dddd;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+    float: none;
+    gap: 0.45rem;
+    justify-content: flex-end;
+    margin: 0.85rem 0 0.2rem;
+    padding-top: 0.65rem;
+
+    .editor_icon_link,
+    > turbo-frame a {
+      border: 1px solid #aeb9bc;
+      border-radius: 0.25rem;
+      color: #34474a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Cabin, sans-serif;
+      font-size: 1.1rem;
+      height: 1.8rem;
+      line-height: 1;
+      padding: 0;
+      text-decoration: none;
+      width: 1.8rem;
+    }
+
+    .editor_icon_link:hover,
+    .editor_icon_link:focus,
+    > turbo-frame a:hover,
+    > turbo-frame a:focus {
+      background: #edf3f2;
+    }
+
+    .paragraph_edit_link {
+      img {
+        display: block;
+        height: 0.9rem;
+        width: 0.9rem;
+      }
+    }
+
+    .paragraph_edit_link:hover,
+    .paragraph_edit_link:focus {
+      background: #dce9e6;
+    }
+
+    .editor_remove_link,
+    .paragraph_remove_link {
+      border-color: transparent;
+      color: #8a3a3a;
+    }
+  }
   
   .focus_tool, .new_focus_tool {
     display: inline-block;
@@ -20,12 +76,29 @@
   }
   
   .paragraph_form {
+    background: #f7fbfa;
+    border: 1px solid #b8c8c4;
+    box-shadow: 0 0.3rem 0.9rem rgba(27, 48, 54, 0.12);
+    margin: -1rem -4.5rem 0;
+    padding: 1rem;
+
     textarea {
-      width: 80%;
+      box-sizing: border-box;
+      min-height: 8rem;
+      width: 100%;
       font-family: "Josefin Sans";
       font-size: 1.2em;
       line-height: 1.45em;
-      padding: 5px 86px;
+      padding: 0.8rem 1rem;
+    }
+
+    input[type='submit'] {
+      margin-top: 0.65rem;
+    }
+
+    @media (max-width: 720px) {
+      margin-left: -1rem;
+      margin-right: -1rem;
     }
   }
 }

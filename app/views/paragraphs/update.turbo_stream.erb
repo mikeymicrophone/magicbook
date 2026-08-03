@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@previous_paragraph) do %>
+  <%= paragraph_control @paragraph_table_of_content.reload %>
+<% end %>

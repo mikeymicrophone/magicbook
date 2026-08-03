@@ -20,16 +20,14 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @purchase = Purchase.new
-    
+    @purchase = Purchase.new(purchase_params)
     @purchase.email = params[:stripeEmail]
     @purchase.stripe_token = params[:stripeToken]
     @purchase.save
 
     if @purchase.fulfill
       sign_in @purchase.magician
-      BookMailer.purchased(@purchase.id).deliver
-      # BookMailersend.purchased(@purchase.id).send # likely put this in a background job
+      BookMailer.purchased(@purchase.id).deliver_later
       redirect_to invite_muggles_path(:purchase_id => @purchase.id)
     else
       render :text => "The purchase was not completed."
@@ -75,6 +73,6 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      params.fetch(:purchase, {}).permit(:email, :stripe_token)
+      params.fetch(:purchase, {}).permit(:email, :stripe_token, :book_id)
     end
 end

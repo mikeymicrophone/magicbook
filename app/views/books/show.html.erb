@@ -6,6 +6,8 @@
   by <%= @book.author %>
 <% end %>
 
+<%= content_tag :p, "Price: #{@book.formatted_price}", :class => 'book_price' %>
+
 <% edition = @book.editions.published.last %>
 <% if edition %>
   <%= div_with_data_for edition, :class => 'syllabus' do %>

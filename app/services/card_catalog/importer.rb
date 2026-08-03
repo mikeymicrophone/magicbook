@@ -21,9 +21,9 @@ module CardCatalog
 
     # `faces` is the array of atomic face records for one game card. Aggregating
     # the faces is essential: Fire // Ice, for example, is both red and blue.
-    def import_printing!(name:, oracle_id:, faces:, set:, printing:)
+    def import_printing!(name:, oracle_id:, faces:, set:, printing:, oracle_text: nil, keywords: [])
       Card.transaction do
-        card_concept = find_or_initialize_concept(name, oracle_id)
+        card_concept = find_or_initialize_concept(name, oracle_id, oracle_text, keywords)
         card_concept.save!
 
         card_set = CardSet.find_or_initialize_by(code: fetch(set, :code))
@@ -56,8 +56,8 @@ module CardCatalog
 
     private
 
-    def find_or_initialize_concept(name, oracle_id)
-      if oracle_id.present?
+    def find_or_initialize_concept(name, oracle_id, oracle_text, keywords)
+      concept = if oracle_id.present?
         (CardConcept.find_by(oracle_id: oracle_id) || CardConcept.find_or_initialize_by(name: name)).tap do |concept|
           concept.oracle_id = oracle_id
           concept.name = name
@@ -65,6 +65,10 @@ module CardCatalog
       else
         CardConcept.find_or_initialize_by(name: name)
       end
+
+      concept.oracle_text = oracle_text if oracle_text.present?
+      concept.keywords = Array(keywords) if keywords.present?
+      concept
     end
 
     def apply_face_attributes(card, faces)

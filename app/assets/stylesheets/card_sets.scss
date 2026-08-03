@@ -1,3 +1,81 @@
+.catalog-page {
+  color: #29251f;
+  font-family: Cabin, Arial, sans-serif;
+  line-height: 1.55;
+  margin: 0 auto 3rem;
+  max-width: 76rem;
+  padding: 0 1.25rem;
+}
+
+.catalog-page h1,
+.catalog-page h2 {
+  color: #34291d;
+  font-family: Cinzel, Georgia, serif;
+  font-weight: 500;
+}
+
+.catalog-page h1 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  letter-spacing: .015em;
+  line-height: 1.15;
+}
+
+.catalog-page h2 {
+  letter-spacing: .01em;
+}
+
+.catalog-page a {
+  color: #6a3b17;
+}
+
+.catalog-page a:hover {
+  color: #9a541d;
+}
+
+.catalog-page-header {
+  margin-bottom: 1.75rem;
+  max-width: 48rem;
+}
+
+.catalog-page-header h1 {
+  margin: .1rem 0 .45rem;
+}
+
+.catalog-page-header p:last-child {
+  font-size: 1.08rem;
+  margin: 0;
+}
+
+.catalog-kicker,
+.catalog-meta,
+.catalog-back-link {
+  font-family: Dosis, Arial, sans-serif;
+  letter-spacing: .08em;
+}
+
+.catalog-kicker {
+  color: #765838;
+  font-size: .85rem;
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.catalog-meta {
+  color: #705f4d;
+  font-size: .92rem;
+  font-weight: 500;
+}
+
+.catalog-back-link {
+  display: inline-block;
+  font-size: .9rem;
+  font-weight: 500;
+  margin-bottom: 1.1rem;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+}
+
 .card-set-filters {
   display: flex;
   flex-wrap: wrap;
@@ -23,8 +101,9 @@
 }
 
 .card-set-card {
-  border: 1px solid #bbb;
-  padding: .8rem;
+  background: #fffcf6;
+  border: 1px solid #d5c9b9;
+  padding: 1rem;
 }
 
 .card-set-card h2 {
@@ -34,6 +113,12 @@
 
 .card-set-card p {
   margin: .25rem 0;
+}
+
+.card-set-card .catalog-count {
+  color: #6a3b17;
+  font-weight: 600;
+  margin-top: .6rem;
 }
 
 .card-printing-grid {
@@ -59,7 +144,11 @@
 }
 
 .card-printing figcaption {
-  font-size: .85rem;
+  font-family: Dosis, Arial, sans-serif;
+  font-size: .95rem;
+  font-weight: 500;
+  letter-spacing: .025em;
+  line-height: 1.25;
   padding-top: .3rem;
 }
 

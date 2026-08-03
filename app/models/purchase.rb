@@ -4,7 +4,7 @@ class Purchase < ApplicationRecord
   has_many :books, :through => :purchased_books
   has_many :muggles
   
-  attr_accessor :fulfill, :ramp
+  attr_accessor :fulfill, :ramp, :book_id
   
   scope :fresh, lambda { where Purchase.arel_table[:created_at].gt 3.days.ago }
   
@@ -39,11 +39,11 @@ class Purchase < ApplicationRecord
   end
   
   def default_book
-    books << Book.find(ENV['DEFAULT_BOOK_IDS']) if books.empty?
+    books << Book.find(book_id.presence || ENV['DEFAULT_BOOK_IDS']) if books.empty?
   end
   
   def price
-    books.count * ENV['CURRENT_BOOK_PRICE'].to_i
+    books.sum(&:price_cents)
   end
   
   def invites_remaining

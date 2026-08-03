@@ -30,9 +30,16 @@ module BooksHelper
   end
   
   def append_to table_of_content
-    link_to send("append_#{table_of_content.content.class.name.underscore}_path", table_of_content.content, :table_of_content_id => table_of_content.id), :remote => true do
-      div_for table_of_content, :focus_tool_for, :class => :new_focus_tool do
-        image_tag asset_path('write.svg'), :title => "Add to #{table_of_content.content.class.name.underscore}"
+    case table_of_content.content
+    when Section
+      paragraph_append_control(table_of_content)
+    when Paragraph
+      citation_append_control(table_of_content)
+    else
+      link_to send("append_#{table_of_content.content.class.name.underscore}_path", table_of_content.content, :table_of_content_id => table_of_content.id), :remote => true, title: "Add #{table_of_content.content.class.name.underscore}", aria: { label: "Add #{table_of_content.content.class.name.underscore}" }, data: { turbo: false } do
+        div_for table_of_content, :focus_tool_for, :class => :new_focus_tool do
+          image_tag asset_path('write.svg'), :title => "Add to #{table_of_content.content.class.name.underscore}"
+        end
       end
     end
   end

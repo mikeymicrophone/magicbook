@@ -18,4 +18,18 @@ RSpec.describe Book, :type => :model do
       expect(@book.patch_version).to be_an Integer
     end
   end
+
+  describe 'pricing' do
+    it 'formats a stored price in cents for display' do
+      book = Fabricate(:book, price_cents: 1250)
+
+      expect(book.formatted_price).to eq('$12.50')
+    end
+
+    it 'does not allow a negative price' do
+      book = Fabricate.build(:book, price_cents: -1)
+
+      expect(book).not_to be_valid
+    end
+  end
 end

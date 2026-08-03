@@ -105,6 +105,8 @@ module CardCatalog
       {
         name: source.fetch("name"),
         oracle_id: source.fetch("oracle_id"),
+        oracle_text: oracle_text_from(source),
+        keywords: source.fetch("keywords", []),
         faces: faces_from(source),
         set: {
           code: source.fetch("set"),
@@ -136,6 +138,12 @@ module CardCatalog
           mana_value: source["cmc"]
         }
       end
+    end
+
+    def oracle_text_from(source)
+      source.fetch("card_faces", [source])
+        .filter_map { |face| face["oracle_text"] }
+        .join("\n//\n")
     end
 
     def image_url_from(source)

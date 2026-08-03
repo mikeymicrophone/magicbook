@@ -1,0 +1,125 @@
+.function-browser-header,
+.function-detail-header {
+  margin-bottom: 2rem;
+  max-width: 52rem;
+}
+
+.function-browser-page .function-browser-header,
+.function-detail-page .function-detail-header {
+  font-size: 1.05rem;
+}
+
+.function-browser-header h1,
+.function-detail-header h1 {
+  margin: .15rem 0 .5rem;
+}
+
+.function-browser-kicker {
+  font-family: Dosis, Arial, sans-serif;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.function-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+
+.function-card {
+  background: #fffcf6;
+  border: 1px solid #d5c9b9;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.function-card h2 {
+  font-family: Cinzel, Georgia, serif;
+  font-size: 1.2rem;
+  margin: 0 0 .5rem;
+}
+
+.function-card p {
+  margin: .3rem 0;
+}
+
+.function-relations {
+  color: #705f4d;
+  font-family: Dosis, Arial, sans-serif;
+  font-size: .9rem;
+}
+
+.function-counts {
+  border-top: 1px solid #ddd;
+  margin-top: auto !important;
+  padding-top: .75rem;
+}
+
+.function-counts span {
+  font-family: Dosis, Arial, sans-serif;
+  display: block;
+  font-size: .8rem;
+}
+
+.function-detail-relations {
+  border-left: .25rem solid #bbb;
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.function-result-note {
+  color: #705f4d;
+  font-family: Dosis, Arial, sans-serif;
+  margin-top: -.75rem;
+}
+
+.card-function-links a {
+  white-space: nowrap;
+}
+
+.concept-card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+}
+
+.concept-card {
+  min-width: 0;
+}
+
+.concept-card-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.concept-card img,
+.concept-card-placeholder {
+  aspect-ratio: 488 / 680;
+  background: #ddd;
+  display: block;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.concept-card-name,
+.concept-card-set {
+  display: block;
+}
+
+.concept-card-name {
+  font-family: Cabin, Arial, sans-serif;
+  font-weight: bold;
+  padding-top: .4rem;
+}
+
+.concept-card-set {
+  color: #705f4d;
+  font-family: Dosis, Arial, sans-serif;
+  font-size: .8rem;
+}

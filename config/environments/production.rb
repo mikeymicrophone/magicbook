@@ -37,7 +37,9 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
-  config.active_storage.service = :railway
+  # A staging environment can run without a persistent bucket while the
+  # production deployment continues to use Railway object storage.
+  config.active_storage.service = ENV['RAILWAY_S3_BUCKET'].present? ? :railway : :local
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -57,35 +59,21 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "magicbook_production"
+  config.active_job.queue_adapter = :solid_queue
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: 'wayswemage.com', protocol: 'https' }
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.mailersend.net',
-    :port => 587,
-    :user_name => ENV['MAILERSEND_SMTP_USERNAME'],
-    :password => ENV['MAILERSEND_SMTP_PASSWORD'],
-    :enable_starttls_auto => true
+    address: 'smtp.resend.com',
+    port: 587,
+    user_name: 'resend',
+    password: ENV['RESEND_API_KEY'],
+    authentication: :plain,
+    enable_starttls_auto: true
   }
-
-  # config.action_mailer.smtp_settings = {
-  #   :address   => "smtp.mandrillapp.com",
-  #   :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
-  #   :enable_starttls_auto => true, # detects and uses STARTTLS
-  #   :user_name => ENV["MANDRILL_USERNAME"],
-  #   :password  => ENV["MANDRILL_PASSWORD"], # SMTP password is any valid API key
-  #   :authentication => 'login', # Mandrill supports 'plain' or 'login'
-  #   :domain => 'wayswemage.com' # your domain to identify your server when connecting
-  # }
-
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

@@ -1,0 +1,41 @@
+<main class="catalog-page function-browser-page">
+  <header class="function-browser-header">
+    <p class="function-browser-kicker">Card concept taxonomy</p>
+    <h1>What cards do</h1>
+    <p>
+      Browse cards by function. A function can belong to more than one broader idea&mdash;
+      <em>Fight</em>, for example, is both creature combat and damage-based removal.
+    </p>
+  </header>
+
+  <div class="function-grid">
+    <% @card_functions.each do |card_function| %>
+      <article class="function-card">
+        <h2><%= link_to card_function.name, card_function_path(card_function.slug) %></h2>
+
+      <% if card_function.description.present? %>
+        <p><%= card_function.description %></p>
+      <% end %>
+
+      <% if card_function.parents.any? %>
+        <p class="function-relations">
+          Under
+          <%= safe_join(card_function.parents.sort_by(&:name).map { |parent| link_to parent.name, card_function_path(parent.slug) }, ', ') %>
+        </p>
+      <% end %>
+
+      <% if card_function.children.any? %>
+        <p class="function-relations">
+          Includes
+          <%= safe_join(card_function.children.sort_by(&:name).map { |child| link_to child.name, card_function_path(child.slug) }, ', ') %>
+        </p>
+      <% end %>
+
+      <p class="function-counts">
+        <strong><%= pluralize(@inclusive_counts.fetch(card_function, 0), 'card') %></strong> in this branch
+        <span><%= @direct_counts.fetch(card_function.id, 0) %> directly classified</span>
+      </p>
+      </article>
+    <% end %>
+  </div>
+</main>

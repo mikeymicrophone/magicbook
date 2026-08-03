@@ -31,6 +31,11 @@
     <%= f.text_field :author %>
   </div>
 
+  <div class="field">
+    <%= f.label :price_cents, 'Price (cents)' %>
+    <%= f.number_field :price_cents, min: 0, step: 1 %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

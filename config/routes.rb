@@ -1,7 +1,6 @@
-require 'resque/server'
 Rails.application.routes.draw do
   devise_for :scribes, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
-  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords', :sessions => 'sessions', :omniauth_callbacks => 'callbacks'}
+  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords', :sessions => 'sessions'}
   devise_for :muggles, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
 
   resources :muggles do
@@ -94,13 +93,13 @@ Rails.application.routes.draw do
   resources :card_inclusions
   resources :cards, only: [:show]
   resources :card_sets, :only => [:index, :show], :param => :code
+  resources :card_functions, only: [:index, :show], param: :slug
   
   get '/privacy' => 'landings#privacy', :as => 'privacy_policy'
   get '/data_deletion' => 'landings#data_deletion', :as => 'data_deletion'
   
   get '/wwemc' => 'landings#ways_we_enjoy_magic_cards', :as => 'wwemc'
   get '/coaching' => 'landings#coaching', :as => 'coaching'
-  get '/rank_my_jank' => 'landings#rank_my_jank', :as => 'rank_my_jank'
   
   get '/font_guide' => 'landings#font_guide'
   
@@ -109,9 +108,6 @@ Rails.application.routes.draw do
     get 'confirmations/establish_access', :to => 'confirmations#establish_access'
   end
   
-  get '/auth/facebook/callback', to: 'authentications#facebook'
-  
   root :to => 'landings#home'
-  mount Resque::Server.new, :at => "/resque"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

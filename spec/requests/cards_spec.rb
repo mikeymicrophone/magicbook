@@ -17,6 +17,8 @@ RSpec.describe 'Cards', type: :request do
     private_item = ListedItem.create!(list: private_list, designation: 'Test Card', privacy: :secret)
     CardInclusion.create!(card: card, piece: published_item)
     CardInclusion.create!(card: card, piece: private_item)
+    card_function = CardFunction.create!(name: 'Card draw', slug: 'card-draw')
+    CardFunctionAssignment.create!(card_concept: concept, card_function: card_function, source: 'spec')
 
     get card_path(card)
 
@@ -24,6 +26,7 @@ RSpec.describe 'Cards', type: :request do
     expect(response.body).to include('Test Expansion')
     expect(response.body).to include('Published card list')
     expect(response.body).not_to include('Private card list')
+    expect(response.body).to include('Card draw', card_function_path(card_function))
 
     get card_set_path(card_set)
 

@@ -103,7 +103,6 @@ module ListsHelper
     tag.meta(:property => 'og:type', :content => 'article') +
     tag.meta(:property => 'og:title', :content => list.name) +
     tag.meta(:property => 'og:description', :content => list.description) +
-    tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png')) +
-    tag.meta(:property => 'fb:app_id', :content => ENV['FACEBOOK_APP_ID'])
+    tag.meta(:property => 'og:image', :content => asset_url('ways-we-mage-logo-vertical.png'))
   end
 end

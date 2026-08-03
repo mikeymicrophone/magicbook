@@ -7,6 +7,8 @@ class Book < ApplicationRecord
   has_many :citations, :through => :table_of_contents
   
   has_one_attached :pdf
+
+  validates :price_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   
   def current_edition
     editions.recent.published.recent.first
@@ -34,5 +36,13 @@ class Book < ApplicationRecord
 
   def permalink
     title.gsub(/[^a-z0-9]+/i, '-')
+  end
+
+  def price_in_dollars
+    price_cents / 100.0
+  end
+
+  def formatted_price
+    format('$%.2f', price_in_dollars)
   end
 end

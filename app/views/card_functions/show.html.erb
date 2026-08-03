@@ -1,0 +1,54 @@
+<main class="catalog-page function-detail-page">
+  <%= link_to '← All card functions', card_functions_path, class: 'catalog-back-link' %>
+
+  <header class="function-detail-header">
+  <p class="function-browser-kicker">Card function</p>
+  <h1><%= @card_function.name %></h1>
+  <% if @card_function.description.present? %>
+    <p><%= @card_function.description %></p>
+  <% end %>
+
+  <div class="function-detail-relations">
+    <% if @card_function.parents.any? %>
+      <p>
+        <strong>Broader ideas:</strong>
+        <%= safe_join(@card_function.parents.sort_by(&:name).map { |parent| link_to parent.name, card_function_path(parent.slug) }, ', ') %>
+      </p>
+    <% end %>
+    <% if @card_function.children.any? %>
+      <p>
+        <strong>More specific:</strong>
+        <%= safe_join(@card_function.children.sort_by(&:name).map { |child| link_to child.name, card_function_path(child.slug) }, ', ') %>
+      </p>
+    <% end %>
+  </div>
+  </header>
+
+  <h2 class="catalog-result-heading"><%= pluralize(@card_concepts.total_count, 'matching card') %></h2>
+  <p class="function-result-note">Includes cards classified under more specific functions in this branch.</p>
+
+  <div class="concept-card-grid">
+    <% @card_concepts.each do |card_concept| %>
+      <% printing = @preferred_printings[card_concept.id] %>
+      <article class="concept-card">
+        <% if printing %>
+          <%= link_to card_path(printing), class: 'concept-card-link' do %>
+            <% if printing.image_url.present? %>
+              <%= image_tag printing.image_url, alt: card_concept.name, loading: 'lazy' %>
+            <% else %>
+              <span class="concept-card-placeholder" aria-hidden="true"></span>
+            <% end %>
+            <span class="concept-card-name"><%= card_concept.name %></span>
+            <% if printing.card_set %>
+              <span class="concept-card-set"><%= printing.card_set.name %></span>
+            <% end %>
+          <% end %>
+        <% else %>
+          <span class="concept-card-name"><%= card_concept.name %></span>
+        <% end %>
+      </article>
+    <% end %>
+  </div>
+
+  <%= paginate @card_concepts %>
+</main>

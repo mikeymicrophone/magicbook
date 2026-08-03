@@ -76,10 +76,8 @@ class ChaptersController < ApplicationController
   
   def promote
     @table_of_content = TableOfContent.find params[:table_of_content_id]
-    @previous_position = @table_of_content.ordering
-    @previous_table_of_content = @table_of_content.previous
-    @table_of_content.update_attribute :ordering, @previous_position.pred
-    @previous_table_of_content.update_attribute :ordering, @previous_position
+    @previous_table_of_content = @table_of_content.promote!
+    @table_of_content.reload
   end
   
   def chapter_params
