@@ -92,6 +92,7 @@ Rails.application.routes.draw do
     end
   end
   resources :card_inclusions
+  resources :cards, only: [:show]
   resources :card_sets, :only => [:index, :show], :param => :code
   
   get '/privacy' => 'landings#privacy', :as => 'privacy_policy'

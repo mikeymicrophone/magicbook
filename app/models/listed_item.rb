@@ -17,6 +17,7 @@ class ListedItem < ApplicationRecord
   scope :published, lambda { where :privacy => :published }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   scope :suggested, lambda { where :privacy => :suggested }
+  scope :with_cards_legal_in, ->(format) { joins(:cards).merge(Card.legal_in(format)).distinct }
   
   before_create :sequence
   before_update :remove_from_sequence

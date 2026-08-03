@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_03_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_03_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -158,6 +158,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_010000) do
     t.datetime "release", precision: nil
     t.datetime "updated_at", precision: nil, null: false
     t.index ["book_id"], name: "index_editions_on_book_id"
+  end
+
+  create_table "format_sets", force: :cascade do |t|
+    t.bigint "card_set_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "format_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_set_id"], name: "index_format_sets_on_card_set_id"
+    t.index ["format_id", "card_set_id"], name: "index_format_sets_on_format_id_and_card_set_id", unique: true
+    t.index ["format_id"], name: "index_format_sets_on_format_id"
+  end
+
+  create_table "formats", force: :cascade do |t|
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_formats_on_code", unique: true
+    t.index ["name"], name: "index_formats_on_name", unique: true
   end
 
   create_table "identifiers", force: :cascade do |t|
@@ -330,6 +350,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_010000) do
   add_foreign_key "cards", "card_concepts"
   add_foreign_key "cards", "card_sets"
   add_foreign_key "editions", "books"
+  add_foreign_key "format_sets", "card_sets"
+  add_foreign_key "format_sets", "formats"
   add_foreign_key "purchased_books", "books"
   add_foreign_key "purchased_books", "purchases"
   add_foreign_key "table_of_contents", "books"

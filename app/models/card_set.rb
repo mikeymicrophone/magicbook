@@ -23,6 +23,8 @@ class CardSet < ApplicationRecord
   }.freeze
 
   has_many :cards, dependent: :restrict_with_exception
+  has_many :format_sets, dependent: :restrict_with_exception
+  has_many :formats, through: :format_sets
 
   enum :category, {
     premier: 0,

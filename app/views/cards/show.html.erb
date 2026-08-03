@@ -1,0 +1,34 @@
+<% if @card.card_set %>
+  <%= link_to "← #{@card.card_set.name}", card_set_path(@card.card_set) %>
+<% end %>
+
+<article class="card-detail">
+  <div>
+    <h1><%= @card.name %></h1>
+    <p>
+      <% if @card.card_set %>
+        <%= link_to @card.card_set.name, card_set_path(@card.card_set) %>
+      <% else %>
+        Legacy printing
+      <% end %>
+      <% if @card.collector_number.present? %> · #<%= @card.collector_number %><% end %>
+    </p>
+
+    <% if @card.image_url.present? %>
+      <%= image_tag @card.image_url, alt: @card.name, class: 'card-detail-image' %>
+    <% end %>
+  </div>
+
+  <section class="card-list-memberships">
+    <h2>Lists including this printing</h2>
+    <% if @lists.any? %>
+      <ul>
+        <% @lists.each do |list| %>
+          <li><%= link_to list.name, list %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No published lists include this printing yet.</p>
+    <% end %>
+  </section>
+</article>

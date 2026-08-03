@@ -21,6 +21,7 @@ class List < ApplicationRecord
   scope :visible_to, lambda { |magician| where :privacy => [:unreviewed_secret, :secret], :magician_id => magician.id }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   scope :in_draft, lambda { where :privacy => :draft }
+  scope :with_cards_legal_in, ->(format) { joins(listed_items: :cards).merge(Card.legal_in(format)).distinct }
   
   def ordered_items
     case mode

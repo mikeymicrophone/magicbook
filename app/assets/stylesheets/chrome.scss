@@ -47,3 +47,15 @@
     margin: 4%;
   }
 }
+
+.header_links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+
+  a {
+    margin: 0;
+    white-space: nowrap;
+  }
+}

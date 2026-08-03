@@ -52,7 +52,35 @@
   width: 100%;
 }
 
+.card-printing-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
 .card-printing figcaption {
   font-size: .85rem;
   padding-top: .3rem;
+}
+
+.card-detail {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 22rem) minmax(16rem, 1fr);
+}
+
+.card-detail-image {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+.card-list-memberships h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 40rem) {
+  .card-detail {
+    grid-template-columns: 1fr;
+  }
 }
