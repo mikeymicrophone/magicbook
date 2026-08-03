@@ -9,6 +9,7 @@ end
 gem 'rails', '~> 8.1.3'
 gem 'pg'
 gem 'puma'
+gem 'aws-sdk-s3', require: false
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
@@ -17,8 +18,6 @@ gem 'turbolinks'
 gem 'jbuilder'
 
 gem 'stripe'
-gem 'carrierwave'
-gem 'fog-aws'
 gem 'record_tag_helper'
 
 gem 'devise'

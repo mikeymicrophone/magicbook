@@ -4,7 +4,6 @@ Fabricator :edition do
   patch { |attrs| rand attrs[:books]&.last&.patch_version.to_i + 1 }
   note { Faker::Hipster.paragraph }
   release { rand 5.years.ago..1.minute.ago }
-  pdf { |attrs| attrs[:books]&.last&.pdf }
   book { |attrs| attrs[:books]&.first }
 end
 

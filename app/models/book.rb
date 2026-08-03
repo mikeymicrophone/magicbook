@@ -6,7 +6,7 @@ class Book < ApplicationRecord
   has_many :paragraphs, -> { where 'table_of_contents.citation_id' => nil }, :through => :table_of_contents
   has_many :citations, :through => :table_of_contents
   
-  mount_uploader :pdf, PdfUploader
+  has_one_attached :pdf
   
   def current_edition
     editions.recent.published.recent.first

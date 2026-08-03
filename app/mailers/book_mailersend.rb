@@ -3,8 +3,8 @@ class BookMailersend
     ms_email = Mailersend::Email.new
     @purchase = Purchase.find purchase_id
     @purchase.books.each do |book|
-      if book.pdf&.file&.exists?
-        ms_email.add_attachment filename: "#{book.title}.pdf", content: Base64.strict_encode64(URI.open(book.pdf.file.url).read), disposition: 'attachment'
+      if book.pdf.attached?
+        ms_email.add_attachment filename: "#{book.title}.pdf", content: Base64.strict_encode64(book.pdf.download), disposition: 'attachment'
       end
     end
     

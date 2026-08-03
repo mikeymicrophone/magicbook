@@ -8,7 +8,7 @@ class Edition < ApplicationRecord
   
   attr_accessor :book
   
-  mount_uploader :pdf, PdfUploader
+  has_one_attached :pdf
   
   scope :recent, lambda { order(:major => :desc, :minor => :desc, :patch => :desc) }
   scope :published, lambda { where Edition.arel_table[:release].lt DateTime.now }
