@@ -1,0 +1,286 @@
+#lists {
+  margin: 30px 10px;
+}
+
+#lists div.list {
+  margin-bottom: 19px;
+  padding: 0 1%;
+  font-size: 2em;
+  font-family: Antic;
+}
+
+#lists div.list.two {
+  margin-left: 10%;
+}
+
+#lists div.list.three {
+  margin-left: 20%;
+}
+
+#lists div.list.four {
+  margin-left: 30%;
+}
+
+#lists div.list.five {
+  text-align: center;
+}
+
+#lists div.list.six {
+  text-align: right;
+  margin-right: 30%;
+}
+
+#lists div.list.seven {
+  text-align: right;
+  margin-right: 20%;
+}
+
+#lists div.list.eight {
+  text-align: right;
+  margin-right: 10%;
+}
+
+#lists div.list.nine {
+  text-align: right;
+}
+
+#lists div.list a {
+  transition: color 2s;
+}
+
+#lists div.list a:visited {
+  color: #555;
+}
+
+#lists div.list a:hover {
+  color: #F49440;
+  text-decoration: none;
+}
+
+#lists em {
+  font-family: Syncopate;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#lists em span {
+  margin-left: 17px;
+  color: #6D3E7A;
+  display: none;
+  font-size: 0.75em;
+}
+
+#lists em:hover span {
+  display: inline-block;
+}
+
+#lists section {
+  display: none;
+}
+
+#lists section.shown {
+  display: block;
+}
+
+.list {
+  margin: 30px 10px;
+  font-family: Cabin;
+  border-bottom: 1px solid #999;
+}
+
+.list .name_of_list {
+  text-align: center;
+  font-size: 2.4em;
+  padding: 9px;
+  border-radius: 28px;
+  box-shadow: 0px 10px 25px #888888;
+  transition: background-color 3s;
+}
+
+.list .name_of_list:hover {
+  background-color: #B1EDFA;
+}
+
+.list .name_of_list input {
+  font-size: 1em;
+}
+
+.list .name_of_list .edit_list_link {
+  float: right;
+  padding: 8px;
+  font-size: 0.5em;
+}
+
+.list .description_of_list {
+  margin: -10px 5% 20px 5%;
+  padding: 26px 26px 26px 26px;
+  text-align: center;
+  font-size: 1.4em;
+  border-radius: 24px;
+  box-shadow: 0px 5px 15px #888888;
+  transition: background-color 3s;
+}
+
+.list .description_of_list:hover {
+  background-color: #BCFDBE;
+}
+
+.list .description_of_list textarea {
+  font-size: 1em;
+  width: 80%;
+  height: 80px;
+}
+
+.list .edit_tool_for_list {
+  margin-top: -16px;
+  text-align: center;
+  opacity: 0;
+}
+
+.list .privacy_options_for_list, .list .privacy_options_for_listed_item, .list .sorting_options_for_list, .list .suggestion_options_for_list {
+  text-align: center;
+  height: 55px;
+}
+
+.list .privacy_options_for_list privacy, .list .privacy_options_for_list order, .list .privacy_options_for_list policy, .list .privacy_options_for_listed_item privacy, .list .privacy_options_for_listed_item order, .list .privacy_options_for_listed_item policy, .list .sorting_options_for_list privacy, .list .sorting_options_for_list order, .list .sorting_options_for_list policy, .list .suggestion_options_for_list privacy, .list .suggestion_options_for_list order, .list .suggestion_options_for_list policy {
+  margin: 5%;
+}
+
+.list .privacy_options_for_list privacy label, .list .privacy_options_for_list order label, .list .privacy_options_for_list policy label, .list .privacy_options_for_listed_item privacy label, .list .privacy_options_for_listed_item order label, .list .privacy_options_for_listed_item policy label, .list .sorting_options_for_list privacy label, .list .sorting_options_for_list order label, .list .sorting_options_for_list policy label, .list .suggestion_options_for_list privacy label, .list .suggestion_options_for_list order label, .list .suggestion_options_for_list policy label {
+  display: inline-block;
+  width: 150px;
+}
+
+.list .submission_of_list, .list .submission_of_listed_item {
+  text-align: center;
+}
+
+.list .submission_of_list input, .list .submission_of_listed_item input {
+  width: 60%;
+  font-size: 2em;
+  background-color: #2522D3;
+  color: white;
+  border-radius: 80px;
+}
+
+.list .listed_item {
+  margin: 0px 12px;
+  padding: 9px;
+  border-bottom: 1px solid #bbb;
+}
+
+.list .listed_item:last-child {
+  border-bottom: none;
+}
+
+.list .listed_item .number_of_listed_item {
+  display: inline-block;
+  padding-right: 14px;
+}
+
+.list .listed_item .designation_of_listed_item {
+  display: inline-block;
+  width: 94%;
+  font-size: 1.3em;
+}
+
+.list .listed_item .editing_tools_for_listed_item {
+  float: right;
+}
+
+.list .listed_item .footer_of_listed_item {
+  opacity: 0;
+}
+
+.list .listed_item:hover .footer_of_listed_item {
+  opacity: 0.4;
+  transition: opacity 10s;
+}
+
+.list .listed_item .expression_of_listed_item .card {
+  float: right;
+}
+
+.list .listed_item .expression_of_listed_item .card img {
+  width: 150px;
+}
+
+.list .listed_item .formatting_of_listed_item {
+  display: none;
+  font-size: 0.7em;
+}
+
+.list .listed_item .formatting_of_listed_item .formatting_of_designation_of_listed_item {
+  font-size: 1.15em;
+  margin-bottom: 8px;
+}
+
+.masthead_of_list:hover .edit_tool_for_list {
+  opacity: 0.8;
+}
+
+.listed_items_in_list {
+  margin: 25px;
+  padding: 3px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 25px #888888;
+}
+
+.submission_reviewer_for_list .accepter_for_listed_item a.suggestion_approval {
+  padding: 2px 10%;
+}
+
+.submission_reviewer_for_list .accepter_for_listed_item a.suggestion_approval.accept {
+  color: #309D0E;
+}
+
+.submission_reviewer_for_list .accepter_for_listed_item a.suggestion_approval.accept_secret {
+  color: #F49440;
+}
+
+.submission_reviewer_for_list .accepter_for_listed_item a.suggestion_approval.reject {
+  color: #B20526;
+}
+
+.new_item_adder_for_list {
+  margin: 45px;
+  padding: 13px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 25px #888888;
+}
+
+.form_for_listed_item .inline {
+  margin: 2%;
+}
+
+.form_for_listed_item .inline.listed_item_content {
+  width: 45%;
+}
+
+.form_for_listed_item textarea {
+  width: 80%;
+  height: 100px;
+}
+
+.form_for_listed_item textarea#listed_item_designation {
+  height: 40px;
+}
+
+.form_for_listed_item .instructions {
+  margin: 14px;
+}
+
+.item_adder_button_for_list {
+  font-family: Righteous;
+  font-size: 1.5em;
+  margin: 35px 75px;
+  padding: 13px;
+  border-radius: 18px;
+  box-shadow: 0px 3px 25px #888888;
+  transition: background-color 5s;
+}
+
+.item_adder_button_for_list:hover {
+  background-color: #FDCF7F;
+}

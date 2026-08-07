@@ -1,0 +1,62 @@
+#logo_holder {
+  text-align: center;
+  clear: both;
+}
+
+#logo_holder #site_subtitle {
+  font-family: Cabin;
+  font-size: 1.3em;
+}
+
+#logo_holder #site_title {
+  display: inline-block;
+  width: 60%;
+  -webkit-clip-path: polygon(6% 0%, 94% 0%, 100% 50%, 94% 100%, 6% 100%, 0% 50%);
+}
+
+#logo_holder #site_title #site_logo {
+  width: 100%;
+  transition: background-color 4s;
+  border-radius: 10px;
+}
+
+#logo_holder #site_title #site_logo:hover {
+  background-color: #ED88F3;
+}
+
+#ways_we_mage_socially {
+  position: absolute;
+  top: 60px;
+  right: 30px;
+}
+
+#ways_we_mage_socially img {
+  width: 24px;
+}
+
+.pagination {
+  text-align: center;
+  font-family: Noto Sans;
+}
+
+.footer_links, .header_links {
+  margin: 4% 4%;
+  font-family: Cinzel;
+  text-align: center;
+}
+
+.footer_links a, .header_links a {
+  margin: 4%;
+}
+
+.header_links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.header_links a {
+  margin: 0;
+  white-space: nowrap;
+}

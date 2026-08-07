@@ -18,15 +18,15 @@
 
 .login_area {
   text-align: center;
+}
 
-  #login_form, #muggle_login_form {
-    padding: 0 10%;
-    text-align: center;
-    font-family: Cabin;
-  
-    form {
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 20px;
-    }
-  }
+.login_area #login_form, .login_area #muggle_login_form {
+  padding: 0 10%;
+  text-align: center;
+  font-family: Cabin;
+}
+
+.login_area #login_form form, .login_area #muggle_login_form form {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
 }

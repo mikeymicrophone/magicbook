@@ -1,0 +1,193 @@
+.book.editing textarea {
+  width: 400px;
+  height: 100px;
+}
+
+.book.editing .controls {
+  font-family: Changa;
+  float: right;
+  font-size: 0.8em;
+}
+
+.book.editing .editor_controls.controls {
+  align-items: center;
+  border-top: 1px solid #d8dddd;
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  float: none;
+  gap: 0.45rem;
+  justify-content: flex-end;
+  margin: 0.85rem 0 0.2rem;
+  padding-top: 0.65rem;
+}
+
+.book.editing .editor_controls.controls .editor_icon_link,
+.book.editing .editor_controls.controls > turbo-frame a {
+  border: 1px solid #aeb9bc;
+  border-radius: 0.25rem;
+  color: #34474a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Cabin, sans-serif;
+  font-size: 1.1rem;
+  height: 1.8rem;
+  line-height: 1;
+  padding: 0;
+  text-decoration: none;
+  width: 1.8rem;
+}
+
+.book.editing .editor_controls.controls .editor_icon_link:hover,
+.book.editing .editor_controls.controls .editor_icon_link:focus,
+.book.editing .editor_controls.controls > turbo-frame a:hover,
+.book.editing .editor_controls.controls > turbo-frame a:focus {
+  background: #edf3f2;
+}
+
+.book.editing .editor_controls.controls .paragraph_edit_link img {
+  display: block;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.book.editing .editor_controls.controls .paragraph_edit_link:hover,
+.book.editing .editor_controls.controls .paragraph_edit_link:focus {
+  background: #dce9e6;
+}
+
+.book.editing .editor_controls.controls .editor_remove_link,
+.book.editing .editor_controls.controls .paragraph_remove_link {
+  border-color: transparent;
+  color: #8a3a3a;
+}
+
+.book.editing .focus_tool, .book.editing .new_focus_tool {
+  display: inline-block;
+}
+
+.book.editing .focus_tool img, .book.editing .new_focus_tool img {
+  width: 13px;
+}
+
+.book.editing .paragraph_form {
+  background: #f7fbfa;
+  border: 1px solid #b8c8c4;
+  box-shadow: 0 0.3rem 0.9rem rgba(27, 48, 54, 0.12);
+  margin: -1rem -4.5rem 0;
+  padding: 1rem;
+}
+
+.book.editing .paragraph_form textarea {
+  box-sizing: border-box;
+  min-height: 8rem;
+  width: 100%;
+  font-family: "Josefin Sans";
+  font-size: 1.2em;
+  line-height: 1.45em;
+  padding: 0.8rem 1rem;
+}
+
+.book.editing .paragraph_form input[type='submit'] {
+  margin-top: 0.65rem;
+}
+
+@media (max-width: 720px) {
+  .book.editing .paragraph_form {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+}
+
+.div_with_data {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.paragraph.div_with_data {
+  font-family: "Josefin Sans";
+  font-size: 1.2em;
+  line-height: 1.45em;
+  border: none;
+  padding: 5px 86px;
+}
+
+.bookshelf_display_of_book {
+  margin: 15%;
+  padding: 30px;
+  font-size: 1.5em;
+  font-family: Cabin;
+  border: 2px solid black;
+  box-shadow: 4px 8px 2px 0px;
+}
+
+.bookshelf_display_of_book .title_of_book {
+  font-size: 1.6em;
+}
+
+.bookshelf_display_of_book .chapter_count_of_book {
+  font-size: 0.6em;
+  float: right;
+}
+
+.bookshelf_display_of_book .actions_with_book {
+  margin-top: 60px;
+  font-size: 0.8em;
+}
+
+.bookshelf_display_of_book .actions_with_book a.begin_reading_link {
+  color: #2A4098;
+}
+
+.bookshelf_display_of_book .actions_with_book a.book_purchase_link {
+  color: #37786F;
+  float: right;
+}
+
+.book_title {
+  margin-left: 5%;
+  padding-top: 25px;
+  font-weight: bold;
+  font-family: Josefin Sans;
+  font-size: 2em;
+}
+
+.book_author {
+  margin-left: 7%;
+  font-family: Josefin Sans;
+  font-size: 1.3em;
+}
+
+.syllabus .div_with_data {
+  border: none;
+}
+
+.syllabus .edition {
+  text-align: center;
+  font-family: Noto Sans;
+  font-size: 0.8em;
+}
+
+.syllabus .chapter_title {
+  font-size: 1.3em;
+  font-family: Fondamento;
+  margin-top: 10px;
+  margin-left: 6%;
+}
+
+.syllabus .section {
+  padding: 0;
+}
+
+.syllabus .section_heading {
+  padding: 2px;
+  margin-left: 8%;
+}
+
+.syllabus .section_subheading {
+  margin-left: 8%;
+  margin-right: 8%;
+  font-size: 0.9em;
+  font-style: italic;
+}

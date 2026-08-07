@@ -1,0 +1,42 @@
+.read_by_chapter .previous_chapter, .read_by_chapter .next_chapter {
+  font-family: Noto Sans;
+  font-size: 0.7em;
+}
+
+.read_by_chapter .next_chapter {
+  float: right;
+}
+
+.read_by_chapter .chapter_title {
+  text-align: center;
+  font-family: Fondamento;
+  font-size: 2.2em;
+}
+
+.read_by_chapter .subtitle_of_chapter {
+  text-align: center;
+}
+
+.read_by_chapter .chapter_subtitle {
+  display: inline-block;
+  text-align: center;
+  font-family: Dosis;
+  max-width: 58%;
+}
+
+.read_by_chapter .section_heading {
+  margin-left: 25%;
+  width: 50%;
+  font-family: Dosis;
+  font-size: 1.25em;
+}
+
+.read_by_chapter .section_subheading {
+  margin-left: 17%;
+  width: 66%;
+  font-family: Dosis;
+}
+
+.read_by_chapter .div_with_data.section {
+  border: none;
+}

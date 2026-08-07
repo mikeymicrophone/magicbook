@@ -5,11 +5,8 @@
 
 .purchases {
   font-family: Anton;
-  
-  .purchase {
-    
-    div {
-      display: inline-block;
-    }
-  }
+}
+
+.purchases .purchase div {
+  display: inline-block;
 }
