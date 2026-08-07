@@ -131,6 +131,7 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
+    dry-cli (1.4.1)
     erb (6.0.6)
     erubi (1.13.1)
     et-orbi (1.4.1)
@@ -200,6 +201,7 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
+    mutex_m (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.6)
@@ -229,6 +231,8 @@ GEM
     raabro (1.5.0)
     racc (1.8.1)
     rack (3.2.6)
+    rack-proxy (0.8.3)
+      rack
     rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -353,6 +357,15 @@ GEM
     uri (1.1.1)
     useragent (0.16.11)
     version_gem (1.1.15)
+    vite_rails (3.11.1)
+      railties (>= 5.1, < 9)
+      vite_ruby (~> 3.0, >= 3.2.2)
+    vite_ruby (3.10.2)
+      dry-cli (>= 0.7, < 2)
+      logger (~> 1.6)
+      mutex_m
+      rack-proxy (~> 0.6, >= 0.6.1)
+      zeitwerk (~> 2.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.3.0)
@@ -405,6 +418,7 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier
+  vite_rails (~> 3.11)
   web-console
 
 RUBY VERSION

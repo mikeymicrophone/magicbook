@@ -66,3 +66,5 @@ group :development do
 end
 
 gem 'tzinfo-data', platforms: %i[windows jruby]
+
+gem "vite_rails", "~> 3.11"
