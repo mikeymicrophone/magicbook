@@ -28,6 +28,12 @@ class CardInclusionsController < ApplicationController
     @card_inclusion = CardInclusion.new card_inclusion_params
     @card_inclusion.card = @card
     @card_inclusion.save if @card_inclusion.piece.magician == current_magician
+    @piece = @card_inclusion.piece
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back fallback_location: list_path(@piece.list) }
+    end
   end
   
   def card_inclusion_params

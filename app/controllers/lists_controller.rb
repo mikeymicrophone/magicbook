@@ -11,9 +11,7 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to @list
     else
-      if @list.errors[:name].present?
-        render 'name_was_taken.js.erb'
-      end
+      render :new, status: :unprocessable_entity
     end
   end
   
@@ -44,11 +42,12 @@ class ListsController < ApplicationController
   def update
     @list = List.find params[:id]
     if @list.update list_params
-      redirect_to @list
-    else
-      if @list.errors[:name].present?
-        render 'name_was_taken.js.erb'
+      respond_to do |format|
+        format.turbo_stream { head :no_content }
+        format.html { redirect_to @list }
       end
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
   
@@ -87,11 +86,21 @@ class ListsController < ApplicationController
     when 'unreviewed_secret'
       @list.update_attribute :privacy, 'secret'
     end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to review_lists_path }
+    end
   end
   
   def reject
     @list = List.find params[:id]
     @list.update_attribute :privacy, 'rejected'
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to review_lists_path }
+    end
   end
   
   def list_params

@@ -3,8 +3,8 @@
     <%= div_for list, :approval_interface_for do %>
       <%= reviewable_display_of list %>
       <%= tag.br %>
-      <%= link_to 'approve', approve_list_path(list), :method => :put, :remote => true %>
-      <%= link_to 'reject', reject_list_path(list), :method => :put, :remote => true %>
+      <%= link_to 'approve', approve_list_path(list), data: { turbo_method: :put, turbo_stream: true } %>
+      <%= link_to 'reject', reject_list_path(list), data: { turbo_method: :put, turbo_stream: true } %>
     <% end %>
   <% end %>
 </div>

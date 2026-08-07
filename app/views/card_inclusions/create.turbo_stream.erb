@@ -1,0 +1,12 @@
+<% if @card_inclusion.persisted? %>
+  <%= turbo_stream.replace dom_id(@piece) do %>
+    <%= listed_item_display @piece.reload %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace dom_id(@piece, :card_includer_for) do %>
+    <%= turbo_frame_tag dom_id(@piece, :card_includer_for) do %>
+      <p>This card was not found. Check the spelling?</p>
+      <%= render 'form' %>
+    <% end %>
+  <% end %>
+<% end %>

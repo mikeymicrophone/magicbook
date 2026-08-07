@@ -119,7 +119,9 @@ module ListedItemsHelper
           link_to('move down', move_down_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true }) +
           tag.br
         end.to_s.html_safe +
-        link_to('include card', new_card_inclusion_path(:listed_item_id => listed_item.id), :remote => true, :data => { :turbo => false }) +
+        turbo_frame_tag(dom_id(listed_item, :card_includer_for)) do
+          link_to('include card', new_card_inclusion_path(listed_item_id: listed_item.id), data: { turbo_frame: dom_id(listed_item, :card_includer_for) })
+        end +
         link_to('edit', edit_listed_item_path(listed_item), :class => 'list_item_edit_link', :data => { :turbo_frame => dom_id(listed_item) }) +
         link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}), :data => { :turbo_method => :put, :turbo_stream => true })
       end

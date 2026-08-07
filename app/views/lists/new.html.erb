@@ -1,5 +1,8 @@
 <div class="list">
-  <%= form_with :model => @list do |list_form| %>
+  <%= form_with model: @list, local: true do |list_form| %>
+    <% if @list.errors[:name].present? %>
+      <p class="center"><%= @list.errors.full_messages_for(:name).to_sentence %></p>
+    <% end %>
     <%= div_for @list, :name_of do %>
       <%= list_form.text_field :name, :placeholder => 'Name the list' %>
     <% end %>

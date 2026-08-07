@@ -19,9 +19,13 @@
 		  To avoid spamming, please ensure that you have permission to send the book to these people.
 		<% end %>
 
-    <%= form_with :url => submit_muggles_path, :id => 'muggle_form' do %>
+    <%= form_with url: submit_muggles_path, local: true, id: 'muggle_form' do %>
       <% @purchase.invites_remaining.times do |i| %>
-        <%= text_field_tag "email_#{i + 1}", nil, :placeholder => 'email address' %>
+        <% muggle = @muggles&.fetch(i, nil) %>
+        <%= text_field_tag "email_#{i + 1}", params["email_#{i + 1}"], placeholder: 'email address' %>
+        <% if muggle&.email.present? && muggle.errors.any? %>
+          <p><%= muggle.errors.full_messages.to_sentence %></p>
+        <% end %>
         <%= tag.br %>
       <% end %>
       <%= text_area_tag :message, nil, :placeholder => 'Add a message. This is how they can know who the gift is from.', :size => '60x5' %>
