@@ -11,13 +11,7 @@ gem 'pg'
 gem 'puma'
 gem 'aws-sdk-s3', require: false
 gem 'sass-rails'
-gem 'uglifier'
-gem 'coffee-rails'
-gem 'jquery-rails'
-gem 'turbolinks'
 gem 'jbuilder'
-gem 'importmap-rails'
-gem 'stimulus-rails'
 gem 'turbo-rails'
 
 gem 'stripe'
