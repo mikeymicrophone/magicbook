@@ -3,7 +3,7 @@ module ParagraphsHelper
     frame_id ||= paragraph.persisted? ? dom_id(paragraph) : dom_id(table_of_content, :append_paragraph_form)
 
     turbo_frame_tag frame_id, data: { controller: 'toc-editor' } do
-      form_with model: paragraph, local: true, class: 'paragraph_form', data: { turbo_stream: true, turbolinks: false } do |paragraph_form|
+      form_with model: paragraph, local: true, class: 'paragraph_form', data: { turbo_stream: true } do |paragraph_form|
         safe_join([
           paragraph_form.text_area(:text, data: { toc_editor_target: 'input' }),
           paragraph_form.submit(paragraph.persisted? ? 'Save' : 'Append'),
@@ -33,7 +33,7 @@ module ParagraphsHelper
     frame_id = dom_id(section_table_of_content, :append_paragraph_form)
 
     turbo_frame_tag frame_id do
-      link_to append_section_path(section_table_of_content.section, table_of_content_id: section_table_of_content.id), title: 'Add paragraph', aria: { label: 'Add paragraph' }, data: { turbo_frame: frame_id, turbolinks: false } do
+      link_to append_section_path(section_table_of_content.section, table_of_content_id: section_table_of_content.id), title: 'Add paragraph', aria: { label: 'Add paragraph' }, data: { turbo_frame: frame_id } do
         div_for section_table_of_content, :focus_tool_for, class: :new_focus_tool do
           image_tag asset_path('write.svg'), title: 'Add paragraph'
         end
@@ -52,10 +52,10 @@ module ParagraphsHelper
       if paragraph_table_of_content.previous.present?
         link_to('↑', promote_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link', :method => :put, :remote => true, :title => 'Move paragraph up', aria: { label: 'Move paragraph up' }, data: { turbo: false })
       end.to_s.html_safe +
-      link_to(edit_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link paragraph_edit_link', title: 'Edit paragraph', aria: { label: 'Edit paragraph' }, data: { action: 'click->toc-editor#open', turbo_frame: dom_id(paragraph), turbolinks: false }) do
+      link_to(edit_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link paragraph_edit_link', title: 'Edit paragraph', aria: { label: 'Edit paragraph' }, data: { action: 'click->toc-editor#open', turbo_frame: dom_id(paragraph) }) do
         image_tag(asset_path('write.svg'), alt: '')
       end +
-      link_to('×', paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link paragraph_remove_link', title: 'Remove paragraph', aria: { label: 'Remove paragraph' }, data: { turbo_method: :delete, turbo_stream: true, turbolinks: false })
+      link_to('×', paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link paragraph_remove_link', title: 'Remove paragraph', aria: { label: 'Remove paragraph' }, data: { turbo_method: :delete, turbo_stream: true })
     end
   end
   

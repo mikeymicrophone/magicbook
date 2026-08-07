@@ -2,11 +2,10 @@ require 'rails_helper'
 
 RSpec.describe CitationsHelper, type: :helper do
   describe '#citation_form' do
-    it 'keeps the Turbo submission out of the legacy Turbolinks handler' do
+    it 'requests a Turbo Stream response' do
       html = helper.citation_form(TableOfContent.new(id: 1)).to_s
 
       expect(html).to include('data-turbo-stream="true"')
-      expect(html).to include('data-turbolinks="false"')
     end
   end
 

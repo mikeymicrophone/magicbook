@@ -11,14 +11,14 @@
   <%= turbo_frame_tag dom_id(@list, :new_item_adder_for), :class => 'hidden' %>
 
   <% if current_magician == @list.magician %>
-    <%= link_to new_list_listed_item_path(@list), :data => { :turbo_frame => dom_id(@list, :new_item_adder_for), :turbolinks => false } do %>
+    <%= link_to new_list_listed_item_path(@list), :data => { :turbo_frame => dom_id(@list, :new_item_adder_for) } do %>
       <%= div_for @list, :item_adder_button_for, :class => 'center' do %>
         Add an item
       <% end %>
     <% end %>
   <% else %>
     <% unless @list.suggestability == 'defer' %>
-      <%= link_to new_list_listed_item_path(@list, :suggest => true), :data => { :turbo_frame => dom_id(@list, :new_item_adder_for), :turbolinks => false } do %>
+      <%= link_to new_list_listed_item_path(@list, :suggest => true), :data => { :turbo_frame => dom_id(@list, :new_item_adder_for) } do %>
         <%= div_for @list, :item_adder_button_for, :class => 'center' do %>
           Suggest an item
         <% end %>

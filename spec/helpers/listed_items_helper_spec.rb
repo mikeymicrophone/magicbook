@@ -20,7 +20,6 @@ RSpec.describe ListedItemsHelper, type: :helper do
 
     expect(html).to include("<turbo-frame id=\"#{dom_id(list, :new_item_adder_for)}\"")
     expect(html).to include('data-turbo-stream="true"')
-    expect(html).to include('data-turbolinks="false"')
   end
 
   it 'renders each listed item as a Turbo Frame with stream-powered controls' do

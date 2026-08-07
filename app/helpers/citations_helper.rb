@@ -3,7 +3,7 @@ module CitationsHelper
     frame_id ||= citation.persisted? ? dom_id(citation) : dom_id(table_of_content, :append_citation_form)
 
     turbo_frame_tag frame_id, data: { controller: 'toc-editor' } do
-      form_with model: citation, local: true, data: { turbo_stream: true, turbolinks: false } do |citation_form|
+      form_with model: citation, local: true, data: { turbo_stream: true } do |citation_form|
         safe_join([
           citation_form.text_area(:finding, placeholder: 'finding', data: { toc_editor_target: 'input' }),
           tag.br,
@@ -34,7 +34,7 @@ module CitationsHelper
     frame_id = dom_id(paragraph_table_of_content, :append_citation_form)
 
     turbo_frame_tag frame_id do
-      link_to append_paragraph_path(paragraph_table_of_content.paragraph, table_of_content_id: paragraph_table_of_content.id), title: 'Add citation', aria: { label: 'Add citation' }, data: { turbo_frame: frame_id, turbolinks: false } do
+      link_to append_paragraph_path(paragraph_table_of_content.paragraph, table_of_content_id: paragraph_table_of_content.id), title: 'Add citation', aria: { label: 'Add citation' }, data: { turbo_frame: frame_id } do
         div_for paragraph_table_of_content, :focus_tool_for, class: :new_focus_tool do
           image_tag asset_path('write.svg'), title: 'Add citation'
         end
@@ -52,8 +52,8 @@ module CitationsHelper
       if citation_table_of_content.previous.present?
         link_to('↑', promote_citation_path(citation, :table_of_content_id => citation_table_of_content), class: 'editor_icon_link', :method => :put, :remote => true, :title => 'Move citation up', aria: { label: 'Move citation up' }, data: { turbo: false })
       end.to_s.html_safe +
-      link_to('✎', edit_citation_path(citation, :table_of_content_id => citation_table_of_content), class: 'editor_icon_link', title: 'Edit citation', aria: { label: 'Edit citation' }, data: { action: 'click->toc-editor#open', turbo_frame: dom_id(citation), turbolinks: false }) +
-      link_to('×', citation_path(citation, :table_of_content_id => citation_table_of_content), class: 'editor_icon_link editor_remove_link', title: 'Remove citation', aria: { label: 'Remove citation' }, data: { turbo_method: :delete, turbo_stream: true, turbolinks: false })
+      link_to('✎', edit_citation_path(citation, :table_of_content_id => citation_table_of_content), class: 'editor_icon_link', title: 'Edit citation', aria: { label: 'Edit citation' }, data: { action: 'click->toc-editor#open', turbo_frame: dom_id(citation) }) +
+      link_to('×', citation_path(citation, :table_of_content_id => citation_table_of_content), class: 'editor_icon_link editor_remove_link', title: 'Remove citation', aria: { label: 'Remove citation' }, data: { turbo_method: :delete, turbo_stream: true })
     end
   end
 end

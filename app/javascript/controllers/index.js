@@ -1,4 +1,4 @@
-import { application } from "controllers/application"
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+import { application } from "./application"
+import TocEditorController from "./toc_editor_controller"
 
-eagerLoadControllersFrom("controllers", application)
+application.register("toc-editor", TocEditorController)

@@ -6,7 +6,7 @@ module ListedItemsHelper
   end
 
   def listed_item_form list, listed_item = list.listed_items.new
-    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for), :class => 'form_for_listed_item', :local => true, :data => { :turbo_stream => true, :turbolinks => false } do |listed_item_form|
+    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for), :class => 'form_for_listed_item', :local => true, :data => { :turbo_stream => true } do |listed_item_form|
       tag.div do
         tag.div(:class => 'inline listed_item_content') do
           listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :id => 'listed_item_designation') +
@@ -115,24 +115,24 @@ module ListedItemsHelper
     if current_magician == listed_item.list.magician
       div_for listed_item, :editing_tools_for do
         if listed_item.list.mode != 'randomized'
-          link_to('move up', move_up_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
-          link_to('move down', move_down_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
+          link_to('move up', move_up_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true }) +
+          link_to('move down', move_down_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true }) +
           tag.br
         end.to_s.html_safe +
         link_to('include card', new_card_inclusion_path(:listed_item_id => listed_item.id), :remote => true, :data => { :turbo => false }) +
-        link_to('edit', edit_listed_item_path(listed_item), :class => 'list_item_edit_link', :data => { :turbo_frame => dom_id(listed_item), :turbolinks => false }) +
-        link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}), :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false })
+        link_to('edit', edit_listed_item_path(listed_item), :class => 'list_item_edit_link', :data => { :turbo_frame => dom_id(listed_item) }) +
+        link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}), :data => { :turbo_method => :put, :turbo_stream => true })
       end
     else
-      link_to('suggest edit', suggest_revision_listed_item_path(listed_item), :rel => 'nofollow', :data => { :turbo_frame => dom_id(listed_item), :turbolinks => false })
+      link_to('suggest edit', suggest_revision_listed_item_path(listed_item), :rel => 'nofollow', :data => { :turbo_frame => dom_id(listed_item) })
     end
   end
   
   def listed_item_accepter listed_item
     turbo_frame_tag dom_id(listed_item, :accepter_for), :class => 'accepter_for_listed_item' do
-      link_to('approve for public', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed}), :class => 'suggestion_approval accept', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
-      link_to('approve for my muggles', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_secret}), :class => 'suggestion_approval accept_secret', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
-      link_to('reject', listed_item_path(listed_item, :listed_item => {:privacy => :rejected}), :class => 'suggestion_approval reject', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
+      link_to('approve for public', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed}), :class => 'suggestion_approval accept', :data => { :turbo_method => :put, :turbo_stream => true }) +
+      link_to('approve for my muggles', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_secret}), :class => 'suggestion_approval accept_secret', :data => { :turbo_method => :put, :turbo_stream => true }) +
+      link_to('reject', listed_item_path(listed_item, :listed_item => {:privacy => :rejected}), :class => 'suggestion_approval reject', :data => { :turbo_method => :put, :turbo_stream => true }) +
       listed_item_display(listed_item)
     end
   end
