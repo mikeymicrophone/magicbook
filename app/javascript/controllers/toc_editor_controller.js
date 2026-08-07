@@ -22,4 +22,9 @@ export default class extends Controller {
     this.openingValue = true
     event.currentTarget.setAttribute("aria-busy", "true")
   }
+
+  hide(event) {
+    event.preventDefault()
+    this.element.hidden = true
+  }
 }

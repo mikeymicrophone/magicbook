@@ -47,10 +47,10 @@ module ParagraphsHelper
     div_for(paragraph, :controls_for, :class => 'controls editor_controls paragraph_controls') do
       append_to(paragraph_table_of_content) +
       if section_table_of_content.succeeding.present?
-        link_to('↓', delay_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link', :method => :put, :remote => true, :title => 'Move to next section', aria: { label: 'Move to next section' }, data: { turbo: false })
+        link_to('↓', delay_paragraph_path(paragraph, table_of_content_id: paragraph_table_of_content), class: 'editor_icon_link', title: 'Move to next section', aria: { label: 'Move to next section' }, data: { turbo_method: :put, turbo_stream: true })
       end.to_s.html_safe +
       if paragraph_table_of_content.previous.present?
-        link_to('↑', promote_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link', :method => :put, :remote => true, :title => 'Move paragraph up', aria: { label: 'Move paragraph up' }, data: { turbo: false })
+        link_to('↑', promote_paragraph_path(paragraph, table_of_content_id: paragraph_table_of_content), class: 'editor_icon_link', title: 'Move paragraph up', aria: { label: 'Move paragraph up' }, data: { turbo_method: :put, turbo_stream: true })
       end.to_s.html_safe +
       link_to(edit_paragraph_path(paragraph, :table_of_content_id => paragraph_table_of_content), class: 'editor_icon_link paragraph_edit_link', title: 'Edit paragraph', aria: { label: 'Edit paragraph' }, data: { action: 'click->toc-editor#open', turbo_frame: dom_id(paragraph) }) do
         image_tag(asset_path('write.svg'), alt: '')

@@ -9,7 +9,6 @@ class ParagraphsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.js
       format.html { redirect_back fallback_location: edit_book_path(@table_of_content.book) }
     end
   end
@@ -23,12 +22,24 @@ class ParagraphsController < ApplicationController
     @table_of_content = TableOfContent.find params[:table_of_content_id]
     @table_of_content.delay!
     @table_of_content.reload
+    @chapter = @table_of_content.chapter
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back fallback_location: edit_book_path(@table_of_content.book) }
+    end
   end
   
   def promote
     @table_of_content = TableOfContent.find params[:table_of_content_id]
     @previous_table_of_content = @table_of_content.promote!
     @table_of_content.reload
+    @chapter = @table_of_content.chapter
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back fallback_location: edit_book_path(@table_of_content.book) }
+    end
   end
   
   def edit
@@ -47,7 +58,6 @@ class ParagraphsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.js
       format.html { redirect_back fallback_location: edit_book_path(@paragraph_table_of_content.book) }
     end
   end
@@ -63,7 +73,6 @@ class ParagraphsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.js
       format.html { redirect_back fallback_location: edit_book_path(@table_of_content.book) }
     end
   end
