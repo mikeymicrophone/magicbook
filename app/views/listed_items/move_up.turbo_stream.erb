@@ -1,0 +1,5 @@
+<% if @previous_item %>
+  <%= turbo_stream.replace dom_id(@listed_item.list, :listed_items_in) do %>
+    <%= listed_items_for @listed_item.list, @listed_item.list.ordered_items %>
+  <% end %>
+<% end %>

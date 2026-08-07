@@ -1,7 +1,17 @@
-$(document).on 'list_item_adder_shown', ->
-  $('.form_for_listed_item').off().on 'change', '#listed_item_content_id', ->
-    if($('#listed_item_content_type').val() == '')
-      $('#listed_item_content_type').val 'List'
+$(document).on 'change', '.form_for_listed_item #listed_item_content_id', ->
+  if($('#listed_item_content_type').val() == '')
+    $('#listed_item_content_type').val 'List'
+
+autocardRefreshTimeout = null
+$(document).on 'turbo:before-stream-render', (event) ->
+  target = event.target.getAttribute('target')
+  return unless target?.match(/^(listed_item_|listed_items_in_list_)/)
+
+  clearTimeout(autocardRefreshTimeout) if autocardRefreshTimeout
+  autocardRefreshTimeout = setTimeout ->
+    $('#hoverpopup').remove()
+    $(document).trigger 'autocard'
+  , 0
 
 $(document).on 'turbolinks:load', ->
   $('.listed_items_in_list .designation_of_listed_item a').attr 'target', '_blank'

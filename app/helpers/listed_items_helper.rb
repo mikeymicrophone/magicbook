@@ -1,6 +1,12 @@
 module ListedItemsHelper
+  def listed_item_adder list
+    turbo_frame_tag dom_id(list, :new_item_adder_for) do
+      listed_item_form list
+    end
+  end
+
   def listed_item_form list, listed_item = list.listed_items.new
-    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for), :class => 'form_for_listed_item' do |listed_item_form|
+    form_with :model => listed_item, :url => (listed_item.persisted? ? listed_item_path : list_listed_items_path(list)), :id => dom_id(listed_item, :form_for), :class => 'form_for_listed_item', :local => true, :data => { :turbo_stream => true, :turbolinks => false } do |listed_item_form|
       tag.div do
         tag.div(:class => 'inline listed_item_content') do
           listed_item_form.text_area(:designation, :placeholder => 'Designation (e.g. name, title, or rank)', :id => 'listed_item_designation') +
@@ -52,7 +58,7 @@ module ListedItemsHelper
   end
   
   def listed_item_display listed_item
-    div_for listed_item do
+    turbo_frame_tag dom_id(listed_item), :class => 'listed_item' do
       if listed_item.list.mode == 'numbered'
         div_for listed_item, :number_of do
           listed_item.ordering.to_s
@@ -98,29 +104,35 @@ module ListedItemsHelper
       end
     end
   end
+
+  def listed_items_for list, items = visible_items_for(list)
+    div_for list, :listed_items_in do
+      safe_join(items.map { |listed_item| listed_item_display(listed_item) } + [submission_reviewer_for(list)].compact)
+    end
+  end
   
   def listed_item_editing_tools_for listed_item
     if current_magician == listed_item.list.magician
       div_for listed_item, :editing_tools_for do
         if listed_item.list.mode != 'randomized'
-          link_to('move up', move_up_listed_item_path(listed_item), :method => :put, :remote => true, :class => 'list_item_ordering') +
-          link_to('move down', move_down_listed_item_path(listed_item), :method => :put, :remote => true, :class => 'list_item_ordering') +
+          link_to('move up', move_up_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
+          link_to('move down', move_down_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
           tag.br
         end.to_s.html_safe +
-        link_to('include card', new_card_inclusion_path(:listed_item_id => listed_item.id), :remote => true) +
-        link_to('edit', edit_listed_item_path(listed_item), :remote => true, :class => 'list_item_edit_link') +
-        link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}, :format => :js), :method => :put, :remote => true)
+        link_to('include card', new_card_inclusion_path(:listed_item_id => listed_item.id), :remote => true, :data => { :turbo => false }) +
+        link_to('edit', edit_listed_item_path(listed_item), :class => 'list_item_edit_link', :data => { :turbo_frame => dom_id(listed_item), :turbolinks => false }) +
+        link_to('remove', listed_item_path(listed_item, :listed_item => {:privacy => :removed}), :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false })
       end
     else
-      link_to('suggest edit', suggest_revision_listed_item_path(listed_item), :remote => true, :rel => 'nofollow')
+      link_to('suggest edit', suggest_revision_listed_item_path(listed_item), :rel => 'nofollow', :data => { :turbo_frame => dom_id(listed_item), :turbolinks => false })
     end
   end
   
   def listed_item_accepter listed_item
-    div_for listed_item, :accepter_for do
-      link_to('approve for public', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed}), :method => :put, :remote => true, :class => 'suggestion_approval accept') +
-      link_to('approve for my muggles', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_private}), :method => :put, :remote => true, :class => 'suggestion_approval accept_secret') +
-      link_to('reject', listed_item_path(listed_item, :listed_item => {:privacy => :rejected}), :method => :put, :remote => true, :class => 'suggestion_approval reject') +
+    turbo_frame_tag dom_id(listed_item, :accepter_for), :class => 'accepter_for_listed_item' do
+      link_to('approve for public', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed}), :class => 'suggestion_approval accept', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
+      link_to('approve for my muggles', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_secret}), :class => 'suggestion_approval accept_secret', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
+      link_to('reject', listed_item_path(listed_item, :listed_item => {:privacy => :rejected}), :class => 'suggestion_approval reject', :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false }) +
       listed_item_display(listed_item)
     end
   end

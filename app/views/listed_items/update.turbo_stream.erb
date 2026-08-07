@@ -1,0 +1,13 @@
+<% if @listed_item.removed? %>
+  <%= turbo_stream.replace dom_id(@listed_item.list, :listed_items_in) do %>
+    <%= listed_items_for @listed_item.list, @listed_item.list.ordered_items %>
+  <% end %>
+<% elsif @was_suggested %>
+  <%= turbo_stream.replace dom_id(@listed_item.list, :listed_items_in) do %>
+    <%= listed_items_for @listed_item.list, @listed_item.list.ordered_items %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace dom_id(@listed_item) do %>
+    <%= listed_item_display @listed_item %>
+  <% end %>
+<% end %>

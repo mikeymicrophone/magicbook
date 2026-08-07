@@ -16,7 +16,14 @@ class ListedItemsController < ApplicationController
       end
     end
     @listed_item.save if can? :create, @listed_item
+    @replaced_listed_item = ListedItem.find_by(:id => @listed_item.replacing) if @listed_item.replacing.present?
     ListMailer.suggested(@listed_item.id).deliver_later if @listed_item.privacy == 'suggested' && @listed_item.list.suggestability == 'notify'
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_to @listed_item.list }
+    end
   end
   
   def edit
@@ -34,13 +41,14 @@ class ListedItemsController < ApplicationController
     @listed_item = ListedItem.new @existing_listed_item.attributes.slice('designation', 'expression', 'list_id', 'content_type', 'content_id').merge('replacing' => @existing_listed_item.id)
     
     respond_to do |format|
-      format.html { render :body => nil }
+      format.html { render :edit }
       format.js { render :template => 'listed_items/edit.js.erb' }
     end
   end
   
   def update
     @listed_item = ListedItem.find params[:id]
+    @was_suggested = @listed_item.suggested?
     if current_scribe
       @listed_item.attributes = listed_item_params
       if @listed_item.privacy == 'unreviewed'
@@ -51,6 +59,12 @@ class ListedItemsController < ApplicationController
       @listed_item.save
     else
       @listed_item.update listed_item_params
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_to @listed_item.list }
     end
   end
   
@@ -66,11 +80,23 @@ class ListedItemsController < ApplicationController
     when 'unreviewed_secret'
       @listed_item.update_attribute :privacy, 'secret'
     end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_to review_listed_items_path }
+    end
   end
   
   def reject
     @listed_item = ListedItem.find params[:id]
     @listed_item.update_attribute :privacy, 'rejected'
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_to review_listed_items_path }
+    end
   end
   
   def move_up
@@ -81,6 +107,12 @@ class ListedItemsController < ApplicationController
       @listed_item.update_attribute :ordering, @previous_item.ordering
       @previous_item.update_attribute :ordering, position
     end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_to @listed_item.list }
+    end
   end
   
   def move_down
@@ -90,6 +122,12 @@ class ListedItemsController < ApplicationController
       position = @listed_item.ordering
       @listed_item.update_attribute :ordering, @next_item.ordering
       @next_item.update_attribute :ordering, position
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.js
+      format.html { redirect_to @listed_item.list }
     end
   end
   

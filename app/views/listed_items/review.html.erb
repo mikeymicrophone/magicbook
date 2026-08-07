@@ -1,9 +1,9 @@
 <% @listed_items.each do |listed_item| %>
-  <%= div_for listed_item, :approval_interface_for, :class => 'list' do %>
+  <%= turbo_frame_tag dom_id(listed_item, :approval_interface_for), :class => 'approval_interface_for_listed_item list' do %>
     <%= listed_item_display listed_item %>
     [in <%= link_to listed_item.list.name, listed_item.list %>]
     <%= tag.br %>
-    <%= link_to 'approve', approve_listed_item_path(listed_item), :method => :put, :remote => true %>
-    <%= link_to 'reject', reject_listed_item_path(listed_item), :method => :put, :remote => true %>
+    <%= link_to 'approve', approve_listed_item_path(listed_item), :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false } %>
+    <%= link_to 'reject', reject_listed_item_path(listed_item), :data => { :turbo_method => :put, :turbo_stream => true, :turbolinks => false } %>
   <% end %>
 <% end %>

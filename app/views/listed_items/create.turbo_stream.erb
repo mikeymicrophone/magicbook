@@ -1,0 +1,22 @@
+<% if current_magician && @listed_item.persisted? %>
+  <%= turbo_stream.replace dom_id(@listed_item.list, :listed_items_in) do %>
+    <%= listed_items_for @listed_item.list, @listed_item.list.ordered_items %>
+  <% end %>
+  <%= turbo_stream.replace dom_id(@listed_item.list, :new_item_adder_for) do %>
+    <%= listed_item_adder @listed_item.list %>
+  <% end %>
+<% elsif @replaced_listed_item && @listed_item.persisted? %>
+  <%= turbo_stream.replace dom_id(@replaced_listed_item) do %>
+    <%= listed_item_display @listed_item %>
+  <% end %>
+  <%= turbo_stream.prepend dom_id(@listed_item) do %>
+    <p class="center">Thank you for submitting! This is what your edit looks like. The magician who created the list will have to accept the submission, and then an admin will approve it.</p>
+  <% end %>
+<% else %>
+  <%= turbo_stream.append dom_id(@listed_item.list, :listed_items_in) do %>
+    <p class="center">Thank you for submitting! The magician who created the list will have to accept the submission, and then an admin will approve it.</p>
+  <% end %>
+  <%= turbo_stream.replace dom_id(@listed_item.list, :new_item_adder_for) do %>
+    <%= listed_item_adder @listed_item.list %>
+  <% end %>
+<% end %>
