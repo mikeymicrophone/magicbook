@@ -1,24 +1,9 @@
-<%= div_with_data_for chapter, :class => 'read_by_chapter' do %>
-  <%= chapter_control chapter_table_of_content %>
-  <% book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).each do |section_table_of_content| %>
-    <% section = section_table_of_content.section %>
-    <%= div_with_data_for section do %>
-      <%= div_for section, :data_on do %>
-        <%= content_tag :header, :class => 'section_heading' do %>
-          <%= section.heading %>
-        <% end %>
-        <%= content_tag :header, :class => 'section_subheading' do %>
-          <%= section.subheading %>
-        <% end %>
-      <% end %>
-      <%= edit_controls_for_section section_table_of_content %>
-      <%= content_tag :div, id: dom_id(section_table_of_content, :paragraphs) do %>
-        <% book.table_of_contents.in_edition(edition).in_chapter(chapter).in_section(section).paragraphish.order(:ordering).each do |paragraph_table_of_content| %>
-          <%= paragraph_control paragraph_table_of_content %>
-        <% end %>
-      <% end %>
-      <%= append_to section_table_of_content %>
+<%= turbo_frame_tag dom_id(chapter), class: 'read_by_chapter' do %>
+  <%= div_with_data_for chapter do %>
+    <%= chapter_control chapter_table_of_content %>
+    <% book.table_of_contents.in_edition(edition).in_chapter(chapter).sectionish.order(:ordering).each do |section_table_of_content| %>
+      <%= render 'sections/editor', book: book, edition: edition, section_table_of_content: section_table_of_content %>
     <% end %>
+    <%= append_to chapter_table_of_content %>
   <% end %>
-  <%= append_to chapter_table_of_content %>
 <% end %>

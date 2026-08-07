@@ -11,14 +11,7 @@
       <% if edition.release.blank? %>
         <%= link_to 'release!', release_edition_path(edition, :book_id => @book), :method => :put %>
       <% end %>
-      <% @book.table_of_contents.in_edition(edition).chapterish.order(:ordering).each do |chapter_table_of_content| %>
-        <% chapter = chapter_table_of_content.chapter %>
-        <%= div_for chapter, :controls_for, :class => 'controls' do %>
-          <%= link_to "edit chapter #{chapter_table_of_content.ordering}", edit_as_chapter_path(chapter, :book_id => @book) %>
-        <% end %>
-        <%= render :partial => 'chapters/edit', :locals => {:chapter => chapter, :edition => edition, :book => @book, :chapter_table_of_content => chapter_table_of_content} %>
-      <% end %>
-      <%= append_to @edition_table_of_content %>
+      <%= render 'chapters/list', book: @book, edition: edition, edition_table_of_content: @edition_table_of_content %>
     <% end %>
   <% else %>
     <%= link_to 'Begin first edition', new_edition_path(:book_id => @book.id) %>

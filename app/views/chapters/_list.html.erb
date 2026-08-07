@@ -1,0 +1,10 @@
+<%= content_tag :div, id: dom_id(edition, :chapters) do %>
+  <% book.table_of_contents.in_edition(edition).chapterish.order(:ordering).each do |chapter_table_of_content| %>
+    <% chapter = chapter_table_of_content.chapter %>
+    <%= div_for chapter, :controls_for, :class => 'controls' do %>
+      <%= link_to "edit chapter #{chapter_table_of_content.ordering}", edit_as_chapter_path(chapter, book_id: book) %>
+    <% end %>
+    <%= render 'chapters/edit', chapter: chapter, edition: edition, book: book, chapter_table_of_content: chapter_table_of_content %>
+  <% end %>
+  <%= append_to edition_table_of_content %>
+<% end %>

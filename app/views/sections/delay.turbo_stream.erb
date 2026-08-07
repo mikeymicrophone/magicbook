@@ -1,0 +1,9 @@
+<%= turbo_stream.replace dom_id(@previous_chapter) do %>
+  <%= render 'chapters/edit', chapter: @previous_chapter, edition: @table_of_content.edition, book: @table_of_content.book, chapter_table_of_content: @table_of_content.book.table_of_contents.in_edition(@table_of_content.edition).in_chapter(@previous_chapter).chapterish.first %>
+<% end %>
+
+<% unless @chapter == @previous_chapter %>
+  <%= turbo_stream.replace dom_id(@chapter) do %>
+    <%= render 'chapters/edit', chapter: @chapter, edition: @table_of_content.edition, book: @table_of_content.book, chapter_table_of_content: @table_of_content.book.table_of_contents.in_edition(@table_of_content.edition).in_chapter(@chapter).chapterish.first %>
+  <% end %>
+<% end %>

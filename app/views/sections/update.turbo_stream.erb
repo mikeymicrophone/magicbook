@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@chapter) do %>
+  <%= render 'chapters/edit', chapter: @chapter, edition: @section_table_of_content.edition, book: @section_table_of_content.book, chapter_table_of_content: @section_table_of_content.parent %>
+<% end %>

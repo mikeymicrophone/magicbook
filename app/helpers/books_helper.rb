@@ -36,9 +36,15 @@ module BooksHelper
     when Paragraph
       citation_append_control(table_of_content)
     else
-      link_to send("append_#{table_of_content.content.class.name.underscore}_path", table_of_content.content, :table_of_content_id => table_of_content.id), :remote => true, title: "Add #{table_of_content.content.class.name.underscore}", aria: { label: "Add #{table_of_content.content.class.name.underscore}" }, data: { turbo: false } do
-        div_for table_of_content, :focus_tool_for, :class => :new_focus_tool do
-          image_tag asset_path('write.svg'), :title => "Add to #{table_of_content.content.class.name.underscore}"
+      content_type = table_of_content.content.class.name.underscore
+      appended_content_type = { 'edition' => 'chapter', 'chapter' => 'section' }.fetch(content_type, content_type)
+      frame_id = dom_id(table_of_content, "append_#{appended_content_type}_form")
+
+      turbo_frame_tag frame_id do
+        link_to send("append_#{content_type}_path", table_of_content.content, table_of_content_id: table_of_content.id), title: "Add #{content_type}", aria: { label: "Add #{content_type}" }, data: { turbo_frame: frame_id } do
+          div_for table_of_content, :focus_tool_for, :class => :new_focus_tool do
+            image_tag asset_path('write.svg'), :title => "Add to #{content_type}"
+          end
         end
       end
     end

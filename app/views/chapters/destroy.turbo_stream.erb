@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@edition, :chapters) do %>
+  <%= render 'chapters/list', book: @table_of_content.book, edition: @edition, edition_table_of_content: @table_of_content.parent %>
+<% end %>

@@ -11,5 +11,14 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe ChaptersHelper, type: :helper do
+  it 'uses a Turbo Frame and Stream submission for a new chapter form' do
+    edition = Edition.new(id: 7)
+    table_of_content = TableOfContent.new(id: 12, edition: edition)
 
+    html = helper.chapter_form(table_of_content)
+
+    expect(html).to include('turbo-frame')
+    expect(html).to include('data-turbo-stream="true"')
+    expect(html).not_to include('data-remote="true"')
+  end
 end
