@@ -89,8 +89,8 @@ RSpec.describe CardCatalog::ScryfallBulkIngest do
   end
 
   it 'moves a list link without a Multiverse ID to the concept preferred printing' do
-    magician = Magician.create!(email: 'catalog@example.test', password: 'password123')
-    list = List.create!(magician: magician, name: 'Catalog list')
+    mage = Mage.create!(email: 'catalog@example.test', password: 'password123')
+    list = List.create!(mage: mage, name: 'Catalog list')
     item = ListedItem.create!(list: list, designation: 'Fire // Ice')
     legacy = Card.create!(name: 'Fire // Ice')
     inclusion = CardInclusion.create!(card: legacy, piece: item)

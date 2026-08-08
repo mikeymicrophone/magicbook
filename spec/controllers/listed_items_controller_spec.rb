@@ -3,17 +3,17 @@ require 'rails_helper'
 RSpec.describe ListedItemsController, type: :controller do
   render_views
 
-  let!(:magician) do
-    Magician.create!(
+  let!(:mage) do
+    Mage.create!(
       email: 'listed-items-controller@example.com',
       password: 'password123',
       password_confirmation: 'password123',
       confirmed_at: Time.current
     )
   end
-  let!(:list) { List.create!(magician: magician, name: 'Controller Turbo list') }
+  let!(:list) { List.create!(mage: mage, name: 'Controller Turbo list') }
 
-  before { sign_in magician }
+  before { sign_in mage }
 
   it 'creates an item with a Turbo Stream response that refreshes the list and add form' do
     expect do

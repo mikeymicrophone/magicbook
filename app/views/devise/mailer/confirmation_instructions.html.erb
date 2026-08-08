@@ -1,12 +1,10 @@
-<% if @resource.is_a? Muggle %>
+<% if @resource.must_set_password? %>
   <p>News for you, <%= @email %>!</p>
 
-  <p>You have been given the e-book, Ways We Enjoy Magic Cards, as a gift.</p>
+  <p>You have been given access to the e-book, Ways We Enjoy Magic Cards.</p>
 
-  <p>A pdf of this book is on its way to you in another email.  And, your license to the book allows you to download updated versions as they are released each Wednesday.</p>
-
-  <p>In order to access those updates, we've created you an account, which uses this email address and the password: <%= @resource.password %>.  You can change this password through a typical reset password process.</p>
-<% elsif @resource.is_a? Magician %>
+  <p>Use the confirmation link below to choose a password and access future updates.</p>
+<% else %>
   <p>I'm so glad that this book is now a part of your collection.</p>
   
   <p>It surely is no match for the company it keeps there.  But it will be updated weekly, so we made you an account that can access those updates.</p>
@@ -14,8 +12,6 @@
   <p>Your account also has the privilege of making lists, as long as they meet our standards and so on.</p>
   
   <p>This confirmation link will also allow you to create a password.</p>
-<% elsif @resource.is_a? Scribe %>
-  Thank you.
 <% end %>
 
 <p>You can confirm your account email using this link:</p>

@@ -26,7 +26,7 @@ module ListedItemsHelper
         end
       end +
       div_for(listed_item, :privacy_options_for) do
-        if current_magician
+        if current_mage
           tag.privacy do
             listed_item_form.radio_button(:privacy, :draft, :id => 'listed_item_privacy_draft') +
             listed_item_form.label(:privacy_draft, 'Draft')
@@ -37,14 +37,14 @@ module ListedItemsHelper
           end +
           tag.privacy do
             listed_item_form.radio_button(:privacy, :unreviewed_secret, :id => 'listed_item_privacy_unreviewed_secret') +
-            listed_item_form.label(:privacy_unreviewed_secret, 'Just for my muggles')
+            listed_item_form.label(:privacy_unreviewed_secret, 'Just for my invitees')
           end
         else
           listed_item_form.hidden_field :privacy, :value => 'suggested'
         end
       end +
       div_for(listed_item, :submission_of) do
-        if current_magician
+        if current_mage
           listed_item_form.submit '~>ready to add this<~'
         else
           listed_item_form.submit '~>ready to suggest this<~'
@@ -112,7 +112,7 @@ module ListedItemsHelper
   end
   
   def listed_item_editing_tools_for listed_item
-    if current_magician == listed_item.list.magician
+    if current_mage == listed_item.list.mage
       div_for listed_item, :editing_tools_for do
         if listed_item.list.mode != 'randomized'
           link_to('move up', move_up_listed_item_path(listed_item), :class => 'list_item_ordering', :data => { :turbo_method => :put, :turbo_stream => true }) +
@@ -133,17 +133,17 @@ module ListedItemsHelper
   def listed_item_accepter listed_item
     turbo_frame_tag dom_id(listed_item, :accepter_for), :class => 'accepter_for_listed_item' do
       link_to('approve for public', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed}), :class => 'suggestion_approval accept', :data => { :turbo_method => :put, :turbo_stream => true }) +
-      link_to('approve for my muggles', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_secret}), :class => 'suggestion_approval accept_secret', :data => { :turbo_method => :put, :turbo_stream => true }) +
+      link_to('approve for my invitees', listed_item_path(listed_item, :listed_item => {:privacy => :unreviewed_secret}), :class => 'suggestion_approval accept_secret', :data => { :turbo_method => :put, :turbo_stream => true }) +
       link_to('reject', listed_item_path(listed_item, :listed_item => {:privacy => :rejected}), :class => 'suggestion_approval reject', :data => { :turbo_method => :put, :turbo_stream => true }) +
       listed_item_display(listed_item)
     end
   end
   
   def visible_items_for list
-    if current_magician
+    if current_mage&.admin? || current_mage == list.mage
       list.ordered_items
-    elsif current_muggle
-      list.items_for current_muggle
+    elsif current_mage
+      list.items_for current_mage
     else
       list.published_items
     end

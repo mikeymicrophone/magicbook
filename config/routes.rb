@@ -1,10 +1,23 @@
 Rails.application.routes.draw do
-  devise_for :scribes, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
-  devise_for :magicians, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords', :sessions => 'sessions'}
-  devise_for :muggles, :controllers => {:confirmations => 'confirmations', :passwords => 'passwords'}
+  devise_for :mages, controllers: {
+    confirmations: 'confirmations',
+    passwords: 'passwords',
+    omniauth_callbacks: 'omniauth_callbacks'
+  }
 
-  resources :muggles do
-    resources :books, :only => :index
+  resource :magic_link, only: [:new, :create]
+  get 'magic-link/:token', to: 'magic_links#show', as: :consume_magic_link
+
+  resource :passkey, only: [] do
+    collection do
+      post :registration_options
+      post :register
+      post :authentication_options
+      post :authenticate
+    end
+  end
+
+  resources :invitations, only: [:index, :show] do
     collection do
       get :invite
       post :submit
@@ -37,11 +50,10 @@ Rails.application.routes.draw do
       get :edit_as
     end
   end
-  resources :magicians, :only => [:index, :show] do
+  resources :mages, only: [:index] do
     collection do
       post :ramp
     end
-    resources :books, :only => :index
   end
   resources :purchased_books
   resources :editions do
@@ -103,7 +115,7 @@ Rails.application.routes.draw do
   
   get '/font_guide' => 'landings#font_guide'
   
-  devise_scope :magician do
+  devise_scope :mage do
     put 'passwords/establish', :to => 'passwords#establish', :as => 'establish_password'
     get 'confirmations/establish_access', :to => 'confirmations#establish_access'
   end

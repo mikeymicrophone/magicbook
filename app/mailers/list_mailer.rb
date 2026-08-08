@@ -2,10 +2,10 @@ class ListMailer < ApplicationMailer
   def suggested listed_item_id
     @listed_item = ListedItem.find listed_item_id
     @list = @listed_item.list
-    @magician = @list.magician
+    @mage = @list.mage
 
     mail :subject => "There is a suggestion for your list, #{@list.name}",
-         :to      => @magician.email,
+         :to      => @mage.email,
          :from    => ENV['DELIVERY_EMAIL']
   end
 end

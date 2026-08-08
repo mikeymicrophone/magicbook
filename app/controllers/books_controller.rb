@@ -3,10 +3,10 @@ class BooksController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @books = if params[:magician_id]
+    @books = if current_mage&.admin?
       Book.all
-    elsif params[:muggle_id]
-      current_muggle.books
+    elsif current_mage
+      current_mage.accessible_books
     else
       Book.all
     end

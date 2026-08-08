@@ -7,18 +7,18 @@
       <% purchase.books.each do |book| %>
         <%= link_to book.title, book %>
       <% end %>
-      <% if purchase.muggles.present? %>
+      <% if purchase.invitations.present? %>
         and shared with
-        <%= div_for purchase, :muggles_with_access_to do %>
-          <% purchase.muggles.each do |muggle| %>
-            <%= div_for muggle do %>
-              <%= muggle.email %>
+        <%= div_for purchase, :people_with_access_to do %>
+          <% purchase.invitations.each do |invitation| %>
+            <%= div_for invitation do %>
+              <%= invitation.mage.email %>
             <% end %>
           <% end %>
         <% end %>
       <% end %>
-      <% if purchase.can_invite_muggles? %>
-        <%= link_to 'Invite muggles', invite_muggles_path(:purchase_id => purchase.id) %>
+      <% if purchase.can_invite? %>
+        <%= link_to 'Invite people', invite_invitations_path(purchase_id: purchase.id) %>
       <% end %>
     <% end %>
   <% end %>

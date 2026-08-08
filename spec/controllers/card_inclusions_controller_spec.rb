@@ -3,19 +3,19 @@ require 'rails_helper'
 RSpec.describe CardInclusionsController, type: :controller do
   render_views
 
-  let!(:magician) do
-    Magician.create!(
+  let!(:mage) do
+    Mage.create!(
       email: 'card-inclusion-owner@example.com',
       password: 'password123',
       password_confirmation: 'password123',
       confirmed_at: Time.current
     )
   end
-  let!(:list) { List.create!(magician: magician, name: 'Card inclusion list') }
+  let!(:list) { List.create!(mage: mage, name: 'Card inclusion list') }
   let!(:listed_item) { ListedItem.create!(list: list, designation: 'A listed card') }
   let!(:card) { Card.create!(name: 'Turbo Test Card', image_url: 'https://example.test/turbo-test-card.png') }
 
-  before { sign_in magician }
+  before { sign_in mage }
 
   it 'includes a known card with a Turbo Stream response that refreshes the listed item' do
     expect do

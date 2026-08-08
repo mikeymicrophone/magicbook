@@ -4,22 +4,22 @@ RSpec.describe ListsController, type: :controller do
   render_views
 
   let!(:scribe) do
-    Scribe.create!(
+    Mage.create!(admin: true,
       email: 'list-review-scribe@example.com',
       password: 'password123',
       password_confirmation: 'password123',
       confirmed_at: Time.current
     )
   end
-  let!(:magician) do
-    Magician.create!(
+  let!(:mage) do
+    Mage.create!(
       email: 'list-review-owner@example.com',
       password: 'password123',
       password_confirmation: 'password123',
       confirmed_at: Time.current
     )
   end
-  let!(:list) { List.create!(magician: magician, name: 'Turbo review list', privacy: 'unreviewed') }
+  let!(:list) { List.create!(mage: mage, name: 'Turbo review list', privacy: 'unreviewed') }
 
   before { sign_in scribe }
 

@@ -1,4 +1,4 @@
-<% if current_magician %>
+<% if current_mage %>
   <%= tag.div :id => 'my_purchases_link' do %>
     <%= link_to 'Your Purchases', purchases_path %>
   <% end %>
@@ -23,7 +23,7 @@
     
     <%= div_for book, :actions_with do %>
       <%= begin_reading_link book %>
-      <%= add_muggles_link book %>
+      <%= add_invitations_link book %>
     <% end %>
   <% end %>
 <% end %>

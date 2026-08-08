@@ -1,37 +1,19 @@
 module ApplicationHelper
   def login_links
-    if current_scribe
-      link_to('log out', destroy_scribe_session_path, :method => :delete, :id => 'lot_out')
-    elsif current_magician
-      link_to('log out', destroy_magician_session_path, :method => :delete, :id => 'lot_out')
-    elsif current_muggle
-      link_to('log out', destroy_muggle_session_path, :method => :delete, :id => 'lot_out')
+    if current_mage
+      link_to('log out', destroy_mage_session_path, method: :delete, id: 'log_out')
     else
-      link_to('Sign in', new_magician_session_path, :id => 'password_login') +
+      link_to('Sign in', new_mage_session_path, id: 'password_login') +
       ' or '.html_safe +
-      link_to('Sign up', new_magician_registration_path, :id => 'registration_link')
+      link_to('Sign up', new_mage_registration_path, id: 'registration_link')
     end
   end
   
   def shelf
     tag.div :class => 'header_links' do
-      if current_scribe
+      if current_mage
         link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
         link_to('Bookshelf', books_path, :class => 'bookshelf') +
-        link_to('Lists', lists_path, :class => 'bookshelf') +
-        link_to('Sets', card_sets_path, :class => 'bookshelf') +
-        link_to('Functions', card_functions_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
-      elsif current_magician
-        link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
-        link_to('Bookshelf', magician_books_path(current_magician), :class => 'bookshelf') +
-        link_to('Lists', lists_path, :class => 'bookshelf') +
-        link_to('Sets', card_sets_path, :class => 'bookshelf') +
-        link_to('Functions', card_functions_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
-      elsif current_muggle
-        link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
-        link_to('Bookshelf', muggle_books_path(current_muggle['id']), :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
         link_to('Sets', card_sets_path, :class => 'bookshelf') +
         link_to('Functions', card_functions_path, :class => 'bookshelf') +
@@ -48,12 +30,24 @@ module ApplicationHelper
   end
   
   def navigation_links
-    link_to('home', root_url) +
-    link_to('books', books_path) +
-    link_to('purchases', purchases_path) +
-    link_to('editions', editions_path) +
-    link_to('purchased_books', purchased_books_path) +
-    link_to('magicians', magicians_path)
+    links = [
+      link_to('home', root_url),
+      link_to('books', books_path),
+      link_to('purchases', purchases_path),
+      link_to('editions', editions_path),
+      link_to('purchased_books', purchased_books_path)
+    ]
+    links << link_to('mages', mages_path) if current_mage&.admin?
+    safe_join(links)
+  end
+
+  def review_kit
+    return unless current_mage&.admin?
+
+    tag.div class: 'header_links' do
+      link_to('Review new lists', review_lists_path) +
+        link_to('Review new items', review_listed_items_path)
+    end
   end
   
   def div_with_data_for obj, opts = {}, &block

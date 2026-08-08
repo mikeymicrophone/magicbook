@@ -1,7 +1,7 @@
 class ListedItem < ApplicationRecord
   belongs_to :list
   belongs_to :content, :polymorphic => true, :optional => true
-  has_one :magician, :through => :list
+  has_one :mage, :through => :list
   has_many :card_inclusions, :as => :piece
   has_many :cards, :through => :card_inclusions
   
@@ -12,8 +12,8 @@ class ListedItem < ApplicationRecord
   scope :ordered, lambda { order :ordering }
   scope :randomized, lambda { order 'random()' }
   scope :remaining, lambda { where.not :privacy => [:rejected, :removed, :suggested] }
-  scope :for_my_muggles, lambda { where :privacy => [:unreviewed, :unreviewed_secret, :published, :secret] }
-  scope :for_muggles, lambda { where :privacy => [:unreviewed, :published] }
+  scope :for_invitees, lambda { where :privacy => [:unreviewed, :unreviewed_secret, :published, :secret] }
+  scope :for_others, lambda { where :privacy => [:unreviewed, :published] }
   scope :published, lambda { where :privacy => :published }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   scope :suggested, lambda { where :privacy => :suggested }

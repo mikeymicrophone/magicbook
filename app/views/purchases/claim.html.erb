@@ -1,5 +1,5 @@
-<%= tag.div :class => 'muggling' do %>
-  <% if @muggling %>
+<%= tag.div class: 'inviting' do %>
+  <% if @inviting %>
     <p>
       A copy of this book is waiting for you.  Ask the person who shared this link to send it to
       your email address &mdash; they can do that from the invitation page in their inbox.
@@ -13,7 +13,7 @@
       The book is updated every week.  You'll have access to all future updates.
     </p>
   <% else %>
-    That license has been claimed by four other muggles.  For $10 you can <%= link_to 'purchase one', root_url %> and invite four of your own muggles.
+    That license has been claimed by four other people. For $10 you can <%= link_to 'purchase one', root_url %> and invite four people of your own.
   <% end %>
   <% content_for :open_graph do %>
     <%= open_graph_tags_for_purchase @purchase %>

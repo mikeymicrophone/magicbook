@@ -7,7 +7,7 @@ class ListsController < ApplicationController
   
   def create
     @list = List.new list_params
-    @list.magician = current_magician
+    @list.mage = current_mage
     if @list.save
       redirect_to @list
     else
@@ -17,10 +17,10 @@ class ListsController < ApplicationController
   
   def show
     @list = List.find params[:id]
-    @listed_items = if current_magician
+    @listed_items = if current_mage&.admin? || current_mage == @list.mage
       @list.ordered_items
-    elsif current_muggle
-      @list.items_for current_muggle
+    elsif current_mage
+      @list.items_for current_mage
     else
       @list.published_items
     end
@@ -63,10 +63,10 @@ class ListsController < ApplicationController
     @prominent = List.prominent.send(sorting_scope)
     @suggestion_seeking = List.suggestion_seeking.send(sorting_scope)
     @deferred = List.deferred.send(sorting_scope)
-    @lists = if current_magician
-      List.send(sorting_scope).visible + List.send(sorting_scope).visible_to(current_magician) + current_magician.lists.in_draft
-    elsif current_muggle
-      List.send(sorting_scope).visible + List.send(sorting_scope).visible_to(current_muggle.magician)
+    @lists = if current_mage&.admin?
+      List.send(sorting_scope).all
+    elsif current_mage
+      List.send(sorting_scope).visible + List.send(sorting_scope).visible_to(current_mage) + current_mage.lists.in_draft
     else
       List.send(sorting_scope).published
     end

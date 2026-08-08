@@ -33,8 +33,8 @@ RSpec.describe 'card printing legality', type: :model do
   end
 
   it 'scopes list positions by the canonical card rather than only their historical printing' do
-    magician = Magician.create!(email: 'legality@example.test', password: 'password123')
-    list = List.create!(magician: magician, name: 'Reprints in a list', privacy: :published)
+    mage = Mage.create!(email: 'legality@example.test', password: 'password123')
+    list = List.create!(mage: mage, name: 'Reprints in a list', privacy: :published)
     item = ListedItem.create!(list: list, designation: concept.name, privacy: :published)
     CardInclusion.create!(card: original, piece: item)
 

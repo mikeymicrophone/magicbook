@@ -1,5 +1,5 @@
 class List < ApplicationRecord
-  belongs_to :magician
+  belongs_to :mage
   has_many :listed_items
   
   enum :mode, [:ordered, :randomized, :numbered]
@@ -18,7 +18,7 @@ class List < ApplicationRecord
   scope :randomized, lambda { order "" }
   scope :published, lambda { where :privacy => :published }
   scope :visible, lambda { where :privacy => [:unreviewed, :published] }
-  scope :visible_to, lambda { |magician| where :privacy => [:unreviewed_secret, :secret], :magician_id => magician.id }
+  scope :visible_to, lambda { |mage| where :privacy => [:unreviewed_secret, :secret], :mage_id => mage.id }
   scope :unreviewed, lambda { where :privacy => [:unreviewed, :unreviewed_secret] }
   scope :in_draft, lambda { where :privacy => :draft }
   scope :with_cards_legal_in, ->(format) { joins(listed_items: :cards).merge(Card.legal_in(format)).distinct }
@@ -32,11 +32,11 @@ class List < ApplicationRecord
     end
   end
   
-  def items_for muggle
-    if muggle.magician == magician
-      ordered_items.for_my_muggles
+  def items_for mage
+    if mage.received_invitations.where(inviter: self.mage).exists?
+      ordered_items.for_invitees
     else
-      ordered_items.for_muggles
+      ordered_items.for_others
     end
   end
   

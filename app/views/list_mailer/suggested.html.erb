@@ -3,11 +3,11 @@
 </p>
 
 <p>
-  It's technically possible to put dirty words, etc, into these suggestions, so I've chosen not to email them out in detail.  To review the suggestions, view the list: <%= link_to @list.name, list_url(@list, :auth_token => @magician.authentication_token) %>
+  It's technically possible to put dirty words, etc, into these suggestions, so I've chosen not to email them out in detail. To review the suggestions, view the list: <%= link_to @list.name, list_url(@list, auth_token: @mage.authentication_token) %>
 </p>
 
 <p>
-  You can approve or reject the suggestion.  If approved, it will be visible to magicians and muggles who are signed in, and then once I review it, the item can become public.
+  You can approve or reject the suggestion. If approved, it will be visible to signed-in Mages, and then once I review it, the item can become public.
 </p>
 
 <p>

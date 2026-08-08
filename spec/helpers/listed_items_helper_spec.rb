@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe ListedItemsHelper, type: :helper do
-  let!(:magician) do
-    Magician.create!(
+  let!(:mage) do
+    Mage.create!(
       email: 'list-helper@example.com',
       password: 'password123',
       password_confirmation: 'password123',
       confirmed_at: Time.current
     )
   end
-  let!(:list) { List.create!(magician: magician, name: 'Turbo list') }
+  let!(:list) { List.create!(mage: mage, name: 'Turbo list') }
 
   before do
-    allow(helper).to receive(:current_magician).and_return(magician)
+    allow(helper).to receive(:current_mage).and_return(mage)
   end
 
   it 'keeps the add form in a stable Turbo Frame and requests a stream response' do

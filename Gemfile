@@ -18,6 +18,9 @@ gem 'stripe'
 gem 'record_tag_helper'
 
 gem 'devise'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+gem 'webauthn'
 
 gem 'cancancan'
 gem 'redcarpet'

@@ -4,9 +4,10 @@ import $ from "jquery"
 import "../controllers"
 import "../legacy/autocard"
 import "../legacy/lists"
-import "../legacy/muggles"
+import "../legacy/ramp"
 import "../legacy/paragraphs"
 import "../legacy/purchases"
+import "../legacy/passkeys"
 
 window.$ = window.jQuery = $
 window.Rails = Rails

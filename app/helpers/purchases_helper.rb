@@ -28,12 +28,12 @@ module PurchasesHelper
     }
   end
   
-  def add_muggles_link book
-    if current_magician && current_magician.purchased_books.where(:book => book).present?
-      purchases = current_magician.purchased_books.where(:book => book, :purchase => current_magician.purchases.fresh).map(&:purchase)
+  def add_invitations_link book
+    if current_mage && current_mage.purchased_books.where(:book => book).present?
+      purchases = current_mage.purchased_books.where(:book => book, :purchase => current_mage.purchases.fresh).map(&:purchase)
       invitable_purchases = purchases.select { |purchase| purchase.invites_remaining > 0 }
       if invitable_purchases.present?
-        return link_to 'Invite more friends', invite_muggles_path(:purchase_id => invitable_purchases.first), :class => 'book_purchase_link'
+        return link_to 'Invite more friends', invite_invitations_path(purchase_id: invitable_purchases.first), class: 'book_purchase_link'
       end
     end
 

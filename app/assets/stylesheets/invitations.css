@@ -1,14 +1,10 @@
-.inviting, .muggling {
+.inviting {
   text-align: center;
   font-family: Righteous;
   font-size: 1.25em;
 }
 
-.inviting .licensing_discussion, .muggling .licensing_discussion {
+.inviting .licensing_discussion {
   margin: 50px 30px;
   font-family: 'Noto Sans';
-}
-
-.muggle {
-  padding: 5px;
 }

@@ -1,8 +1,6 @@
 module BooksHelper
   def book_title_link book
-    if current_magician
-      link_to book.title, book
-    elsif current_muggle
+    if current_mage
       link_to book.title, book
     else
       link_to book.title, wwemc_path, :class => 'purchase_trigger'
@@ -10,13 +8,11 @@ module BooksHelper
   end
   
   def begin_reading_link book
-    if current_scribe
+    if current_mage&.admin?
       link_to('Read this book online', book, :class => 'begin_reading_link') +
       tag.br +
       link_to('Edit this book', edit_book_path(book), :class => 'begin_reading_link')
-    elsif current_magician
-      link_to 'Read this book online', book, :class => 'begin_reading_link'
-    elsif current_muggle
+    elsif current_mage
       link_to 'Read this book online', book, :class => 'begin_reading_link'
     else
       link_to 'Read this book online', root_url, :class => 'begin_reading_link purchase_trigger', :data => {:confirm => "If you have purchased or received #{book.title}, log in to read it.  Otherwise, you can purchase it for $2!"}

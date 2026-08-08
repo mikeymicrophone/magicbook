@@ -27,7 +27,7 @@ class CardInclusionsController < ApplicationController
     
     @card_inclusion = CardInclusion.new card_inclusion_params
     @card_inclusion.card = @card
-    @card_inclusion.save if @card_inclusion.piece.magician == current_magician
+    @card_inclusion.save if @card_inclusion.piece.mage == current_mage
     @piece = @card_inclusion.piece
 
     respond_to do |format|

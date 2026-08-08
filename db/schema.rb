@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_07_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -188,13 +188,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
   create_table "identifiers", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "email"
+    t.bigint "mage_id"
     t.bigint "magician_id"
     t.bigint "muggle_id"
     t.string "provider"
     t.string "uid"
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["mage_id"], name: "index_identifiers_on_mage_id"
     t.index ["magician_id"], name: "index_identifiers_on_magician_id"
     t.index ["muggle_id"], name: "index_identifiers_on_muggle_id"
+    t.index ["provider", "uid"], name: "index_identifiers_on_provider_and_uid", unique: true
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "inviter_id", null: false
+    t.bigint "mage_id", null: false
+    t.bigint "purchase_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inviter_id"], name: "index_invitations_on_inviter_id"
+    t.index ["mage_id"], name: "index_invitations_on_mage_id"
+    t.index ["purchase_id", "mage_id"], name: "index_invitations_on_purchase_id_and_mage_id", unique: true
+    t.index ["purchase_id"], name: "index_invitations_on_purchase_id"
   end
 
   create_table "listed_items", force: :cascade do |t|
@@ -214,6 +229,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
   create_table "lists", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.text "description"
+    t.bigint "mage_id"
     t.bigint "magician_id"
     t.integer "mode"
     t.string "name"
@@ -221,7 +237,41 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
     t.integer "privacy"
     t.integer "suggestability"
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["mage_id"], name: "index_lists_on_mage_id"
     t.index ["magician_id"], name: "index_lists_on_magician_id"
+  end
+
+  create_table "mages", force: :cascade do |t|
+    t.boolean "admin", default: false, null: false
+    t.string "authentication_token"
+    t.datetime "authentication_token_created_at"
+    t.datetime "confirmation_sent_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "created_at", null: false
+    t.datetime "current_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "last_sign_in_at"
+    t.inet "last_sign_in_ip"
+    t.datetime "magic_link_sent_at"
+    t.string "magic_link_token_digest"
+    t.boolean "must_set_password", default: false, null: false
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.string "webauthn_user_handle"
+    t.index ["authentication_token"], name: "index_mages_on_authentication_token", unique: true
+    t.index ["confirmation_token"], name: "index_mages_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_mages_on_email", unique: true
+    t.index ["magic_link_token_digest"], name: "index_mages_on_magic_link_token_digest", unique: true
+    t.index ["reset_password_token"], name: "index_mages_on_reset_password_token", unique: true
+    t.index ["webauthn_user_handle"], name: "index_mages_on_webauthn_user_handle", unique: true
   end
 
   create_table "magicians", force: :cascade do |t|
@@ -280,6 +330,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "passkeys", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "external_id", null: false
+    t.datetime "last_used_at"
+    t.bigint "mage_id", null: false
+    t.text "public_key", null: false
+    t.bigint "sign_count", default: 0, null: false
+    t.string "transports", default: [], null: false, array: true
+    t.datetime "updated_at", null: false
+    t.index ["external_id"], name: "index_passkeys_on_external_id", unique: true
+    t.index ["mage_id"], name: "index_passkeys_on_mage_id"
+  end
+
   create_table "purchased_books", force: :cascade do |t|
     t.bigint "book_id"
     t.datetime "created_at", precision: nil, null: false
@@ -292,10 +355,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
   create_table "purchases", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "email"
+    t.bigint "mage_id"
     t.bigint "magician_id"
     t.string "stripe_token"
     t.string "token"
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["mage_id"], name: "index_purchases_on_mage_id"
   end
 
   create_table "scribes", force: :cascade do |t|
@@ -478,8 +543,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_03_160000) do
   add_foreign_key "editions", "books"
   add_foreign_key "format_sets", "card_sets"
   add_foreign_key "format_sets", "formats"
+  add_foreign_key "identifiers", "mages"
+  add_foreign_key "invitations", "mages"
+  add_foreign_key "invitations", "mages", column: "inviter_id"
+  add_foreign_key "invitations", "purchases"
+  add_foreign_key "lists", "mages"
+  add_foreign_key "passkeys", "mages"
   add_foreign_key "purchased_books", "books"
   add_foreign_key "purchased_books", "purchases"
+  add_foreign_key "purchases", "mages"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

@@ -1,26 +1,25 @@
 class Ability
   include CanCan::Ability
 
-  def initialize user
-    if user.is_a? Scribe
+  def initialize(user)
+    if user.is_a?(Mage) && user.admin?
       can :manage, :all
-    elsif user.is_a? Magician
+    elsif user.is_a?(Mage)
       can :read, :all
-      can :invite, Muggle
-      can :submit, Muggle
+      can :invite, Invitation
+      can :submit, Invitation
       can [:free, :next], Chapter
-      can :manage, List
-      can :manage, ListedItem
+      can :create, List
+      can [:read, :update, :destroy], List, mage_id: user.id
+      can :create, ListedItem
+      can [:read, :update, :destroy], ListedItem do |listed_item|
+        listed_item.list&.mage_id == user.id
+      end
       cannot :review, :all
       cannot :approve, :all
       cannot :reject, :all
-      cannot :read, Magician
-    elsif user.is_a? Muggle
-      can :read, :all
-      can [:free, :next], Chapter
-      cannot :read, Magician
+      cannot :read, Mage
     else
-      can :invite, Muggle
       can :read, List
       can :read, CardSet
       can :read, Card
@@ -29,7 +28,7 @@ class Ability
       can :index, Book
       can [:new, :suggest_revision], ListedItem
       can :create, ListedItem, :privacy => ListedItem.privacies[:suggested]
-      cannot :read, Magician
+      cannot :read, Mage
     end
   end
 end

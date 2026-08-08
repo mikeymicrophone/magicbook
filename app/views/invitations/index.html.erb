@@ -1,0 +1,5 @@
+<% @invitations.each do |invitation| %>
+  <%= div_for invitation do %>
+    <%= invitation.mage.email %> — invited by <%= invitation.inviter.email %>
+  <% end %>
+<% end %>

@@ -13,6 +13,7 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
+  config.hosts << "dev.wayswemage.com"
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -34,18 +35,14 @@ Rails.application.configure do
   config.active_storage.service = :local
   config.active_job.queue_adapter = :solid_queue
 
-  # Don't care if the mailer can't send.
+  # Keep development mail in memory; no external SMTP server is contacted.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: 'smtp.resend.com',
-    port: 587,
-    user_name: 'resend',
-    password: ENV['RESEND_API_KEY'],
-    authentication: :plain,
-    enable_starttls_auto: true
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('APP_HOST', 'dev.wayswemage.com'),
+    protocol: ENV.fetch('APP_PROTOCOL', 'https')
   }
+  config.action_mailer.delivery_method = :test
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.perform_caching = false
 

@@ -4,7 +4,7 @@ RSpec.describe ParagraphsController, type: :controller do
   render_views
 
   let!(:scribe) do
-    Scribe.create!(
+    Mage.create!(admin: true,
       email: 'paragraph-turbo-scribe@example.com',
       password: 'password123',
       password_confirmation: 'password123',

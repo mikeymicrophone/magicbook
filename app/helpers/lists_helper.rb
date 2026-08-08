@@ -35,7 +35,7 @@ module ListsHelper
         end
       end.to_s +
       div_for(list, :edit_tool_for) do
-        if current_magician == list.magician
+        if current_mage == list.mage
           link_to 'edit', edit_list_path(list), :class => 'edit_list_link'
         end.to_s.html_safe +
         link_to('sort', :sort => 'alpha')
@@ -44,9 +44,7 @@ module ListsHelper
   end
   
   def begin_list_link
-    if current_magician
-      link_to 'Begin new list', new_list_path, :id => 'new_list_link'
-    elsif current_muggle
+    if current_mage
       link_to 'Begin new list', new_list_path, :id => 'new_list_link'
     else
       link_to 'Begin new list', '', :id => 'new_list_link', :data => {:confirm => 'If you have made a purchase, log in.  Otherwise, purchase a $2 book and you will be welcome to make lists!'}
@@ -54,18 +52,18 @@ module ListsHelper
   end
   
   def publish_controls_for list
-    if list.magician == current_magician
+    if list.mage == current_mage
       if list.privacy == 'draft'
         tag.div :class => 'right' do
           link_to('publish', list_path(list, :list => {:privacy => 'unreviewed'}), :method => :put) +
-          link_to('[for my muggles]', list_path(list, :list => {:privacy => 'unreviewed_secret'}), :method => :put)
+          link_to('[for my invitees]', list_path(list, :list => {:privacy => 'unreviewed_secret'}), :method => :put)
         end
       end
     end
   end
   
   def pin_controls_for list
-    if current_scribe
+    if current_mage&.admin?
       tag.div :class => 'right' do
         link_to('e', list_path(list, list: { pin: 'examplary' }), data: { turbo_method: :put, turbo_stream: true }) +
         link_to('p', list_path(list, list: { pin: 'prominent' }), data: { turbo_method: :put, turbo_stream: true }) +
@@ -76,7 +74,7 @@ module ListsHelper
   end
   
   def submission_reviewer_for list
-    if list.magician == current_magician
+    if list.mage == current_mage
       if list.listed_items.suggested.present?
         div_for list, :submission_reviewer_for do 
           list.listed_items.suggested.map do |listed_item|

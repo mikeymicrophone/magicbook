@@ -4,7 +4,7 @@ RSpec.describe CitationsController, type: :controller do
   render_views
 
   let!(:scribe) do
-    Scribe.create!(
+    Mage.create!(admin: true,
       email: 'citation-turbo-scribe@example.com',
       password: 'password123',
       password_confirmation: 'password123',

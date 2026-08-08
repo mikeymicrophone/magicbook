@@ -1,0 +1,27 @@
+<%= tag.div class: 'inviting' do %>
+  <%= link_to '[Click here to read the book now]', book_path(@purchase.books.first) %>
+
+  <p>You can share the book with four people.</p>
+  <p>Enter their email addresses below and we’ll send each of them a copy.</p>
+
+  <% if @purchase.invites_remaining.zero? %>
+    <p>To share it with more people, <%= link_to 'purchase another copy', root_url %>.</p>
+  <% end %>
+
+  <h3>Please ensure that you have permission to email these people.</h3>
+
+  <%= form_with url: submit_invitations_path, local: true, id: 'invitation_form' do %>
+    <% @purchase.invites_remaining.times do |index| %>
+      <% invitation = @invitations&.fetch(index, nil) %>
+      <%= text_field_tag "email_#{index + 1}", params["email_#{index + 1}"], placeholder: 'email address' %>
+      <% if invitation&.errors&.any? %>
+        <p><%= invitation.errors.full_messages.to_sentence %></p>
+      <% end %>
+      <br>
+    <% end %>
+    <%= text_area_tag :message, nil, placeholder: 'Add a message so they know who the gift is from.', size: '60x5' %>
+    <br>
+    <%= submit_tag 'Send invitations' %>
+    <%= hidden_field_tag :purchase_id, @purchase.id %>
+  <% end %>
+<% end %>

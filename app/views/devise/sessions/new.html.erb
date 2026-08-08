@@ -30,40 +30,25 @@
         </div>
       <% end %>
 
+      <p><%= link_to 'Email me a sign-in link', new_magic_link_path %></p>
+
+      <% if Mage.google_oauth_configured? %>
+        <%= button_to 'Continue with Google', mage_google_oauth2_omniauth_authorize_path,
+          method: :post, form: { data: { turbo: false } } %>
+      <% end %>
+
+      <p>
+        <button type="button"
+          data-passkey-action="authenticate"
+          data-options-url="<%= authentication_options_passkey_path %>"
+          data-submit-url="<%= authenticate_passkey_path %>">
+          Sign in with a passkey
+        </button>
+      </p>
+
       <%= render "devise/shared/links" %>
     </div>
   </div>
 
 
-  <div class="authentication_form">
-    <div id="muggle_login_form">
-      <h2>Muggle Log in</h2>
-      <h3>(if you received the book)</h3>
-    
-      <%= form_for(Muggle.new, as: :muggle, url: session_url(:muggle), data: {turbo: false}) do |f| %>
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
-        </div>
-
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Log in" %>
-        </div>
-      <% end %>
-
-      <%= link_to "Forgot your password?", new_password_path(:muggle) %><br />
-
-      <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(:muggle) %><br />
-    </div>
-  </div>
 </div>

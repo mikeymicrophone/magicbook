@@ -1,0 +1,11 @@
+<% @mages.each do |mage| %>
+  <%= div_for mage do %>
+    <%= mage.email %>
+    <% if mage.admin? %>(admin)<% end %>
+  <% end %>
+<% end %>
+
+<%= form_with url: ramp_mages_path do |form| %>
+  <%= form.email_field :email %>
+  <%= form.submit 'Send access invitation' %>
+<% end %>

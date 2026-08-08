@@ -11,10 +11,10 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe BooksHelper, type: :helper do
-  context 'magician is logged in' do
+  context 'mage is logged in' do
     before do
       @book = Fabricate :book
-      sign_in Fabricate :magician
+      sign_in Fabricate :mage
     end
     
     it 'should link book title to book show page' do

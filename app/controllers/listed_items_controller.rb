@@ -8,7 +8,7 @@ class ListedItemsController < ApplicationController
   def create
     @listed_item = ListedItem.new listed_item_params
     @listed_item.list_id = params[:list_id]
-    if current_scribe
+    if current_mage&.admin?
       if @listed_item.privacy == 'unreviewed'
         @listed_item.privacy = 'published'
       elsif @listed_item.privacy == 'unreviewed_secret'
@@ -49,7 +49,7 @@ class ListedItemsController < ApplicationController
   def update
     @listed_item = ListedItem.find params[:id]
     @was_suggested = @listed_item.suggested?
-    if current_scribe
+    if current_mage&.admin?
       @listed_item.attributes = listed_item_params
       if @listed_item.privacy == 'unreviewed'
         @listed_item.privacy = 'published'

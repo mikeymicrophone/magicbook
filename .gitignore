@@ -28,6 +28,7 @@ config/initializers/aalpha_dev_constants.rb
 
 /config/credentials/development.key
 .env
+.pumaenv
 
 # Vite Ruby
 /public/vite*

@@ -1,0 +1,5 @@
+<%= div_for @invitation do %>
+  <p><%= @invitation.mage.email %></p>
+  <p>Invited by <%= @invitation.inviter.email %></p>
+  <p>Access to: <%= @invitation.books.map(&:title).to_sentence %></p>
+<% end %>

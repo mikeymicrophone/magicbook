@@ -1,19 +1,18 @@
 class Purchase < ApplicationRecord
-  belongs_to :magician, :optional => true
+  belongs_to :mage, optional: true
   has_many :purchased_books
   has_many :books, :through => :purchased_books
-  has_many :muggles
+  has_many :invitations, dependent: :destroy
   
   attr_accessor :fulfill, :ramp, :book_id
   
   scope :fresh, lambda { where Purchase.arel_table[:created_at].gt 3.days.ago }
   
   before_create :default_book, :populate_token
-  after_create :process_payment, :attach_magician
+  after_create :process_payment, :attach_mage
   
-  def attach_magician
-    @magician = Magician.find_or_create_by :email => email
-    update_attribute :magician_id, @magician.id
+  def attach_mage
+    update!(mage: Mage.create_access_account!(email))
   end
   
   def process_payment
@@ -47,14 +46,14 @@ class Purchase < ApplicationRecord
   end
   
   def invites_remaining
-    4 - muggles.count
+    4 - invitations.count
   end
   
   def fresh?
     created_at > 3.days.ago
   end
   
-  def can_invite_muggles?
+  def can_invite?
     invites_remaining.present? && fresh?
   end
   
