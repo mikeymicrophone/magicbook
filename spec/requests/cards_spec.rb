@@ -45,7 +45,8 @@ RSpec.describe 'Cards', type: :request do
 
     get card_path(card)
 
-    expect(response.body).to include('Drag it into a role', 'Interaction', 'card-role-assignment')
+    expect(response.body).to include('Drop the card on every broad role it plays', 'Interaction', 'card-role-assignment')
+    expect(response.body).not_to include('Lists including this printing')
 
     post card_card_function_assignments_path(card),
       params: { card_function_assignment: { card_function_id: role.id } },

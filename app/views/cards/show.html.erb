@@ -5,7 +5,6 @@
 
   <article class="card-detail"<% if can?(:manage, @card) && @role_options.any? %> data-controller="card-role-assignment" data-card-role-assignment-url-value="<%= card_card_function_assignments_path(@card) %>"<% end %>>
     <header class="card-detail-header">
-      <p class="catalog-kicker">Card printing</p>
       <h1><%= @card.name %></h1>
       <p class="catalog-meta">
         <% if @card.card_set %>
@@ -35,12 +34,8 @@
     <% end %>
 
     <% if can?(:manage, @card) && @role_options.any? %>
-      <section class="card-role-assignment" aria-labelledby="card-roles-heading">
-        <div class="card-role-assignment-heading">
-          <p class="catalog-kicker">Classify this card</p>
-          <h2 id="card-roles-heading">Drag it into a role</h2>
-          <p>Drop the card on every broad role it plays. You can also select a role directly.</p>
-        </div>
+      <section class="card-role-assignment" aria-label="Classify this card">
+        <p class="card-role-assignment-heading">Drop the card on every broad role it plays. You can also select a role directly.</p>
         <div class="card-role-grid">
           <% @role_options.each do |role| %>
             <% assigned = @card.card_concept.card_functions.include?(role) %>
@@ -59,17 +54,14 @@
       </section>
     <% end %>
 
-    <section class="card-list-memberships">
-      <h2>Lists including this printing</h2>
-      <% if @lists.any? %>
+    <% if @lists.any? %>
+      <section class="card-list-memberships" aria-label="Lists including this printing">
         <ul>
           <% @lists.each do |list| %>
             <li><%= link_to list.name, list %></li>
           <% end %>
         </ul>
-      <% else %>
-        <p>No published lists include this printing yet.</p>
-      <% end %>
-    </section>
+      </section>
+    <% end %>
   </article>
 </main>

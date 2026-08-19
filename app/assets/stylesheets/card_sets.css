@@ -198,15 +198,6 @@
   max-width: 29rem;
 }
 
-.card-role-assignment h2 {
-  font-size: 1.5rem;
-  margin: .1rem 0 .35rem;
-}
-
-.card-role-assignment-heading p:last-child {
-  margin: 0;
-}
-
 .card-role-grid {
   display: grid;
   gap: .65rem;
@@ -261,9 +252,8 @@
   text-transform: uppercase;
 }
 
-.card-list-memberships h2 {
-  font-size: 1.35rem;
-  margin: 2.25rem 0 .5rem;
+.card-list-memberships {
+  margin-top: 2.25rem;
 }
 
 @media (max-width: 40rem) {
