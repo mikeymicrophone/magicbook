@@ -175,7 +175,8 @@
   display: block;
   height: auto;
   margin: 0 auto;
-  max-width: min(100%, 24rem);
+  max-width: 24rem;
+  width: 100%;
 }
 
 .role-card-preview {
