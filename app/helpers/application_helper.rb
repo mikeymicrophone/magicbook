@@ -3,9 +3,7 @@ module ApplicationHelper
     if current_mage
       link_to('log out', destroy_mage_session_path, method: :delete, id: 'log_out')
     else
-      link_to('Sign in', new_mage_session_path, id: 'password_login') +
-      ' or '.html_safe +
-      link_to('Sign up', new_mage_registration_path, id: 'registration_link')
+      link_to('Sign in', new_mage_session_path, id: 'password_login')
     end
   end
   
@@ -16,15 +14,13 @@ module ApplicationHelper
         link_to('Bookshelf', books_path, :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
         link_to('Sets', card_sets_path, :class => 'bookshelf') +
-        link_to('Functions', card_functions_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
+        link_to('Functions', card_functions_path, :class => 'bookshelf')
       else
         link_to('Free Chapter', free_book_chapters_path(Book.featured)) +
         link_to('Bookshelf', books_path, :class => 'bookshelf') +
         link_to('Lists', lists_path, :class => 'bookshelf') +
         link_to('Sets', card_sets_path, :class => 'bookshelf') +
-        link_to('Functions', card_functions_path, :class => 'bookshelf') +
-        link_to('Coaching', coaching_path, :class => 'bookshelf')
+        link_to('Functions', card_functions_path, :class => 'bookshelf')
       end
     end
   end

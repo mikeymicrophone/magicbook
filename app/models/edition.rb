@@ -1,4 +1,8 @@
 class Edition < ApplicationRecord
+  class ReleaseError < StandardError; end
+  class AlreadyReleasedError < ReleaseError; end
+  class SuccessorAlreadyExistsError < ReleaseError; end
+
   has_many :table_of_contents
   has_many :books, :through => :table_of_contents
   has_many :chapters, -> { where 'table_of_contents.section_id' => nil }, :through => :table_of_contents
@@ -82,6 +86,38 @@ class Edition < ApplicationRecord
   
   def version
     "#{major}.#{minor}.#{patch}"
+  end
+
+  # Publish this edition and prepare the next minor edition for editing as one
+  # atomic operation. A release cannot be repeated or overwrite a successor
+  # that has already been created by another workflow.
+  def release_for!(book, at: Time.current)
+    self.class.transaction do
+      book.lock!
+      edition = self.class.lock.find(id)
+
+      raise ActiveRecord::RecordNotFound unless book.editions.where(id: edition.id).exists?
+      raise AlreadyReleasedError, "Edition #{edition.version} has already been released" if edition.release?
+
+      successor_attributes = {
+        major: edition.major,
+        minor: edition.minor.next,
+        patch: 0
+      }
+
+      if book.editions.where(successor_attributes).exists?
+        raise SuccessorAlreadyExistsError, "Edition #{successor_attributes.values.join('.')} already exists"
+      end
+
+      edition.update!(release: at)
+      book.update!(version: edition.version)
+
+      successor = self.class.create!(successor_attributes)
+      TableOfContent.create!(book: book, edition: successor)
+      successor.copy_contents_from(edition, book)
+
+      successor
+    end
   end
   
   def locate params

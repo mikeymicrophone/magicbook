@@ -153,23 +153,120 @@
 }
 
 .card-detail {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: minmax(0, 22rem) minmax(16rem, 1fr);
+  margin: 0 auto;
+  max-width: 34rem;
+  text-align: center;
+}
+
+.card-detail-header {
+  margin: 0 auto 1.5rem;
+}
+
+.card-detail-header h1 {
+  margin: .1rem 0 .45rem;
+}
+
+.card-detail-header .catalog-meta,
+.card-function-links {
+  margin: .35rem 0;
 }
 
 .card-detail-image {
   display: block;
   height: auto;
-  max-width: 100%;
+  margin: 0 auto;
+  max-width: min(100%, 24rem);
+}
+
+.role-card-preview {
+  cursor: grab;
+}
+
+.role-card-preview:active {
+  cursor: grabbing;
+}
+
+.card-role-assignment {
+  border-top: 1px solid #d5c9b9;
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+}
+
+.card-role-assignment-heading {
+  margin: 0 auto 1rem;
+  max-width: 29rem;
+}
+
+.card-role-assignment h2 {
+  font-size: 1.5rem;
+  margin: .1rem 0 .35rem;
+}
+
+.card-role-assignment-heading p:last-child {
+  margin: 0;
+}
+
+.card-role-grid {
+  display: grid;
+  gap: .65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card-role-drop {
+  align-items: center;
+  background: #fffcf6;
+  border: 1px dashed #a48a69;
+  color: #34291d;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  gap: .15rem;
+  justify-content: center;
+  min-height: 6rem;
+  padding: .75rem;
+  transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+.card-role-drop:hover,
+.card-role-drop:focus-visible,
+.card-role-drop.is-dragging-over {
+  background: #f3e7d4;
+  border-color: #6a3b17;
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.card-role-drop.is-assigned {
+  background: #e3eadb;
+  border-color: #61724b;
+}
+
+.card-role-drop.is-saving {
+  opacity: .65;
+}
+
+.card-role-name {
+  font-family: Cinzel, Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.card-role-status {
+  color: #705f4d;
+  font-family: Dosis, Arial, sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .card-list-memberships h2 {
-  margin-top: 0;
+  font-size: 1.35rem;
+  margin: 2.25rem 0 .5rem;
 }
 
 @media (max-width: 40rem) {
-  .card-detail {
+  .card-role-grid {
     grid-template-columns: 1fr;
   }
 }

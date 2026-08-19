@@ -1,6 +1,6 @@
 Fabricator :chapter do
-  title { Faker::Hipster.sentence 3 }
-  subtitle { Faker::Shakespeare.king_richard_iii_quote }
+  title { Faker::Lorem.sentence }
+  subtitle { Faker::Lorem.sentence }
   edition { |attrs| attrs[:editions]&.first }
   book { |attrs| attrs[:edition]&.books&.last }
 end

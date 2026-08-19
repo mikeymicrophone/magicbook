@@ -103,7 +103,9 @@ Rails.application.routes.draw do
     end
   end
   resources :card_inclusions
-  resources :cards, only: [:show]
+  resources :cards, only: [:show] do
+    resources :card_function_assignments, only: [:create]
+  end
   resources :card_sets, :only => [:index, :show], :param => :code
   resources :card_functions, only: [:index, :show], param: :slug
   

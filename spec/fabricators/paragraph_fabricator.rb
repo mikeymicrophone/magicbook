@@ -1,5 +1,5 @@
 Fabricator :paragraph do
-  text { Faker::Friends.quote }
+  text { Faker::Lorem.paragraph }
   section { |attrs| attrs[:sections]&.first }
   chapter { |attrs| attrs[:section]&.chapter }
   edition { |attrs| attrs[:chapter]&.edition }

@@ -1,6 +1,6 @@
 Fabricator :citation do
-  source { Faker::Educator.university }
-  finding { Faker::Ancient.god }
+  source { Faker::Lorem.sentence }
+  finding { Faker::Lorem.sentence }
   paragraph { |attrs| attrs[:paragraphs]&.first }
   section { |attrs| attrs[:paragraph]&.section }
   chapter { |attrs| attrs[:section]&.chapter }

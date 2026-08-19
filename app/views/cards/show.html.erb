@@ -3,41 +3,73 @@
     <%= link_to "← #{@card.card_set.name}", card_set_path(@card.card_set), class: 'catalog-back-link' %>
   <% end %>
 
-  <article class="card-detail">
-  <div>
-    <h1><%= @card.name %></h1>
-    <p>
-      <% if @card.card_set %>
-        <%= link_to @card.card_set.name, card_set_path(@card.card_set) %>
-      <% else %>
-        Legacy printing
-      <% end %>
-      <% if @card.collector_number.present? %> · #<%= @card.collector_number %><% end %>
-    </p>
-
-    <% if @card.card_concept.card_functions.any? %>
-      <p class="card-function-links">
-        <strong>Functions:</strong>
-        <%= safe_join(@card.card_concept.card_functions.sort_by(&:name).map { |card_function| link_to card_function.name, card_function_path(card_function) }, ', ') %>
+  <article class="card-detail"<% if can?(:manage, @card) && @role_options.any? %> data-controller="card-role-assignment" data-card-role-assignment-url-value="<%= card_card_function_assignments_path(@card) %>"<% end %>>
+    <header class="card-detail-header">
+      <p class="catalog-kicker">Card printing</p>
+      <h1><%= @card.name %></h1>
+      <p class="catalog-meta">
+        <% if @card.card_set %>
+          <%= link_to @card.card_set.name, card_set_path(@card.card_set) %>
+        <% else %>
+          Legacy printing
+        <% end %>
+        <% if @card.collector_number.present? %> · #<%= @card.collector_number %><% end %>
       </p>
-    <% end %>
+
+      <% if @card.card_concept.card_functions.any? %>
+        <p class="card-function-links">
+          <strong>Functions:</strong>
+          <%= safe_join(@card.card_concept.card_functions.sort_by(&:name).map { |card_function| link_to card_function.name, card_function_path(card_function) }, ', ') %>
+        </p>
+      <% end %>
+    </header>
 
     <% if @card.image_url.present? %>
-      <%= image_tag @card.image_url, alt: @card.name, class: 'card-detail-image' %>
+      <% if can?(:manage, @card) %>
+        <div class="role-card-preview" draggable="true" data-action="dragstart->card-role-assignment#startDrag dragend->card-role-assignment#endDrag">
+          <%= image_tag @card.image_url, alt: @card.name, class: 'card-detail-image' %>
+        </div>
+      <% else %>
+        <%= image_tag @card.image_url, alt: @card.name, class: 'card-detail-image' %>
+      <% end %>
     <% end %>
-  </div>
 
-  <section class="card-list-memberships">
-    <h2>Lists including this printing</h2>
-    <% if @lists.any? %>
-      <ul>
-        <% @lists.each do |list| %>
-          <li><%= link_to list.name, list %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>No published lists include this printing yet.</p>
+    <% if can?(:manage, @card) && @role_options.any? %>
+      <section class="card-role-assignment" aria-labelledby="card-roles-heading">
+        <div class="card-role-assignment-heading">
+          <p class="catalog-kicker">Classify this card</p>
+          <h2 id="card-roles-heading">Drag it into a role</h2>
+          <p>Drop the card on every broad role it plays. You can also select a role directly.</p>
+        </div>
+        <div class="card-role-grid">
+          <% @role_options.each do |role| %>
+            <% assigned = @card.card_concept.card_functions.include?(role) %>
+            <button
+              class="card-role-drop<%= ' is-assigned' if assigned %>"
+              type="button"
+              aria-pressed="<%= assigned %>"
+              data-card-role-assignment-target="role"
+              data-role-id="<%= role.id %>"
+              data-action="click->card-role-assignment#chooseRole dragover->card-role-assignment#allowDrop dragenter->card-role-assignment#enterDrop dragleave->card-role-assignment#leaveDrop drop->card-role-assignment#drop">
+              <span class="card-role-name"><%= role.name %></span>
+              <span class="card-role-status"><%= assigned ? 'Assigned' : 'Drop here' %></span>
+            </button>
+          <% end %>
+        </div>
+      </section>
     <% end %>
-  </section>
+
+    <section class="card-list-memberships">
+      <h2>Lists including this printing</h2>
+      <% if @lists.any? %>
+        <ul>
+          <% @lists.each do |list| %>
+            <li><%= link_to list.name, list %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No published lists include this printing yet.</p>
+      <% end %>
+    </section>
   </article>
 </main>

@@ -1,6 +1,6 @@
 Fabricator :section do
-  heading { Faker::StarWars.quote }
-  subheading { Faker::Space.nasa_space_craft + " launched from " + Faker::Pokemon.location }
+  heading { Faker::Lorem.sentence }
+  subheading { Faker::Lorem.sentence }
   chapter { |attrs| attrs[:chapters]&.first }
   edition { |attrs| attrs[:chapter]&.edition }
   book { |attrs| attrs[:edition]&.book }

@@ -18,7 +18,7 @@ RSpec.describe BooksHelper, type: :helper do
     end
     
     it 'should link book title to book show page' do
-      expect(helper.book_title_link(@book)).to include @book.title
+      expect(helper.book_title_link(@book)).to include ERB::Util.html_escape(@book.title)
       expect(helper.book_title_link(@book)).to include book_path(@book)
     end
   end

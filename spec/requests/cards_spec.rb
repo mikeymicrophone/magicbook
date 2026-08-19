@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Cards', type: :request do
+  include Devise::Test::IntegrationHelpers
+
   before do
     host! 'localhost'
     Book.create!(id: 1, title: 'Featured book', version: '1.0.0')
@@ -27,9 +29,30 @@ RSpec.describe 'Cards', type: :request do
     expect(response.body).to include('Published card list')
     expect(response.body).not_to include('Private card list')
     expect(response.body).to include('Card draw', card_function_path(card_function))
+    expect(response.body).to include('card-detail-header')
 
     get card_set_path(card_set)
 
     expect(response.body).to include(card_path(card))
+  end
+
+  it 'lets an administrator assign a card to a role' do
+    concept = CardConcept.create!(name: 'Role test card', oracle_id: SecureRandom.uuid)
+    card = Card.create!(name: concept.name, card_concept: concept)
+    role = CardFunction.create!(name: 'Interaction', slug: 'interaction')
+    admin = Mage.create!(admin: true, email: 'catalog-admin@example.test', password: 'password123')
+    sign_in admin
+
+    get card_path(card)
+
+    expect(response.body).to include('Drag it into a role', 'Interaction', 'card-role-assignment')
+
+    post card_card_function_assignments_path(card),
+      params: { card_function_assignment: { card_function_id: role.id } },
+      headers: { 'ACCEPT' => 'application/json' },
+      as: :json
+
+    expect(response).to have_http_status(:created)
+    expect(concept.card_functions).to include(role)
   end
 end
