@@ -4,7 +4,7 @@ class CardSetsController < ApplicationController
 
     @selected_category = params[:category].presence || 'browseable'
     @card_sets = filtered_sets.order(released_on: :desc, name: :asc).page(params[:page]).per(48)
-    @category_counts = CardSet.group(:category).count
+    @category_counts = CardSet.with_printings.group(:category).count
   end
 
   def show
@@ -17,10 +17,10 @@ class CardSetsController < ApplicationController
   private
 
   def filtered_sets
-    return CardSet.all if @selected_category == 'all'
+    return CardSet.with_printings if @selected_category == 'all'
     return CardSet.browseable if @selected_category == 'browseable'
     return CardSet.none unless CardSet.categories.key?(@selected_category)
 
-    CardSet.public_send(@selected_category)
+    CardSet.with_printings.public_send(@selected_category)
   end
 end

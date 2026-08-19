@@ -39,7 +39,8 @@ class CardSet < ApplicationRecord
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
 
-  scope :browseable, -> { where.not(category: [:promo, :token, :special]) }
+  scope :with_printings, -> { joins(:cards).distinct }
+  scope :browseable, -> { with_printings.where.not(category: [:promo, :token, :special]) }
 
   def self.category_for_set_type(set_type)
     RAW_TYPE_CATEGORIES.fetch(set_type, :special)

@@ -19,6 +19,7 @@ RSpec.describe 'Card sets', type: :request do
   it 'browses normal set categories while leaving promo sets filterable' do
     premier = CardSet.create!(code: 'TST', name: 'Test Expansion', released_on: Date.new(2026, 1, 1), category: :premier)
     promo = CardSet.create!(code: 'PST', name: 'Test Promo', released_on: Date.new(2026, 1, 2), category: :promo)
+    empty = CardSet.create!(code: 'EMP', name: 'Unimported Expansion', released_on: Date.new(2026, 1, 3), category: :premier)
     create_printing(set: premier, name: 'Test Card')
     create_printing(set: promo, name: 'Promo Card')
 
@@ -27,6 +28,7 @@ RSpec.describe 'Card sets', type: :request do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include('Test Expansion')
     expect(response.body).not_to include('Test Promo')
+    expect(response.body).not_to include(empty.name)
 
     get card_sets_path(category: 'promo')
 
