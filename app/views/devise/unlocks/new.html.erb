@@ -1,16 +1,22 @@
-<h2>Resend unlock instructions</h2>
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Resend unlock instructions',
+  lede: 'If this account is locked, we’ll email a link to unlock it.'
+} do %>
+  <div class="auth-form">
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render 'devise/shared/error_messages', resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+      <div class="actions">
+        <%= f.submit 'Resend unlock instructions', class: 'auth-button auth-button-primary' %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Resend unlock instructions" %>
-  </div>
+  <%= render 'devise/shared/links' %>
 <% end %>
-
-<%= render "devise/shared/links" %>

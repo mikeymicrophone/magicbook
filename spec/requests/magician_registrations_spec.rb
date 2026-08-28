@@ -33,7 +33,8 @@ RSpec.describe 'Mage registrations', type: :request do
     get new_mage_session_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include('Mage Log in')
+    expect(response.body).to include('Log in')
+    expect(response.body).to include('Mage account')
     expect(response.body).not_to include('Muggle Log in')
   end
 end

@@ -1,24 +1,28 @@
-Let's establish your access to the site.
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Set a password',
+  lede: 'One way to keep this account is with a password you can remember. Repeat it silently a few times before you save it.'
+} do %>
+  <div class="auth-form">
+    <%= form_with(model: @mage, as: :mage, url: establish_password_path, html: { method: :put }) do |password_form| %>
+      <div class="field">
+        <%= password_form.label :password, 'Password' %>
+        <% if @minimum_password_length %>
+          <span class="auth-hint"><%= @minimum_password_length %> characters minimum</span>
+        <% end %>
+        <%= password_form.password_field :password, autofocus: true, autocomplete: 'new-password', required: true %>
+      </div>
 
-One way to access your account is with a secure password.
+      <div class="field">
+        <%= password_form.label :password_confirmation, 'Type it again' %>
+        <%= password_form.password_field :password_confirmation, autocomplete: 'new-password', required: true %>
+      </div>
 
-<%= form_with(model: @mage, as: :mage, url: establish_password_path, html: { method: :put }) do |password_form| %>
-  <div class="field">
-    <%= password_form.label :password, "This will be my password:" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <div class="actions">
+        <%= password_form.submit 'Save this password', class: 'auth-button auth-button-primary' %>
+      </div>
+
+      <%= password_form.hidden_field :reset_password_token, value: @mage.reset_password_token %>
     <% end %>
-    <%= password_form.password_field :password, autofocus: true, autocomplete: "off" %>
   </div>
-
-  <div class="field">
-    <%= password_form.label :password_confirmation, "Type the password again." %><br />
-    <%= password_form.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= password_form.submit "This will be my password.  I just repeated it silently to myself 5 times!" %>
-  </div>
-  
-  <%= password_form.hidden_field :reset_password_token, value: @mage.reset_password_token %>
 <% end %>

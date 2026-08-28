@@ -1,60 +1,69 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Account settings',
+  lede: 'Update the email and password for this mage.'
+} do %>
+  <div class="auth-form">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render 'devise/shared/error_messages', resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <p class="auth-hint">Currently waiting confirmation for <%= resource.unconfirmed_email %>.</p>
+      <% end %>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+      <div class="field">
+        <%= f.label :password %>
+        <span class="auth-hint">Leave blank to keep the current password<% if @minimum_password_length %>; <%= @minimum_password_length %> characters minimum<% end %>.</span>
+        <%= f.password_field :password, autocomplete: 'new-password' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <div class="field">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, autocomplete: 'new-password' %>
+      </div>
+
+      <div class="field">
+        <%= f.label :current_password %>
+        <span class="auth-hint">Required to save these changes.</span>
+        <%= f.password_field :current_password, autocomplete: 'current-password' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit 'Save changes', class: 'auth-button auth-button-primary' %>
+      </div>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+  <section class="auth-section">
+    <h2>Passkeys</h2>
+    <p class="auth-lede">Use a passkey for quick, passwordless sign-in on this device or another trusted one.</p>
+    <button type="button"
+      class="auth-button auth-button-secondary"
+      data-passkey-action="register"
+      data-options-url="<%= registration_options_passkey_path %>"
+      data-submit-url="<%= register_passkey_path %>">
+      Add a passkey
+    </button>
+    <% if resource.passkeys.any? %>
+      <p class="auth-hint"><%= pluralize(resource.passkeys.count, 'passkey') %> saved on this account.</p>
+    <% end %>
+  </section>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
+  <section class="auth-section auth-danger">
+    <h2>Cancel my account</h2>
+    <p class="auth-lede">This removes the mage record. Purchases already made stay with their emails.</p>
+    <%= button_to 'Cancel my account', registration_path(resource_name),
+      data: { confirm: 'Are you sure?' },
+      method: :delete,
+      class: 'auth-button auth-button-danger' %>
+  </section>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
+  <nav class="auth-links">
+    <%= link_to 'Back', :back %>
+  </nav>
 <% end %>
-
-<h3>Passkeys</h3>
-
-<p>Use a passkey for quick, passwordless sign-in on this device or another trusted device.</p>
-
-<p>
-  <button type="button"
-    data-passkey-action="register"
-    data-options-url="<%= registration_options_passkey_path %>"
-    data-submit-url="<%= register_passkey_path %>">
-    Add a passkey
-  </button>
-</p>
-
-<% if resource.passkeys.any? %>
-  <p><%= pluralize(resource.passkeys.count, 'passkey') %> saved.</p>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>

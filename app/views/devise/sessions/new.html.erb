@@ -1,54 +1,63 @@
-<div class="login_area">
-  <%= tag.div :class => :center do %>
-    <%= wwemc_purchase "Buy the book to receive an account." %>
-  <% end %>
-  <div class="authentication_form">
-    <div id="login_form">
-      <h2><%= resource_name.capitalize %> Log in</h2>
-      <h3>(if you purchased the book)</h3>
-
-      <%= form_for(resource, as: resource_name, url: session_url(resource_name), data: {turbo: false}) do |f| %>
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
-        </div>
-
-        <% if devise_mapping.rememberable? -%>
-          <div class="field">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
-        <% end -%>
-
-        <div class="actions">
-          <%= f.submit "Log in" %>
-        </div>
-      <% end %>
-
-      <p><%= link_to 'Email me a sign-in link', new_magic_link_path %></p>
-
-      <% if Mage.google_oauth_configured? %>
-        <%= button_to 'Continue with Google', mage_google_oauth2_omniauth_authorize_path,
-          method: :post, form: { data: { turbo: false } } %>
-      <% end %>
-
-      <p>
-        <button type="button"
-          data-passkey-action="authenticate"
-          data-options-url="<%= authentication_options_passkey_path %>"
-          data-submit-url="<%= authenticate_passkey_path %>">
-          Sign in with a passkey
-        </button>
-      </p>
-
-      <%= render "devise/shared/links" %>
+<% purchase_aside = capture do %>
+  <aside class="auth-purchase">
+    <div class="auth-purchase-copy">
+      <p class="auth-kicker">New here</p>
+      <h2>Buy the book</h2>
+      <p>A purchase creates your mage account and unlocks the online edition.</p>
     </div>
+    <%= wwemc_purchase 'Buy the book' %>
+  </aside>
+<% end %>
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Log in',
+  lede: 'If you purchased the book or already have an account, sign in here.',
+  aside: purchase_aside
+} do %>
+  <div class="auth-form">
+    <%= form_for(resource, as: resource_name, url: session_url(resource_name), data: { turbo: false }) do |f| %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: 'current-password', required: true %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field auth-remember">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit 'Log in', class: 'auth-button auth-button-primary' %>
+      </div>
+    <% end %>
   </div>
 
+  <div class="auth-alt" aria-label="Other ways to sign in">
+    <p class="auth-alt-label">Or continue with</p>
+    <%= link_to 'Email me a sign-in link', new_magic_link_path, class: 'auth-button auth-button-secondary' %>
 
-</div>
+    <% if Mage.google_oauth_configured? %>
+      <%= button_to 'Continue with Google', mage_google_oauth2_omniauth_authorize_path,
+        method: :post,
+        form: { data: { turbo: false }, class: 'auth-alt-form' },
+        class: 'auth-button auth-button-secondary' %>
+    <% end %>
+
+    <button type="button"
+      class="auth-button auth-button-secondary"
+      data-passkey-action="authenticate"
+      data-options-url="<%= authentication_options_passkey_path %>"
+      data-submit-url="<%= authenticate_passkey_path %>">
+      Sign in with a passkey
+    </button>
+  </div>
+
+  <%= render 'devise/shared/links' %>
+<% end %>

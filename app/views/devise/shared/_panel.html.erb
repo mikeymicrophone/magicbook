@@ -1,0 +1,21 @@
+<main class="auth-page<%= ' auth-page-has-aside' if local_assigns[:aside].present? %>">
+  <section class="auth-panel">
+    <% if local_assigns[:kicker].present? %>
+      <p class="auth-kicker"><%= kicker %></p>
+    <% end %>
+    <h1><%= title %></h1>
+    <% if local_assigns[:lede].present? %>
+      <p class="auth-lede"><%= lede %></p>
+    <% end %>
+
+    <% if notice.present? %>
+      <p class="auth-flash is-notice" role="status"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="auth-flash is-alert" role="alert"><%= alert %></p>
+    <% end %>
+
+    <%= yield %>
+  </section>
+  <%= local_assigns[:aside] %>
+</main>

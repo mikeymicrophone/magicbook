@@ -1,18 +1,21 @@
-<div class="login_area">
-  <div class="authentication_form">
-    <div id="magic_link_form">
-      <h2>Email me a sign-in link</h2>
-      <p>We’ll send a one-time link if this email has an account.</p>
-
-      <%= form_with url: magic_link_path, method: :post, data: { turbo: false } do |f| %>
-        <div class="field">
-          <%= f.label :email %><br>
-          <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true %>
-        </div>
-        <div class="actions"><%= f.submit 'Email sign-in link' %></div>
-      <% end %>
-
-      <%= link_to 'Back to sign in', new_mage_session_path %>
-    </div>
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Email me a sign-in link',
+  lede: 'We’ll send a one-time link if this email has an account.'
+} do %>
+  <div class="auth-form">
+    <%= form_with url: magic_link_path, method: :post, data: { turbo: false } do |f| %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true %>
+      </div>
+      <div class="actions">
+        <%= f.submit 'Email sign-in link', class: 'auth-button auth-button-primary' %>
+      </div>
+    <% end %>
   </div>
-</div>
+
+  <nav class="auth-links">
+    <%= link_to 'Back to sign in', new_mage_session_path %>
+  </nav>
+<% end %>

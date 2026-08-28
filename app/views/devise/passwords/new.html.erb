@@ -1,16 +1,22 @@
-<h2>Forgot your password?</h2>
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Forgot your password?',
+  lede: 'We’ll email reset instructions if this address has an account.'
+} do %>
+  <div class="auth-form">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render 'devise/shared/error_messages', resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+      <div class="actions">
+        <%= f.submit 'Email reset instructions', class: 'auth-button auth-button-primary' %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
+  <%= render 'devise/shared/links' %>
 <% end %>
-
-<%= render "devise/shared/links" %>

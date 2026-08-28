@@ -1,16 +1,23 @@
-<h2>Resend confirmation instructions</h2>
+<%= render layout: 'devise/shared/panel', locals: {
+  kicker: 'Mage account',
+  title: 'Resend confirmation',
+  lede: 'We’ll send another confirmation email if this address still needs it.'
+} do %>
+  <div class="auth-form">
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render 'devise/shared/error_messages', resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true,
+          value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+      <div class="actions">
+        <%= f.submit 'Resend confirmation instructions', class: 'auth-button auth-button-primary' %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
+  <%= render 'devise/shared/links' %>
 <% end %>
-
-<%= render "devise/shared/links" %>

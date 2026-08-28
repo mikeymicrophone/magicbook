@@ -1,6 +1,6 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" data-turbo-cache="false">
-    <h2><%= pluralize(resource.errors.count, 'error') %> prevented this account from being created:</h2>
+  <div class="auth-errors" id="error_explanation" data-turbo-cache="false">
+    <p><%= pluralize(resource.errors.count, 'error') %> need<%= resource.errors.count == 1 ? 's' : '' %> your attention:</p>
     <ul>
       <% resource.errors.full_messages.each do |message| %>
         <li><%= message %></li>
