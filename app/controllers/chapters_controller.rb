@@ -21,16 +21,16 @@ class ChaptersController < ApplicationController
   def free
     @book = Book.find params[:book_id]
     @edition = @book.current_edition
-    @chapters = @book.current_edition.chapters
-    
+    @table_of_contents = @book.table_of_contents.chapterish.where(edition: @edition).ordered.to_a
+    raise ActiveRecord::RecordNotFound, 'The current edition has no chapters.' if @table_of_contents.empty?
+
     today = Date.today
     dividend = today.year + today.month + today.day
-    divisor = @chapters.count
-    free_chapter_position = dividend % divisor
-    @chapter = @book.table_of_contents.chapterish.find_by(:ordering => free_chapter_position).chapter
-    @table_of_content = @book.table_of_contents.chapterish.find_by(:edition => @edition, :chapter => @chapter)
-    @previous_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).find_by(:ordering => @table_of_content.ordering - 1)&.chapter
-    @next_chapter = @book.table_of_contents.chapterish.where(:edition => @edition).find_by(:ordering => @table_of_content.ordering + 1)&.chapter
+    @table_of_content = @table_of_contents.fetch(dividend % @table_of_contents.length)
+    @chapter = @table_of_content.chapter
+    chapter_index = @table_of_contents.index(@table_of_content)
+    @previous_chapter = @table_of_contents[chapter_index - 1]&.chapter if chapter_index.positive?
+    @next_chapter = @table_of_contents[chapter_index + 1]&.chapter
   end
   
   def next
