@@ -9,6 +9,7 @@ class Mage < ApplicationRecord
   has_many :purchased_books, through: :purchases
   has_many :owned_books, through: :purchases, source: :books
   has_many :lists, dependent: :nullify
+  has_many :taggings, dependent: :nullify
   has_many :identifiers, dependent: :nullify
   has_many :passkeys, dependent: :destroy
   has_many :received_invitations, class_name: 'Invitation', dependent: :destroy

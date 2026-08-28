@@ -34,6 +34,7 @@ module ApplicationHelper
       link_to('purchased_books', purchased_books_path)
     ]
     links << link_to('mages', mages_path) if current_mage&.admin?
+    links << link_to('tagging', admin_tag_contexts_path) if current_mage&.admin?
     safe_join(links)
   end
 
@@ -42,7 +43,8 @@ module ApplicationHelper
 
     tag.div class: 'header_links' do
       link_to('Review new lists', review_lists_path) +
-        link_to('Review new items', review_listed_items_path)
+        link_to('Review new items', review_listed_items_path) +
+        link_to('Tagging', admin_tag_contexts_path)
     end
   end
   

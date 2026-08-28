@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_07_020000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_28_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -531,6 +531,39 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_020000) do
     t.index ["section_id"], name: "index_table_of_contents_on_section_id"
   end
 
+  create_table "tag_contexts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "kind", default: "user", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_tag_contexts_on_slug", unique: true
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "mage_id"
+    t.bigint "tag_id", null: false
+    t.bigint "taggable_id", null: false
+    t.string "taggable_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mage_id"], name: "index_taggings_on_mage_id"
+    t.index ["tag_id", "taggable_type", "taggable_id"], name: "index_taggings_on_tag_id_and_taggable_type_and_taggable_id", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "kind", default: "user", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.bigint "tag_context_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_context_id", "slug"], name: "index_tags_on_tag_context_id_and_slug", unique: true
+    t.index ["tag_context_id"], name: "index_tags_on_tag_context_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "card_function_assignments", "card_concepts"
@@ -564,4 +597,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_020000) do
   add_foreign_key "table_of_contents", "editions"
   add_foreign_key "table_of_contents", "paragraphs"
   add_foreign_key "table_of_contents", "sections"
+  add_foreign_key "taggings", "mages"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "tags", "tag_contexts"
 end

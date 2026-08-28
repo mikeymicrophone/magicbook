@@ -1,0 +1,8 @@
+<main class="tagging-admin">
+  <h1>Add a tag to <%= @tag_context.name %></h1>
+
+  <%= form_with model: [:admin, @tag_context, @tag] do |form| %>
+    <%= render "form", form: form %>
+    <%= form.submit "Add tag" %>
+  <% end %>
+</main>

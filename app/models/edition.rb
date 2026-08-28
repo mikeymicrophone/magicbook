@@ -1,4 +1,6 @@
 class Edition < ApplicationRecord
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
   class ReleaseError < StandardError; end
   class AlreadyReleasedError < ReleaseError; end
   class SuccessorAlreadyExistsError < ReleaseError; end

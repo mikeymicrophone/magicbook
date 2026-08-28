@@ -103,6 +103,12 @@ Rails.application.routes.draw do
     end
   end
   resources :card_inclusions
+  namespace :admin do
+    resources :tag_contexts do
+      resources :tags, except: [:index, :show]
+    end
+    resources :taggings, only: [:create, :destroy]
+  end
   resources :cards, only: [:show] do
     resources :card_function_assignments, only: [:create]
   end

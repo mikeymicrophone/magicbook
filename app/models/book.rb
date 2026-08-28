@@ -1,5 +1,7 @@
 class Book < ApplicationRecord
   has_many :table_of_contents
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
   has_many :editions, -> { where 'table_of_contents.chapter_id' => nil }, :through => :table_of_contents
   has_many :chapters, -> { where 'table_of_contents.section_id' => nil }, :through => :table_of_contents
   has_many :sections, -> { where 'table_of_contents.paragraph_id' => nil }, :through => :table_of_contents

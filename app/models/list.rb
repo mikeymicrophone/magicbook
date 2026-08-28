@@ -1,6 +1,8 @@
 class List < ApplicationRecord
   belongs_to :mage
   has_many :listed_items
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
   
   enum :mode, [:ordered, :randomized, :numbered]
   enum :privacy, [:draft, :unreviewed, :unreviewed_secret, :published, :secret, :rejected, :removed]

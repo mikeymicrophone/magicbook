@@ -1,0 +1,12 @@
+<% if form.object.errors.any? %>
+  <p><%= form.object.errors.full_messages.to_sentence %></p>
+<% end %>
+
+<p>
+  <%= form.label :name, "Name" %>
+  <%= form.text_field :name %>
+</p>
+<p>
+  <%= form.label :slug, "Slug" %>
+  <%= form.text_field :slug %>
+</p>

@@ -1,0 +1,10 @@
+<main class="tagging-admin">
+  <h1>Edit <%= @tag.name %></h1>
+
+  <%= form_with model: [:admin, @tag_context, @tag] do |form| %>
+    <%= render "form", form: form %>
+    <%= form.submit "Save tag" %>
+  <% end %>
+
+  <p><%= link_to "Back to tagging", admin_tag_contexts_path %></p>
+</main>

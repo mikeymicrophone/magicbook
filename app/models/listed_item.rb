@@ -1,6 +1,8 @@
 class ListedItem < ApplicationRecord
   belongs_to :list
   belongs_to :content, :polymorphic => true, :optional => true
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
   has_one :mage, :through => :list
   has_many :card_inclusions, :as => :piece
   has_many :cards, :through => :card_inclusions

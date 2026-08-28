@@ -1,5 +1,7 @@
 class Chapter < ApplicationRecord
   has_many :table_of_contents
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
   has_many :books, :through => :table_of_contents
   has_many :editions, :through => :table_of_contents
   has_many :sections, -> { where 'table_of_contents.paragraph_id' => nil }, :through => :table_of_contents

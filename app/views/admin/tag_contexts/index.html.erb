@@ -1,0 +1,75 @@
+<main class="tagging-admin">
+  <header>
+    <p class="tagging-admin-kicker">Mage club</p>
+    <h1>Tagging</h1>
+    <p>Create styles and tags here, then apply a tag to a list. System rows are kept visible but protected.</p>
+  </header>
+
+  <section class="tag-context-create">
+    <h2>Add a tag style</h2>
+    <%= form_with model: [:admin, @tag_context] do |form| %>
+      <%= render "form", form: form %>
+      <%= form.submit "Add style" %>
+    <% end %>
+  </section>
+
+  <% @tag_contexts.each do |tag_context| %>
+    <section class="tag-context" id="<%= dom_id(tag_context) %>">
+      <header>
+        <h2><%= tag_context.name %></h2>
+        <p><code><%= tag_context.slug %></code> · <%= tag_context.kind %></p>
+        <p>
+          <%= link_to "Edit style", edit_admin_tag_context_path(tag_context) %>
+          <% unless tag_context.system? %>
+            <%= button_to "Delete style", admin_tag_context_path(tag_context), method: :delete, data: { turbo_confirm: "Delete this tag style?" } %>
+          <% end %>
+        </p>
+      </header>
+
+      <div class="tag-context-add-tag">
+        <h3>Add a tag</h3>
+        <%= form_with model: [:admin, tag_context, tag_context.tags.new] do |form| %>
+          <%= render "admin/tags/form", form: form %>
+          <%= form.submit "Add tag" %>
+        <% end %>
+      </div>
+
+      <ul class="tag-list">
+        <% tag_context.tags.order(:name).each do |tag| %>
+          <li id="<%= dom_id(tag) %>">
+            <div>
+              <strong><%= tag.name %></strong>
+              <code><%= tag.slug %></code>
+              <% if tag.system? %><span class="tag-system">system</span><% end %>
+            </div>
+
+            <% unless tag.system? %>
+              <p>
+                <%= link_to "Edit tag", edit_admin_tag_context_tag_path(tag_context, tag) %>
+                <%= button_to "Delete tag", admin_tag_context_tag_path(tag_context, tag), method: :delete, data: { turbo_confirm: "Delete this tag?" } %>
+              </p>
+            <% end %>
+
+            <%= form_with url: admin_taggings_path, scope: :tagging, class: "tag-list-application" do |form| %>
+              <%= form.hidden_field :tag_id, value: tag.id %>
+              <%= form.label :list_id, "Apply to list" %>
+              <%= form.collection_select :list_id, @lists, :id, :name, { prompt: "Choose a list" } %>
+              <%= form.submit "Apply" %>
+            <% end %>
+
+            <% list_taggings = tag.taggings.select { |tagging| tagging.taggable_type == "List" } %>
+            <% if list_taggings.any? %>
+              <p class="tagged-lists">
+                On:
+                <% list_taggings.each do |tagging| %>
+                  <%= link_to tagging.taggable.name, tagging.taggable %>
+                  <%= button_to "Remove", admin_tagging_path(tagging), method: :delete, data: { turbo_confirm: "Remove this tag from the list?" } %>
+                <% end %>
+              </p>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+</main>
