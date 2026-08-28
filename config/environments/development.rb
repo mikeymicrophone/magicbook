@@ -14,6 +14,7 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
   config.hosts << "dev.wayswemage.com"
+  config.hosts << "magicbook.test"
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
