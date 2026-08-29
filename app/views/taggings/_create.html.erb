@@ -1,0 +1,68 @@
+<section class="tagging-create" id="<%= dom_id(taggable, :create_tag) %>" data-controller="create-tag" data-action="turbo:submit-end->create-tag#submitted">
+  <%= form_with url: admin_tags_path,
+    scope: :tag,
+    class: "tagging-create-form",
+    local: true,
+    data: { turbo: true, turbo_stream: true, turbo_frame: "_top" } do |form| %>
+    <% if tag.errors.any? %>
+      <p class="tagging-errors"><%= tag.errors.full_messages.to_sentence %></p>
+    <% end %>
+
+    <%= form.text_field :name,
+      value: tag.name,
+      required: true,
+      autocomplete: "off",
+      aria: { label: "Tag" },
+      data: {
+        create_tag_target: "name",
+        action: "input->create-tag#slugify"
+      } %>
+
+    <% if tag_contexts.any? %>
+      <% selected_context = tag_contexts.detect { |tag_context| tag_context.id == tag.tag_context_id } %>
+      <div class="tagging-style-picker<%= " is-styled" if selected_context %>" data-create-tag-target="picker" style="<%= tag_style_css(selected_context) %>">
+        <button type="button"
+          class="tagging-icon-button tagging-style-trigger"
+          data-create-tag-target="trigger"
+          data-action="click->create-tag#toggleMenu"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-controls="<%= dom_id(taggable, :tag_style_menu) %>"
+          title="<%= selected_context ? "Style: #{selected_context.name}" : "Choose a style" %>"
+          aria-label="<%= selected_context ? "Style: #{selected_context.name}" : "Choose a style" %>"><%= selected_context ? selected_context.name : "#" %></button>
+        <div class="tagging-style-menu"
+          id="<%= dom_id(taggable, :tag_style_menu) %>"
+          data-create-tag-target="menu"
+          role="listbox"
+          aria-label="Style"
+          hidden>
+          <button type="button"
+            role="option"
+            data-action="click->create-tag#chooseStyle"
+            data-style-id=""
+            data-style-name=""
+            aria-selected="<%= selected_context ? "false" : "true" %>"
+            class="<%= "is-selected" unless selected_context %>">No style</button>
+          <% tag_contexts.each do |tag_context| %>
+            <button type="button"
+              role="option"
+              data-action="click->create-tag#chooseStyle"
+              data-style-id="<%= tag_context.id %>"
+              data-style-name="<%= tag_context.name %>"
+              data-style-color="<%= resolved_tag_style_color(tag_context) %>"
+              aria-selected="<%= tag_context.id == selected_context&.id %>"
+              class="<%= "is-selected" if tag_context.id == selected_context&.id %>"
+              style="<%= tag_style_css(tag_context) %>"><%= tag_context.name %></button>
+          <% end %>
+        </div>
+      </div>
+      <input type="hidden" name="tag_context_id" value="<%= tag.tag_context_id %>" data-create-tag-target="style">
+    <% end %>
+
+    <%= form.hidden_field :slug, value: tag.slug, data: { create_tag_target: "slug" } %>
+    <%= hidden_field_tag :taggable_type, taggable.class.name %>
+    <%= hidden_field_tag :taggable_id, taggable.id %>
+
+    <button type="submit" class="tagging-icon-button tagging-create-submit" title="Add tag" aria-label="Add tag">+</button>
+  <% end %>
+</section>

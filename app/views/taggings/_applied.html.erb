@@ -1,0 +1,23 @@
+<div class="tagging-applied" id="<%= dom_id(taggable, :applied_tags) %>">
+  <% if taggings.any? %>
+    <ul class="tagging-chips">
+      <% taggings.sort_by { |tagging| [tagging.tag.tag_context&.name.to_s, tagging.tag.name] }.each do |tagging| %>
+        <%= tag.li class: ["tagging-chip", ("is-styled" if tagging.tag.tag_context)], style: tag_style_css(tagging.tag.tag_context) do %>
+          <% if tagging.tag.tag_context %>
+            <span class="tagging-chip-context"><%= tagging.tag.tag_context.name %></span>
+          <% end %>
+          <span class="tagging-chip-name"><%= tagging.tag.name %></span>
+          <% if editable %>
+            <%= button_to "×", admin_tagging_path(tagging),
+              method: :delete,
+              class: "tagging-chip-remove",
+              title: "Remove #{tagging.tag.name}",
+              aria: { label: "Remove #{tagging.tag.name}" },
+              data: { turbo_confirm: "Remove #{tagging.tag.name}?" },
+              form: { data: { turbo: true, turbo_stream: true, turbo_frame: "_top" } } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

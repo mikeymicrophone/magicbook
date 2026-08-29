@@ -1,13 +1,14 @@
 class Tag < ApplicationRecord
   KINDS = %w[system user].freeze
 
-  belongs_to :tag_context
+  belongs_to :tag_context, optional: true
   has_many :taggings, dependent: :restrict_with_error
 
   validates :slug, :name, presence: true
   validates :slug, uniqueness: { scope: :tag_context_id }
   validates :kind, inclusion: { in: KINDS }
 
+  before_validation :assign_slug, on: :create
   before_update :prevent_system_rename
   before_destroy :prevent_system_destruction, prepend: true
 
@@ -16,6 +17,10 @@ class Tag < ApplicationRecord
   end
 
   private
+
+  def assign_slug
+    self.slug = name.to_s.parameterize if slug.blank?
+  end
 
   def prevent_system_rename
     return unless system? && (will_save_change_to_name? || will_save_change_to_slug?)

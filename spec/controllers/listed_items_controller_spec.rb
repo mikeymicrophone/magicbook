@@ -12,8 +12,17 @@ RSpec.describe ListedItemsController, type: :controller do
     )
   end
   let!(:list) { List.create!(mage: mage, name: 'Controller Turbo list') }
+  let!(:featured_book) { Book.create!(id: 1, title: 'Featured book', version: '1.0.0') }
 
   before { sign_in mage }
+
+  it 'renders the new item form in the matching Turbo Frame' do
+    get :new, params: { list_id: list.id }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("<turbo-frame id=\"#{ActionView::RecordIdentifier.dom_id(list, :new_item_adder_for)}\"")
+    expect(response.body).to include('form_for_listed_item')
+  end
 
   it 'creates an item with a Turbo Stream response that refreshes the list and add form' do
     expect do

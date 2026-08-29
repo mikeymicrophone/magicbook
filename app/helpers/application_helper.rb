@@ -1,9 +1,12 @@
 module ApplicationHelper
   def login_links
     if current_mage
-      link_to('log out', destroy_mage_session_path, method: :delete, id: 'log_out')
+      tag.nav class: "account-links" do
+        link_to("profile", profile_path, id: "profile") +
+          link_to("log out", destroy_mage_session_path, method: :delete, id: "log_out")
+      end
     else
-      link_to('Sign in', new_mage_session_path, id: 'password_login')
+      link_to("Sign in", new_mage_session_path, id: "password_login")
     end
   end
   

@@ -18,6 +18,13 @@ RSpec.describe Admin::TagContextsController, type: :controller do
     context = TagContext.find_by!(slug: "archetype")
 
     expect(context.kind).to eq("user")
+    expect(context.color).to eq(HexColor::DEFAULT)
     expect(response).to redirect_to(admin_tag_contexts_path)
+  end
+
+  it "lets an admin set a style color" do
+    post :create, params: { tag_context: { name: "Palette", slug: "palette", color: "#4a628a" } }
+
+    expect(TagContext.find_by!(slug: "palette").color).to eq("#4a628a")
   end
 end

@@ -1,0 +1,36 @@
+<%= render layout: "devise/shared/panel", locals: {
+  kicker: "Mage account",
+  title: "Profile",
+  lede: "Choose your own colors for tag styles. Site defaults apply until you change them."
+} do %>
+  <%= form_with url: profile_path, method: :patch, local: true, class: "auth-form" do %>
+    <% if @tag_contexts.any? %>
+      <ul class="profile-style-colors">
+        <% @tag_contexts.each do |tag_context| %>
+          <% current_color = resolved_tag_style_color(tag_context) %>
+          <li class="profile-style-color" data-controller="style-color">
+            <span class="tag-style-swatch" data-style-color-target="swatch" style="<%= tag_style_css(tag_context) %>"></span>
+            <span class="profile-style-name"><%= tag_context.name %></span>
+            <%= color_field_tag "style_colors[#{tag_context.id}]", current_color,
+              data: { style_color_target: "input", action: "input->style-color#preview" } %>
+            <code data-style-color-target="hex"><%= current_color %></code>
+            <button type="button"
+              class="auth-button auth-button-secondary"
+              data-action="style-color#reset"
+              data-default-color="<%= tag_context.color %>">Use site color</button>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="auth-hint">No tag styles yet.</p>
+    <% end %>
+
+    <div class="actions">
+      <%= submit_tag "Save colors", class: "auth-button auth-button-primary" %>
+    </div>
+  <% end %>
+
+  <nav class="auth-links">
+    <%= link_to "Account settings", edit_mage_registration_path %>
+  </nav>
+<% end %>

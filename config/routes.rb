@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       get :edit_as
     end
   end
+  resource :profile, only: [:show, :update]
   resources :mages, only: [:index] do
     collection do
       post :ramp
@@ -107,6 +108,7 @@ Rails.application.routes.draw do
     resources :tag_contexts do
       resources :tags, except: [:index, :show]
     end
+    resources :tags, only: [:create]
     resources :taggings, only: [:create, :destroy]
   end
   resources :cards, only: [:show] do

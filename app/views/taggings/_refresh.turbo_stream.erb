@@ -1,0 +1,11 @@
+<%= turbo_stream.replace dom_id(@taggable, :applied_tags) do %>
+  <%= applied_tags_for(@taggable) %>
+<% end %>
+<%= turbo_stream.replace dom_id(@taggable, :apply_tag) do %>
+  <%= apply_existing_tag_to(@taggable) %>
+<% end %>
+<% if @tag&.errors&.any? %>
+  <%= turbo_stream.replace dom_id(@taggable, :create_tag) do %>
+    <%= create_tag_for(@taggable) %>
+  <% end %>
+<% end %>

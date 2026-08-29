@@ -198,6 +198,10 @@
   transition: opacity 10s;
 }
 
+.list .listed_item .tagging {
+  margin: .2rem 0 .55rem;
+}
+
 .list .listed_item .expression_of_listed_item .card {
   float: right;
 }

@@ -7,6 +7,7 @@
 <% end %>
 
 <%= content_tag :p, "Price: #{@book.formatted_price}", :class => 'book_price' %>
+<%= tagging_panel_for @book %>
 
 <% edition = @book.editions.published.last %>
 <% if edition %>

@@ -1,15 +1,28 @@
 #password_login,
-#log_out {
+#log_out,
+#profile {
   color: #6a3b17;
   font-family: Cabin, Arial, sans-serif;
   font-weight: 500;
+}
+
+#password_login {
+  position: absolute;
+  right: 30px;
+  top: 5px;
+}
+
+.account-links {
+  display: flex;
+  gap: 0.75rem;
   position: absolute;
   right: 30px;
   top: 5px;
 }
 
 #password_login:hover,
-#log_out:hover {
+#log_out:hover,
+#profile:hover {
   color: #9a541d;
 }
 
@@ -289,6 +302,49 @@
 
 .auth-section .auth-lede {
   margin-bottom: 0.85rem;
+}
+
+.profile-style-colors {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.profile-style-color {
+  align-items: center;
+  display: grid;
+  gap: 0.45rem 0.55rem;
+  grid-template-columns: auto 1fr auto auto;
+}
+
+.profile-style-color .tag-style-swatch {
+  grid-row: 1;
+}
+
+.profile-style-name {
+  font-size: 0.95rem;
+}
+
+.profile-style-color input[type="color"] {
+  background: none;
+  border: 1px solid #cbbba6;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  height: 2rem;
+  padding: 0.15rem;
+  width: 2.4rem;
+}
+
+.profile-style-color code {
+  color: #705f4d;
+  font-size: 0.8rem;
+}
+
+.profile-style-color .auth-button {
+  grid-column: 1 / -1;
+  justify-self: start;
 }
 
 .auth-purchase {

@@ -10,6 +10,7 @@ class Mage < ApplicationRecord
   has_many :owned_books, through: :purchases, source: :books
   has_many :lists, dependent: :nullify
   has_many :taggings, dependent: :nullify
+  has_many :tag_context_color_overrides, dependent: :destroy
   has_many :identifiers, dependent: :nullify
   has_many :passkeys, dependent: :destroy
   has_many :received_invitations, class_name: 'Invitation', dependent: :destroy
@@ -106,5 +107,46 @@ class Mage < ApplicationRecord
 
   def needs_access_technique?
     must_set_password? || encrypted_password.blank?
+  end
+
+  def color_for_tag_context(tag_context)
+    return unless tag_context
+
+    override = tag_context_color_overrides.find { |record| record.tag_context_id == tag_context.id }
+    override&.color.presence || tag_context.color.presence
+  end
+
+  def sync_tag_context_color_overrides!(colors_by_context_id)
+    transaction do
+      overrides = tag_context_color_overrides.index_by(&:tag_context_id)
+
+      TagContext.find_each do |tag_context|
+        submitted = HexColor.normalize(
+          colors_by_context_id[tag_context.id.to_s] || colors_by_context_id[tag_context.id]
+        )
+        existing = overrides[tag_context.id]
+
+        if submitted.blank? || submitted == tag_context.color
+          existing&.destroy!
+        elsif existing
+          existing.update!(color: submitted)
+        else
+          tag_context_color_overrides.create!(tag_context: tag_context, color: submitted)
+        end
+      end
+    end
+
+    tag_context_color_overrides.reset
+  end
+
+  def tagging_editor_for?(taggable)
+    return false unless taggable.respond_to?(:tags)
+    return true if admin?
+
+    case taggable
+    when List then taggable.mage_id == id
+    when ListedItem then taggable.list&.mage_id == id
+    else false
+    end
   end
 end

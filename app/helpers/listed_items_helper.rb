@@ -1,7 +1,30 @@
 module ListedItemsHelper
   def listed_item_adder list
     turbo_frame_tag dom_id(list, :new_item_adder_for) do
-      listed_item_form list
+      tag.div :class => 'new_item_adder_for_list' do
+        listed_item_form list
+      end
+    end
+  end
+
+  def listed_item_adder_button list
+    if current_mage == list.mage
+      listed_item_adder_prompt list, new_list_listed_item_path(list), 'Add an item'
+    elsif list.suggestability != 'defer'
+      listed_item_adder_prompt list, new_list_listed_item_path(list, :suggest => true), 'Suggest an item'
+    end
+  end
+
+  def listed_item_adder_prompt list, path, label
+    turbo_frame_tag dom_id(list, :new_item_adder_for), :data => { :controller => 'listed-item-adder' } do
+      tag.div(:class => 'new_item_adder_for_list hidden', :data => { :listed_item_adder_target => 'form' }) do
+        listed_item_form list
+      end +
+      link_to(path, :data => { :action => 'listed-item-adder#show', :listed_item_adder_target => 'button' }) do
+        div_for list, :item_adder_button_for, :class => 'center' do
+          label
+        end
+      end
     end
   end
 
@@ -76,6 +99,7 @@ module ListedItemsHelper
         mark_up(listed_item.expression)
       end +
       clearboth +
+      tagging_for(listed_item).to_s.html_safe +
       if listed_item.content.present?
         case listed_item.content
         when List

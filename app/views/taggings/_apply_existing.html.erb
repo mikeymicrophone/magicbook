@@ -1,0 +1,40 @@
+<section class="tagging-apply" id="<%= dom_id(taggable, :apply_tag) %>" data-controller="apply-existing-tag">
+  <h3>Apply an existing tag</h3>
+  <% if available_tags.any? %>
+    <label class="tagging-filter">
+      <span>Find a tag</span>
+      <input type="search"
+        data-apply-existing-tag-target="query"
+        data-action="input->apply-existing-tag#filter"
+        placeholder="Name or style"
+        autocomplete="off">
+    </label>
+    <div class="tagging-options" role="list">
+      <% available_tags.each do |tag| %>
+        <div data-apply-existing-tag-target="option"
+          data-label="<%= [tag.tag_context&.name, tag.name, tag.slug].compact.join(" ") %>">
+          <%= button_to tag_label(tag), admin_taggings_path,
+            params: {
+              tagging: {
+                tag_id: tag.id,
+                taggable_type: taggable.class.name,
+                taggable_id: taggable.id
+              }
+            },
+            class: ["tagging-option", ("is-styled" if tag.tag_context)],
+            style: tag_style_css(tag.tag_context),
+            form: { data: { turbo: true, turbo_stream: true, turbo_frame: "_top" } } %>
+        </div>
+      <% end %>
+    </div>
+    <p class="tagging-filter-empty" data-apply-existing-tag-target="empty" hidden>No matching tags.</p>
+  <% else %>
+    <p class="tagging-empty">
+      <% if taggable.tags.any? %>
+        Every tag is already on this. Create a new one below.
+      <% else %>
+        No tags to apply yet. Create one below.
+      <% end %>
+    </p>
+  <% end %>
+</section>

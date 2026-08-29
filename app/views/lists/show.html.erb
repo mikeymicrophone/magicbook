@@ -5,26 +5,11 @@
 <% end %>
 <%= div_for @list do %>
   <%= list_masthead @list %>
+  <%= tagging_panel_for @list %>
 
   <%= listed_items_for @list, @listed_items %>
 
-  <%= turbo_frame_tag dom_id(@list, :new_item_adder_for), :class => 'hidden' %>
-
-  <% if current_mage == @list.mage %>
-    <%= link_to new_list_listed_item_path(@list), :data => { :turbo_frame => dom_id(@list, :new_item_adder_for) } do %>
-      <%= div_for @list, :item_adder_button_for, :class => 'center' do %>
-        Add an item
-      <% end %>
-    <% end %>
-  <% else %>
-    <% unless @list.suggestability == 'defer' %>
-      <%= link_to new_list_listed_item_path(@list, :suggest => true), :data => { :turbo_frame => dom_id(@list, :new_item_adder_for) } do %>
-        <%= div_for @list, :item_adder_button_for, :class => 'center' do %>
-          Suggest an item
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
+  <%= listed_item_adder_button @list %>
 <% end %>
 <% content_for :open_graph do %>
   <%= open_graph_tags_for @list %>

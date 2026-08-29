@@ -41,3 +41,33 @@ export async function expectCheckoutMatchesFeaturedBook(page: Page): Promise<str
   }
   return expected
 }
+
+export function isLocalMagicbook(baseURL = process.env.BASE_URL || 'http://magicbook.test'): boolean {
+  return /magicbook\.test|localhost|127\.0\.0\.1/.test(baseURL)
+}
+
+export async function signInAsListOwner(page: Page): Promise<void> {
+  const { execFileSync } = await import('node:child_process')
+  const env = { ...process.env }
+  delete env.BUNDLE_PATH
+  delete env.BUNDLE_BIN
+  delete env.BUNDLE_WITHOUT
+
+  const token = execFileSync(
+    'mise',
+    [
+      'exec',
+      '--',
+      'bundle',
+      'exec',
+      'rails',
+      'runner',
+      'm = Mage.find_by!(email: "mike@example.com"); token = SecureRandom.urlsafe_base64(32); m.update_columns(magic_link_token_digest: Digest::SHA256.hexdigest(token), magic_link_sent_at: Time.current); puts token'
+    ],
+    { encoding: 'utf8', env }
+  ).trim()
+
+  await page.goto(`/magic-link/${token}`, { waitUntil: 'domcontentloaded' })
+  await expect(page.getByRole('link', { name: 'profile' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'log out' })).toBeVisible()
+}

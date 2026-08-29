@@ -2,7 +2,7 @@
   <header>
     <p class="tagging-admin-kicker">Mage club</p>
     <h1>Tagging</h1>
-    <p>Create styles and tags here, then apply a tag to a list. System rows are kept visible but protected.</p>
+    <p>Create styles and tags here, then apply a tag to a list. System rows are kept visible but protected. Each style has a color; mages can override those colors on their profile.</p>
   </header>
 
   <section class="tag-context-create">
@@ -16,8 +16,11 @@
   <% @tag_contexts.each do |tag_context| %>
     <section class="tag-context" id="<%= dom_id(tag_context) %>">
       <header>
-        <h2><%= tag_context.name %></h2>
-        <p><code><%= tag_context.slug %></code> · <%= tag_context.kind %></p>
+        <h2>
+          <span class="tag-style-swatch" style="--tag-color: <%= tag_context.color %>"></span>
+          <%= tag_context.name %>
+        </h2>
+        <p><code><%= tag_context.slug %></code> · <%= tag_context.kind %> · <code><%= tag_context.color %></code></p>
         <p>
           <%= link_to "Edit style", edit_admin_tag_context_path(tag_context) %>
           <% unless tag_context.system? %>

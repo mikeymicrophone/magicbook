@@ -35,6 +35,27 @@ RSpec.describe Tagging, type: :model do
     expect(duplicate.errors[:tag_id]).to include("has already been taken")
   end
 
+  it "assigns a slug from the name when one is not provided" do
+    tag = flags.tags.create!(name: "Needs Review")
+
+    expect(tag.slug).to eq("needs-review")
+  end
+
+  it "allows a tag with no style" do
+    tag = Tag.create!(name: "Sleeper")
+
+    expect(tag.tag_context).to be_nil
+    expect(tag.slug).to eq("sleeper")
+  end
+
+  it "keeps unstyled tag slugs unique" do
+    Tag.create!(name: "Sleeper")
+    duplicate = Tag.new(name: "Sleeper")
+
+    expect(duplicate).not_to be_valid
+    expect(duplicate.errors[:slug]).to include("has already been taken")
+  end
+
   it "keeps system contexts and tags from being removed or renamed" do
     expect(flags.destroy).to be_falsey
     expect(flags.errors[:base]).to include("System tag contexts cannot be destroyed")

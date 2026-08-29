@@ -1,41 +1,60 @@
 module Admin
   class TaggingsController < ApplicationController
-    before_action :require_admin!
+    include ResolvesTaggable
+
+    before_action :authenticate_mage!
 
     def create
       tag = Tag.find(tagging_params.fetch(:tag_id))
-      list = List.find(tagging_params.fetch(:list_id))
-      tagging = Tagging.find_or_initialize_by(tag: tag, taggable: list)
+      @taggable = resolved_taggable
+      raise ActiveRecord::RecordNotFound unless @taggable
+      authorize_tagging!(@taggable)
+      raise CanCan::AccessDenied if tag.system? && !current_mage.admin?
+
+      tagging = Tagging.find_or_initialize_by(tag: tag, taggable: @taggable)
       tagging.mage ||= current_mage
 
       if tagging.save
-        redirect_to admin_tag_contexts_path, notice: "#{tag.name} applied to #{list.name}."
+        @taggable.reload
+        respond_to_tagging "#{tag.name} applied."
       else
-        redirect_to admin_tag_contexts_path, alert: tagging.errors.full_messages.to_sentence
+        @tagging_alert = tagging.errors.full_messages.to_sentence
+        respond_to_tagging_error
       end
     end
 
     def destroy
       tagging = Tagging.find(params[:id])
-      unless tagging.taggable_type == "List"
-        raise ActiveRecord::RecordNotFound
-      end
-
-      list_name = tagging.taggable.name
+      @taggable = tagging.taggable
+      authorize_tagging!(@taggable)
       tag_name = tagging.tag.name
       tagging.destroy!
-      redirect_to admin_tag_contexts_path, notice: "#{tag_name} removed from #{list_name}."
+      @taggable.reload
+      respond_to_tagging "#{tag_name} removed."
     end
 
     private
 
-    def require_admin!
-      authenticate_mage!
-      authorize! :manage, :all
+    def tagging_params
+      params.require(:tagging).permit(:tag_id, :taggable_type, :taggable_id, :list_id)
     end
 
-    def tagging_params
-      params.require(:tagging).permit(:tag_id, :list_id)
+    def respond_to_tagging(notice)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to html_tagging_location, notice: notice }
+      end
+    end
+
+    def respond_to_tagging_error
+      respond_to do |format|
+        format.turbo_stream { render :create, status: :unprocessable_entity }
+        format.html { redirect_to html_tagging_location, alert: @tagging_alert }
+      end
+    end
+
+    def html_tagging_location
+      taggable_param(:taggable_type).present? ? after_tagging_path(@taggable) : admin_tag_contexts_path
     end
   end
 end

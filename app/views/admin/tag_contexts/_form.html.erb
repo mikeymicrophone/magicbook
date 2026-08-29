@@ -10,3 +10,9 @@
   <%= form.label :slug, "Slug" %>
   <%= form.text_field :slug %>
 </p>
+<p class="tag-context-color" data-controller="style-color">
+  <%= form.label :color, "Color" %>
+  <span class="tag-style-swatch" data-style-color-target="swatch" style="--tag-color: <%= form.object.color.presence || HexColor::DEFAULT %>"></span>
+  <%= form.color_field :color, value: form.object.color.presence || HexColor::DEFAULT, data: { style_color_target: "input", action: "input->style-color#preview" } %>
+  <code data-style-color-target="hex"><%= form.object.color.presence || HexColor::DEFAULT %></code>
+</p>

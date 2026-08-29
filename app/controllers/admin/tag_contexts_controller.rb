@@ -50,7 +50,7 @@ module Admin
     end
 
     def tag_context_params
-      params.require(:tag_context).permit(:name, :slug)
+      params.require(:tag_context).permit(:name, :slug, :color)
     end
 
     def load_index

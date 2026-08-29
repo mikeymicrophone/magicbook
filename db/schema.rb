@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_28_020000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_29_190000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -531,7 +531,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_020000) do
     t.index ["section_id"], name: "index_table_of_contents_on_section_id"
   end
 
+  create_table "tag_context_color_overrides", force: :cascade do |t|
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.bigint "mage_id", null: false
+    t.bigint "tag_context_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mage_id", "tag_context_id"], name: "index_tag_context_color_overrides_on_mage_and_context", unique: true
+    t.index ["tag_context_id"], name: "index_tag_context_color_overrides_on_tag_context_id"
+  end
+
   create_table "tag_contexts", force: :cascade do |t|
+    t.string "color", null: false
     t.datetime "created_at", null: false
     t.string "kind", default: "user", null: false
     t.string "name", null: false
@@ -558,9 +569,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_020000) do
     t.string "kind", default: "user", null: false
     t.string "name", null: false
     t.string "slug", null: false
-    t.bigint "tag_context_id", null: false
+    t.bigint "tag_context_id"
     t.datetime "updated_at", null: false
-    t.index ["tag_context_id", "slug"], name: "index_tags_on_tag_context_id_and_slug", unique: true
+    t.index ["slug"], name: "index_tags_on_unstyled_slug", unique: true, where: "(tag_context_id IS NULL)"
+    t.index ["tag_context_id", "slug"], name: "index_tags_on_tag_context_id_and_slug", unique: true, where: "(tag_context_id IS NOT NULL)"
     t.index ["tag_context_id"], name: "index_tags_on_tag_context_id"
   end
 
@@ -597,6 +609,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_020000) do
   add_foreign_key "table_of_contents", "editions"
   add_foreign_key "table_of_contents", "paragraphs"
   add_foreign_key "table_of_contents", "sections"
+  add_foreign_key "tag_context_color_overrides", "mages"
+  add_foreign_key "tag_context_color_overrides", "tag_contexts"
   add_foreign_key "taggings", "mages"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "tag_contexts"
