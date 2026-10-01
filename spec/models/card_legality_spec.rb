@@ -32,6 +32,44 @@ RSpec.describe 'card printing legality', type: :model do
     expect(reprint.latest_printing_for(pioneer)).to eq(original)
   end
 
+  describe 'legality windows' do
+    let(:membership) { standard.format_sets.find_by!(card_set: new_set) }
+
+    it 'keeps a set in the format up to the day before it rotates' do
+      membership.update!(legal_until: Date.tomorrow)
+
+      expect(reprint).to be_legal_in(standard)
+      expect(standard.card_sets).to contain_exactly(new_set)
+    end
+
+    it 'drops a set from the format on its rotation date without forgetting it' do
+      membership.update!(legal_until: Date.current)
+
+      expect(original).not_to be_legal_in(standard)
+      expect(Card.legal_in(standard)).to be_empty
+      expect(Card.printed_in(standard)).to be_empty
+      expect(standard.card_sets.reload).to be_empty
+      expect(standard.card_concepts).to be_empty
+      expect(new_set.formats).to be_empty
+      expect(reprint.printing_formats).to be_empty
+      expect(original.latest_printing_for(standard)).to be_nil
+      expect(CardConcept.ever_legal_in(standard)).to contain_exactly(concept)
+    end
+
+    it 'leaves an upcoming set out of the format until it becomes legal' do
+      membership.update!(legal_from: Date.tomorrow)
+
+      expect(reprint).not_to be_legal_in(standard)
+      expect(FormatSet.current(Date.tomorrow)).to include(membership)
+    end
+
+    it 'rejects a window that closes before it opens' do
+      membership.assign_attributes(legal_from: Date.current, legal_until: Date.current)
+
+      expect(membership).not_to be_valid
+    end
+  end
+
   it 'scopes list positions by the canonical card rather than only their historical printing' do
     mage = Mage.create!(email: 'legality@example.test', password: 'password123')
     list = List.create!(mage: mage, name: 'Reprints in a list', privacy: :published)

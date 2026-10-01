@@ -126,6 +126,7 @@ CardSet ──< FormatSet >── Format
 - `CardConcept` represents the shared game object across printings. It stores Scryfall’s Oracle ID, Oracle text, and keywords.
 - `CardFunction` is a directed acyclic taxonomy. A function may sit under multiple broader functions—for example, **Fight** belongs under both creature combat and damage removal.
 - `CardSet` has a Scryfall set type and a broader browse category. `Format` is related to sets through `FormatSet`.
+- A `FormatSet` may carry `legal_from` and `legal_until` dates; a blank date leaves that end open, and `legal_until` is the first day the set is no longer legal. Legality queries only count sets whose window includes today, so a rotation is recorded ahead of time by dating the departing sets. The Standard seed dates the sets leaving on January 29, 2027.
 
 ### Refresh Scryfall data
 

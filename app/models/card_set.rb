@@ -24,7 +24,8 @@ class CardSet < ApplicationRecord
 
   has_many :cards, dependent: :restrict_with_exception
   has_many :format_sets, dependent: :restrict_with_exception
-  has_many :formats, through: :format_sets
+  has_many :current_format_sets, -> { current }, class_name: "FormatSet"
+  has_many :formats, through: :current_format_sets
 
   enum :category, {
     premier: 0,

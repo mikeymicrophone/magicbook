@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe CardCatalog::StandardEnvironmentSeeder do
+  include ActiveSupport::Testing::TimeHelpers
+
   let!(:standard_set) { CardSet.create!(code: "std", name: "Test Standard", category: :premier) }
   let!(:outside_set) { CardSet.create!(code: "old", name: "Rotated set", category: :premier) }
 
@@ -35,5 +37,23 @@ RSpec.describe CardCatalog::StandardEnvironmentSeeder do
 
     expect { described_class.new(set_codes: [standard_set.code], logger: Logger.new(nil)).call }
       .not_to change(CardFunctionAssignment, :count)
+  end
+
+  it "schedules the 2027 rotation and keeps classifying the sets that leave" do
+    departing = CardSet.create!(code: "dsk", name: "Duskmourn: House of Horror", category: :premier)
+    staying = CardSet.create!(code: "fdn", name: "Foundations", category: :premier)
+    departing_concept = concept_with_printing("Departing Removal", oracle_text: "Destroy target creature.", card_set: departing)
+
+    standard = described_class.new(set_codes: %w[dsk fdn], logger: Logger.new(nil)).call.fetch(:format)
+
+    expect(standard.format_sets.find_by!(card_set: departing).legal_until).to eq(Date.new(2027, 1, 29))
+    expect(standard.format_sets.find_by!(card_set: staying).legal_until).to be_nil
+
+    travel_to Date.new(2027, 1, 29) do
+      expect(standard.card_sets).to contain_exactly(staying)
+
+      described_class.new(set_codes: %w[dsk fdn], logger: Logger.new(nil)).call
+      expect(departing_concept.card_functions.pluck(:slug)).to contain_exactly("destroy")
+    end
   end
 end

@@ -1,7 +1,8 @@
 class CardConcept < ApplicationRecord
   has_many :cards, dependent: :restrict_with_exception
   has_many :format_sets, through: :cards
-  has_many :formats, through: :format_sets
+  has_many :current_format_sets, through: :cards
+  has_many :formats, through: :current_format_sets
   has_many :card_function_assignments, dependent: :destroy
   has_many :card_functions, through: :card_function_assignments
 
@@ -9,6 +10,10 @@ class CardConcept < ApplicationRecord
   validates :oracle_id, uniqueness: true, allow_nil: true
 
   scope :legal_in, ->(format) {
+    joins(cards: { card_set: :format_sets }).where(format_sets: { format_id: format }).merge(FormatSet.current).distinct
+  }
+  # Includes cards whose sets have since rotated out of the format.
+  scope :ever_legal_in, ->(format) {
     joins(cards: { card_set: :format_sets }).where(format_sets: { format_id: format }).distinct
   }
 

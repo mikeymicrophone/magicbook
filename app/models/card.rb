@@ -7,7 +7,8 @@ class Card < ApplicationRecord
   belongs_to :card_set, optional: true
 
   has_many :format_sets, through: :card_set
-  has_many :printing_formats, through: :format_sets, source: :format
+  has_many :current_format_sets, through: :card_set
+  has_many :printing_formats, through: :current_format_sets, source: :format
   has_many :card_inclusions
   has_many :listed_items, through: :card_inclusions, source: :piece, source_type: 'ListedItem'
   has_many :lists, through: :listed_items
@@ -37,11 +38,11 @@ class Card < ApplicationRecord
             
   scope :unmultiversed, lambda { where :multiverse_id => nil }
   scope :preferred, -> { where(preferred: true) }
-  # A printing is *printed in* a format when its own set belongs to that
-  # format. A card is *legal in* a format when any printing of its canonical
-  # CardConcept is printed in that format.
+  # A printing is *printed in* a format when its own set currently belongs to
+  # that format. A card is *legal in* a format when any printing of its
+  # canonical CardConcept is printed in that format.
   scope :printed_in, ->(format) {
-    joins(card_set: :format_sets).where(format_sets: { format_id: format }).distinct
+    joins(card_set: :format_sets).where(format_sets: { format_id: format }).merge(FormatSet.current).distinct
   }
   scope :legal_in, ->(format) {
     where(card_concept_id: CardConcept.legal_in(format).select(:id))

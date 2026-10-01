@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_29_190000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -169,6 +169,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_190000) do
     t.bigint "card_set_id", null: false
     t.datetime "created_at", null: false
     t.bigint "format_id", null: false
+    t.date "legal_from"
+    t.date "legal_until"
     t.datetime "updated_at", null: false
     t.index ["card_set_id"], name: "index_format_sets_on_card_set_id"
     t.index ["format_id", "card_set_id"], name: "index_format_sets_on_format_id_and_card_set_id", unique: true

@@ -2,7 +2,7 @@ module CardCatalog
   class StandardEnvironmentSeeder
     SOURCE = "standard-2026-08-02"
 
-    # Current paper Standard after Marvel Super Heroes and before The Hobbit.
+    # Current paper Standard after Reality Fracture and before Star Trek.
     STANDARD_SETS = [
       ["woe", "Wilds of Eldraine", "2023-09-08", "expansion"],
       ["lci", "The Lost Caverns of Ixalan", "2023-11-17", "expansion"],
@@ -21,9 +21,16 @@ module CardCatalog
       ["ecl", "Lorwyn Eclipsed", "2026-01-23", "expansion"],
       ["tmt", "Teenage Mutant Ninja Turtles", "2026-03-06", "expansion"],
       ["sos", "Secrets of Strixhaven", "2026-04-24", "expansion"],
-      ["msh", "Marvel Super Heroes", "2026-06-26", "expansion"]
+      ["msh", "Marvel Super Heroes", "2026-06-26", "expansion"],
+      ["hob", "The Hobbit", "2026-08-14", "expansion"],
+      ["fra", "Reality Fracture", "2026-10-02", "expansion"]
     ].freeze
     STANDARD_SET_CODES = STANDARD_SETS.map(&:first).freeze
+
+    # Standard next rotates at the prerelease of the first set of 2027.
+    # Foundations stays despite its 2024 release.
+    ROTATION_DATE = Date.new(2027, 1, 29)
+    ROTATING_SET_CODES = %w[woe lci mkm otj big blb dsk].freeze
 
     FUNCTIONS = [
       { slug: "interaction", name: "Interaction", description: "Cards that disrupt an opponent's plan." },
@@ -69,8 +76,8 @@ module CardCatalog
 
         {
           format: standard,
-          sets: standard.card_sets.count,
-          concepts: standard.card_concepts.distinct.count,
+          sets: standard.format_sets.count,
+          concepts: CardConcept.ever_legal_in(standard).count,
           assignments: assignment_count
         }
       end
@@ -82,11 +89,16 @@ module CardCatalog
       format = Format.find_or_initialize_by(code: "standard")
       format.update!(
         name: "Standard",
-        description: "Current paper Standard environment as of August 2, 2026."
+        description: "Current paper Standard environment as of October 2, 2026."
       )
 
       sets = standard_sets
-      format.card_sets = sets
+      format.format_sets.where.not(card_set: sets).destroy_all
+      sets.each do |set|
+        format.format_sets.find_or_initialize_by(card_set: set).update!(
+          legal_until: (ROTATION_DATE if ROTATING_SET_CODES.include?(set.code))
+        )
+      end
       format
     end
 
@@ -139,7 +151,8 @@ module CardCatalog
     def assign_standard_concepts(standard, functions)
       CardFunctionAssignment.where(source: SOURCE).delete_all
 
-      standard.card_concepts.distinct.find_each do |concept|
+      # Rotated cards keep their classifications when the seed is re-run.
+      CardConcept.ever_legal_in(standard).find_each do |concept|
         classifications_for(concept).each do |slug|
           assignment = CardFunctionAssignment.find_or_initialize_by(
             card_concept: concept,
