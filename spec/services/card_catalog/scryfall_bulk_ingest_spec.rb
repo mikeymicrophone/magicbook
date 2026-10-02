@@ -62,6 +62,31 @@ RSpec.describe CardCatalog::ScryfallBulkIngest do
     expect(concept.keywords).to eq(['Fuse'])
   end
 
+  describe 'set release dates' do
+    let(:late_addition) do
+      printing(
+        'id' => SecureRandom.uuid,
+        'oracle_id' => '22222222-2222-2222-2222-222222222222',
+        'name' => 'Late Addition',
+        'collector_number' => '300',
+        'released_at' => '2026-04-24'
+      )
+    end
+
+    it "dates a set from Scryfall's set list, not from the last printing imported" do
+      described_class.new.ingest_io!(gzipped_jsonl([printing, late_addition]), set_release_dates: { 'APC' => '2001-06-04' })
+
+      expect(CardSet.find_by!(code: 'APC').released_on).to eq(Date.new(2001, 6, 4))
+      expect(Card.find_by!(name: 'Late Addition').released_on).to eq(Date.new(2026, 4, 24))
+    end
+
+    it 'falls back to the earliest printing when Scryfall has no date for the set' do
+      described_class.new.ingest_io!(gzipped_jsonl([late_addition, printing]))
+
+      expect(CardSet.find_by!(code: 'APC').released_on).to eq(Date.new(2001, 6, 4))
+    end
+  end
+
   it 'excludes digital-only records' do
     digital = printing('games' => ['arena'], 'digital' => true)
 

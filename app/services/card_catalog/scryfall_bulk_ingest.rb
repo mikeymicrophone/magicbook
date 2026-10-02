@@ -6,6 +6,7 @@ require "zlib"
 module CardCatalog
   class ScryfallBulkIngest
     BULK_DATA_URI = URI("https://api.scryfall.com/bulk-data")
+    SETS_URI = URI("https://api.scryfall.com/sets")
     SPECIAL_FRAME_EFFECTS = %w[etched extendedart inverted showcase textless].freeze
 
     def initialize(importer: Importer.new, logger: Rails.logger)
@@ -16,20 +17,25 @@ module CardCatalog
     # Downloads Scryfall's Default Cards JSONL file, which contains English card
     # printings. This is intentionally a bulk operation, not a per-card lookup.
     def call
+      set_release_dates = scryfall_set_release_dates
+
       Tempfile.create(["magicbook-scryfall-default-cards", ".jsonl.gz"], binmode: true) do |file|
         download_to(default_cards_uri, file)
         file.flush
-        File.open(file.path, "rb") { |input| ingest_io!(input) }
+        File.open(file.path, "rb") { |input| ingest_io!(input, set_release_dates: set_release_dates) }
       end
     end
 
     # Public for tests and for an operator who has already downloaded the bulk
     # file. `input` must be the gzipped JSONL payload supplied by Scryfall.
-    def ingest_io!(input)
+    # `set_release_dates` maps set codes to Scryfall's release date for the set;
+    # a set missing from it is dated by its earliest printing.
+    def ingest_io!(input, set_release_dates: {})
       candidates = best_printing_per_set(input)
       preferred_keys = preferred_printing_keys(candidates)
+      apply_set_release_dates!(candidates, set_release_dates)
 
-      candidates.sort_by { |_key, candidate| [candidate[:set][:released_on].to_s, candidate[:printing][:collector_number].to_s] }
+      candidates.sort_by { |_key, candidate| [candidate[:printing][:released_on].to_s, candidate[:printing][:collector_number].to_s] }
         .each do |key, candidate|
           payload = candidate.except(:style)
           @importer.import_printing!(**payload, printing: candidate[:printing].merge(preferred: preferred_keys.include?(key)))
@@ -62,6 +68,28 @@ module CardCatalog
 
       download_uri = default_cards["jsonl_download_uri"] || default_cards.fetch("download_uri")
       URI(download_uri)
+    end
+
+    def scryfall_set_release_dates
+      dates = {}
+      uri = SETS_URI
+
+      while uri
+        page = JSON.parse(read(uri))
+        page.fetch("data").each { |set| dates[set.fetch("code")] = set["released_at"] if set["released_at"] }
+        uri = page["has_more"] ? URI(page.fetch("next_page")) : nil
+      end
+
+      dates
+    end
+
+    # A card added to a set later carries its own release date, so a set's date
+    # cannot be read from whichever of its printings happens to be imported last.
+    def apply_set_release_dates!(candidates, set_release_dates)
+      candidates.values.group_by { |candidate| candidate[:set][:code] }.each do |code, printings|
+        released_on = set_release_dates[code] || printings.filter_map { |candidate| candidate[:printing][:released_on] }.min
+        printings.each { |candidate| candidate[:set][:released_on] = released_on }
+      end
     end
 
     def best_printing_per_set(input)
@@ -162,7 +190,7 @@ module CardCatalog
     end
 
     def preferred_score(candidate)
-      style_score(candidate) + [candidate[:set][:released_on].to_s]
+      style_score(candidate) + [candidate[:printing][:released_on].to_s]
     end
 
     def read(uri)

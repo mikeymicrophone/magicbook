@@ -130,7 +130,7 @@ CardSet ──< FormatSet >── Format
 
 ### Refresh Scryfall data
 
-The normal importer downloads Scryfall’s public **Default Cards** bulk JSONL file. It chooses one ordinary printing per card/set, avoids premium variants where possible, preserves list links through legacy Multiverse IDs, and updates Oracle text on the shared concept.
+The normal importer downloads Scryfall’s public **Default Cards** bulk JSONL file. It chooses one ordinary printing per card/set, avoids premium variants where possible, preserves list links through legacy Multiverse IDs, and updates Oracle text on the shared concept. Set release dates come from Scryfall's set list, since a card added to a set later carries its own date.
 
 ```sh
 bundle exec rake cards:ingest:scryfall
