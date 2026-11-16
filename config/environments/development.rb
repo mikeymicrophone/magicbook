@@ -36,13 +36,11 @@ Rails.application.configure do
   config.active_storage.service = :local
   config.active_job.queue_adapter = :solid_queue
 
-  # Keep development mail in memory; no external SMTP server is contacted.
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
     host: ENV.fetch('APP_HOST', 'dev.wayswemage.com'),
     protocol: ENV.fetch('APP_PROTOCOL', 'https')
   }
-  config.action_mailer.delivery_method = :test
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.perform_caching = false

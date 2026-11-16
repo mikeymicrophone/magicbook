@@ -11,7 +11,7 @@ The card catalog deliberately models the information needed by this application�
 - Sprockets/Sass, CoffeeScript, Turbolinks, and jQuery
 - Devise for authentication and CanCanCan for authorization
 - Stripe’s legacy Checkout/Charges integration for book purchases
-- Resend SMTP for transactional mail
+- PostShiba for transactional mail
 - Active Storage with Railway S3-compatible object storage in production
 - Solid Queue worker process for queued mail and publishing work
 
@@ -76,7 +76,7 @@ bin/jobs
 
 Development uses the local PostgreSQL database configured in `config/database.yml`. Production reads `DATABASE_URL`.
 
-Local environment variables are loaded from the ignored `.env` file with `dotenv-rails`. Copy `.env.example` if you need a fresh local setup, then add only Stripe **test-mode** keys and a Resend key if you want to exercise payments or actual email locally. Railway remains the source of truth for production variables.
+Local environment variables are loaded from the ignored `.env` file with `dotenv-rails`. Copy `.env.example` if you need a fresh local setup, then add only Stripe **test-mode** keys if you want to exercise payments locally. See [email setup](docs/email.md) for optional PostShiba delivery. Railway remains the source of truth for production variables.
 
 Set secrets through your environment or Railway variables; never commit them. The production application uses these variables:
 
@@ -89,7 +89,11 @@ Set secrets through your environment or Railway variables; never commit them. Th
 | `DEFAULT_BOOK_IDS` | ID of the featured/default book. |
 | `STRIPE_PUBLISHABLE_KEY` | Browser-facing Stripe key. |
 | `STRIPE_SECRET_KEY` | Server-side Stripe API key. |
-| `RESEND_API_KEY` | Resend SMTP password/API key. |
+| `POSTSHIBA_API_KEY` | PostShiba Send only key for this app and environment. |
+| `POSTSHIBA_CLUSTER_ID` | Optional transactional cluster ID. |
+| `MAILER_TEST_RECIPIENT` | Required recipient override for PostShiba outside production. |
+| `APP_HOST` | Host for HTTPS email links. |
+| `DELIVERY_EMAIL` | Sender on the verified PostShiba domain. |
 | `CUSTOMER_SUPPORT_EMAIL_ADDRESS` | Contact address shown in the application. |
 | `FACEBOOK_APP_ID` | Facebook login/share integration. |
 | `RAILWAY_S3_ACCESS_KEY_ID` | Railway object-storage access key. |
@@ -173,7 +177,7 @@ bundle exec rails assets:precompile
 
 ## Production deployment
 
-The production service runs on Railway with PostgreSQL and Railway object storage. Before deploying, ensure the production variables above exist, especially Stripe, Resend, Active Storage, `DATABASE_URL`, and `RAILS_SERVE_STATIC_FILES`.
+The production service runs on Railway with PostgreSQL and Railway object storage. Before deploying, ensure the production variables above exist, especially Stripe, PostShiba, Active Storage, `DATABASE_URL`, and `RAILS_SERVE_STATIC_FILES`.
 
 Deploy from this directory with the Railway CLI:
 
@@ -191,3 +195,5 @@ Do not treat a queued build as a successful release. Confirm the newest deployme
 - `/card_sets` — set browser
 - `/card_functions` — function taxonomy browser
 - `/cards/:id` — a printing and the lists that include it
+
+Transactional mail setup and development capture: [Configure transactional email](docs/email.md).

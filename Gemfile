@@ -65,3 +65,5 @@ end
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
 gem "vite_rails", "~> 3.11"
+
+gem "postshiba", git: "https://github.com/postshiba/postshiba-ruby.git", ref: "9c2c5f3585c196f663495b7e2adcd5b9341fdf55"
