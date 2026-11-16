@@ -4,7 +4,7 @@ Magicbook sends through the PostShiba Action Mailer adapter. Existing mailers an
 
 ## Configure production
 
-Create a Send only key named `magicbook-production` in the MICharisma PostShiba team. Store it as `POSTSHIBA_API_KEY` in the environment's secret manager and supply it to every web and worker process that sends mail. Use a separate key for each app and environment. These keys are team-scoped and can send from any of the team's verified domains.
+Use the Send only key named `magicbook-production` in the MICharisma PostShiba team. Store it as `POSTSHIBA_API_KEY` in the environment's secret manager and supply it to every web and worker process that sends mail. Use a separate key for each app and environment. These keys are team-scoped and can send from any of the team's verified domains.
 
 Set `DELIVERY_EMAIL` to `Ways We Mage <hello@mail.wayswemage.com>` and `APP_HOST` to `wayswemage.com`. `POSTSHIBA_CLUSTER_ID` optionally pins the transactional cluster. Without it, PostShiba chooses a sending-ready cluster.
 
@@ -18,7 +18,7 @@ Without `POSTSHIBA_API_KEY`, development and staging save messages under `tmp/ma
 
 Staging means either `RAILS_ENV=staging` or Railway's injected `RAILWAY_ENVIRONMENT_NAME=staging`, including services that run `RAILS_ENV=production`. Keep Railway's environment name as `staging` for these services. Test suites retain their existing `:test` mail delivery method.
 
-To exercise PostShiba delivery outside production, create a separate Send only key named `magicbook-staging` or `magicbook-development`. Supply that key and set `MAILER_TEST_RECIPIENT` to your own address. The app replaces To with that address and clears Cc and Bcc before delivery. It refuses to boot with a non-production PostShiba key unless `MAILER_TEST_RECIPIENT` is present. Set the sender variable to an address on a verified PostShiba domain before enabling delivery. The sender domain still needs DNS verification.
+To exercise PostShiba delivery outside production, use the existing Send only key named `magicbook-staging` or `magicbook-development`. Supply that key and set `MAILER_TEST_RECIPIENT` to your own address. The app replaces To with that address and clears Cc and Bcc before delivery. It refuses to boot with a non-production PostShiba key unless `MAILER_TEST_RECIPIENT` is present. Set the sender variable to an address on a verified PostShiba domain before enabling delivery. The sender domain still needs DNS verification.
 
 PostShiba also supports `sandbox: true` on its cluster send API. It validates and composes without delivery, but still requires a verified domain and a sending-ready cluster. The Ruby Action Mailer adapter pinned here does not expose this option, so setting `sandbox` in `postshiba_settings` does not enable sandbox delivery.
 
@@ -34,3 +34,11 @@ The [PostShiba sender domain](https://app.postshiba.com/account/sending_domains/
 | CNAME | `rp.mail` | `rp.postshiba.com` |
 
 Publish these as DNS-only records. If no existing DMARC policy covers the sender domain, PostShiba suggests a TXT record at `_dmarc.mail` with `v=DMARC1; p=none;`. Review the current policy before adding one. Recheck the dashboard's current records before publishing DNS.
+
+## Use the provisioned keys
+
+On 2026-11-16, the `magicbook-development`, `magicbook-staging`, and `magicbook-production` Send only keys were stored as `POSTSHIBA_API_KEY` in Doppler project `magicbook`, configurations `dev`, `stg`, and `prd`, respectively. Each key passed authentication and rejected a management request.
+
+Each configuration pins the existing transactional cluster with `POSTSHIBA_CLUSTER_ID=ReEMKe`. Development and staging set `MAILER_TEST_RECIPIENT=mike@micharisma.com`. These keys enable PostShiba when supplied to the app, so the sender domain still needs DNS verification before delivery can succeed. Omit `POSTSHIBA_API_KEY` from a non-production process to keep file capture enabled.
+
+Supply the matching Doppler values to Railway web and worker processes when deploying this configuration. Key storage does not establish a Railway deployment or inbox delivery.
