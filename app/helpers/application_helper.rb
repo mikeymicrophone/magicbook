@@ -6,7 +6,7 @@ module ApplicationHelper
           link_to("log out", destroy_mage_session_path, method: :delete, id: "log_out")
       end
     else
-      link_to("Sign in", new_mage_session_path, id: "password_login")
+      google_sign_in_button || link_to("Sign in", new_mage_session_path, id: "password_login")
     end
   end
   

@@ -43,12 +43,7 @@
     <p class="auth-alt-label">Or continue with</p>
     <%= link_to 'Email me a sign-in link', new_magic_link_path, class: 'auth-button auth-button-secondary' %>
 
-    <% if Mage.google_oauth_configured? %>
-      <%= button_to 'Continue with Google', mage_google_oauth2_omniauth_authorize_path,
-        method: :post,
-        form: { data: { turbo: false }, class: 'auth-alt-form' },
-        class: 'auth-button auth-button-secondary' %>
-    <% end %>
+    <%= google_sign_in_button %>
 
     <button type="button"
       class="auth-button auth-button-secondary"
