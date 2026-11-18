@@ -191,3 +191,5 @@ Do not treat a queued build as a successful release. Confirm the newest deployme
 - `/card_sets` — set browser
 - `/card_functions` — function taxonomy browser
 - `/cards/:id` — a printing and the lists that include it
+
+Google account entry points and reusable button: [Google sign-in](docs/google-sign-in.md).

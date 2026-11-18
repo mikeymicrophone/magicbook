@@ -1,6 +1,8 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     mage = Mage.from_google_oauth!(request.env.fetch('omniauth.auth'))
+    return_to = url_from(request.env.fetch('omniauth.params', {})['return_to'])
+    store_location_for(:mage, return_to) if return_to
     set_flash_message(:notice, :success, kind: 'Google') if is_navigational_format?
     sign_in_and_redirect mage, event: :authentication
   rescue ArgumentError, ActiveRecord::RecordInvalid

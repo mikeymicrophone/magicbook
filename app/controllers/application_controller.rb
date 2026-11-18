@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   end
   
   def after_sign_in_path_for user
-    books_path
+    stored_location_for(user) || books_path
   end
   
   helper_method :current_user
