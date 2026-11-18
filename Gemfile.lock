@@ -149,6 +149,7 @@ GEM
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
     ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     flag_shih_tzu (1.0.5)
       version_gem (~> 1.1, >= 1.1.14)
     fugit (1.13.0)
@@ -222,6 +223,8 @@ GEM
     nio4r (2.7.5)
     nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.19.4-x86_64-linux-gnu)
+      racc (~> 1.4)
     oauth2 (2.0.25)
       anonymous_loader (~> 0.1, >= 0.1.3)
       auth-sanitizer (~> 0.2, >= 0.2.3)
@@ -257,6 +260,7 @@ GEM
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     pg (1.6.3-arm64-darwin)
+    pg (1.6.3-x86_64-linux)
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.0)
@@ -429,6 +433,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-25
+  x86_64-linux
 
 DEPENDENCIES
   actionview-encoded_mail_to
