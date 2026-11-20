@@ -67,10 +67,13 @@ class ConvertPrimaryKeysAndReferencesToUuid < ActiveRecord::Migration[8.1]
       backfill_foreign_key_uuids!(fk, allow_orphans: true)
     end
 
-    # 4. Backfill polymorphic *_id references (rows with a blank type or NULL id stay NULL).
+    # 4. Backfill polymorphic *_id references (blank-type rows with a non-null id receive a deterministic orphan UUID; NULL ids stay NULL).
     polymorphic_refs.each do |ref|
       backfill_polymorphic_uuids!(ref, target_set)
     end
+
+    # Log old integer -> new UUID mapping for books before dropping books.id so DEFAULT_BOOK_IDS can be updated from deploy logs.
+    log_migrated_books! if target_set.include?("books")
 
     # 5. Drop dependent FKs, check/unique constraints, and indexes before swapping columns.
     foreign_keys.each do |fk|
@@ -534,6 +537,16 @@ class ConvertPrimaryKeysAndReferencesToUuid < ActiveRecord::Migration[8.1]
     return POLYMORPHIC_TABLE_OVERRIDES[type_name] if POLYMORPHIC_TABLE_OVERRIDES.key?(type_name)
 
     type_name.underscore.pluralize.tr("/", "_")
+  end
+
+  def log_migrated_books!
+    rows = select_all('SELECT id, "__uuid_id", title FROM books ORDER BY id')
+    return if rows.empty?
+
+    say "Migrated books (update DEFAULT_BOOK_IDS with the new UUID):"
+    rows.each do |row|
+      say "  #{row['id']} -> #{row['__uuid_id']}, #{row['title']}", true
+    end
   end
 
   def swap_reference_columns!(foreign_keys, unconstrained_fks, polymorphic_refs)

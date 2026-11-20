@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  unless ActiveStorage::Record.method_defined?(:assign_uuid_v7, false)
+  unless ActiveStorage::Record.private_method_defined?(:assign_uuid_v7, false)
     ActiveStorage::Record.class_eval do
       before_create :assign_uuid_v7
 

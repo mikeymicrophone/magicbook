@@ -30,8 +30,13 @@ class Book < ApplicationRecord
     version.split('.').third.to_i
   end
   
+  def self.default_featured_id
+    ENV["DEFAULT_BOOK_IDS"].to_s.split(",").first&.strip.presence
+  end
+
   def self.featured
-    find(ENV['DEFAULT_BOOK_IDS'])
+    id = default_featured_id
+    (find_by(id: id) if id.present?) || order(:created_at).first || raise(ActiveRecord::RecordNotFound, "Couldn't find featured Book")
   end
   
   def to_param

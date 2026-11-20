@@ -38,7 +38,7 @@ class Purchase < ApplicationRecord
   end
   
   def default_book
-    books << Book.find(book_id.presence || ENV['DEFAULT_BOOK_IDS']) if books.empty?
+    books << (book_id.present? ? Book.find(book_id) : Book.featured) if books.empty?
   end
   
   def price

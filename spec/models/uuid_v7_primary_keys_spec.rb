@@ -130,6 +130,60 @@ RSpec.describe "UUIDv7 primary keys" do
       expect(conn.columns(table).find { |column| column.name == "id" }.type).to eq(:integer), "expected #{table}.id to remain integer"
     end
   end
+
+  describe "Book.featured and Purchase#default_book" do
+    let!(:older_book) { Book.create!(title: "Older book", version: "1.0.0", created_at: 2.days.ago) }
+    let!(:newer_book) { Book.create!(title: "Newer book", version: "2.0.0", created_at: 1.day.ago) }
+
+    def stub_default_book_ids(value)
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with("DEFAULT_BOOK_IDS").and_return(value)
+    end
+
+    it "resolves a single UUID in DEFAULT_BOOK_IDS" do
+      stub_default_book_ids(newer_book.id)
+
+      expect(Book.default_featured_id).to eq(newer_book.id)
+      expect(Book.featured).to eq(newer_book)
+    end
+
+    it "resolves the first UUID from a comma-separated DEFAULT_BOOK_IDS list" do
+      stub_default_book_ids("#{newer_book.id},#{older_book.id}")
+
+      expect(Book.default_featured_id).to eq(newer_book.id)
+      expect(Book.featured).to eq(newer_book)
+    end
+
+    it "strips surrounding whitespace and newlines from DEFAULT_BOOK_IDS" do
+      stub_default_book_ids(" #{newer_book.id} \n")
+
+      expect(Book.default_featured_id).to eq(newer_book.id)
+      expect(Book.featured).to eq(newer_book)
+    end
+
+    it "falls back to the oldest book when DEFAULT_BOOK_IDS still holds a stale integer id" do
+      stub_default_book_ids("1")
+
+      expect(Book.featured).to eq(older_book)
+    end
+
+    it "assigns the featured book or explicit book_id in Purchase#default_book" do
+      stub_default_book_ids("1")
+
+      fallback_purchase = Purchase.new(email: "fallback@example.com")
+      fallback_purchase.default_book
+      expect(fallback_purchase.books).to eq([older_book])
+
+      stub_default_book_ids("#{newer_book.id},#{older_book.id}")
+      featured_purchase = Purchase.new(email: "featured@example.com")
+      featured_purchase.default_book
+      expect(featured_purchase.books).to eq([newer_book])
+
+      explicit_purchase = Purchase.new(email: "explicit@example.com", book_id: older_book.to_param)
+      explicit_purchase.default_book
+      expect(explicit_purchase.books).to eq([older_book])
+    end
+  end
 end
 
 RSpec.describe ListsController, type: :controller do
