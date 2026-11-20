@@ -18,7 +18,7 @@ RSpec.describe "Admin tagging", type: :request do
 
   before do
     host! "localhost"
-    Book.create!(id: 1, title: "Featured book", version: "1.0.0")
+    create_featured_book!
     sign_in admin
   end
 

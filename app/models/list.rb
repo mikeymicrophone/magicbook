@@ -1,4 +1,6 @@
 class List < ApplicationRecord
+  include UuidSlugParam
+
   belongs_to :mage
   has_many :listed_items
   has_many :taggings, as: :taggable, dependent: :destroy

@@ -15,7 +15,7 @@ RSpec.describe "Profiles", type: :request do
 
   before do
     host! "localhost"
-    Book.create!(id: 1, title: "Featured book", version: "1.0.0")
+    create_featured_book!
   end
 
   it "requires a signed-in mage" do

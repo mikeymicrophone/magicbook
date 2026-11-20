@@ -12,8 +12,8 @@ require 'rails_helper'
 # end
 RSpec.describe ChaptersHelper, type: :helper do
   it 'uses a Turbo Frame and Stream submission for a new chapter form' do
-    edition = Edition.new(id: 7)
-    table_of_content = TableOfContent.new(id: 12, edition: edition)
+    edition = Edition.new(id: SecureRandom.uuid_v7)
+    table_of_content = TableOfContent.new(id: SecureRandom.uuid_v7, edition: edition)
 
     html = helper.chapter_form(table_of_content)
 

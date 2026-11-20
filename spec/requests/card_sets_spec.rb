@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Card sets', type: :request do
   before { host! 'localhost' }
-  before { Book.create!(id: 1, title: 'Featured book', version: '1.0.0') }
+  before { create_featured_book! }
 
   def create_printing(set:, name:, collector_number: '1')
     concept = CardConcept.create!(name: name, oracle_id: SecureRandom.uuid)

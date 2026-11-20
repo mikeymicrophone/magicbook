@@ -86,7 +86,7 @@ Set secrets through your environment or Railway variables; never commit them. Th
 | `RAILS_ENV` | Set to `production` in production. |
 | `RAILS_SERVE_STATIC_FILES` | Enable when the Rails service serves compiled assets. |
 | `SECRET_KEY_BASE` | Rails session and message verifier secret. |
-| `DEFAULT_BOOK_IDS` | ID of the featured/default book. |
+| `DEFAULT_BOOK_IDS` | UUID of the featured/default book. |
 | `STRIPE_PUBLISHABLE_KEY` | Browser-facing Stripe key. |
 | `STRIPE_SECRET_KEY` | Server-side Stripe API key. |
 | `RESEND_API_KEY` | Resend SMTP password/API key. |

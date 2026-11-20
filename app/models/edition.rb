@@ -20,7 +20,7 @@ class Edition < ApplicationRecord
   scope :published, lambda { where Edition.arel_table[:release].lt DateTime.now }
   
   def copy_contents_from edition, book, options = {}
-    excluded_parameters = ""
+    excluded_parameters = nil
     delayed_content_type = nil
     promoted_content_type = nil
     
@@ -28,9 +28,9 @@ class Edition < ApplicationRecord
       excluded = options[:exclude]
       case excluded
       when Paragraph
-        excluded_parameters = "paragraph_id is distinct from #{excluded.id}"
+        excluded_parameters = ["paragraph_id is distinct from ?", excluded.id]
       when Section
-        excluded_parameters = "section_id is distinct from #{excluded.id}"
+        excluded_parameters = ["section_id is distinct from ?", excluded.id]
       end
     end
     if options[:delay]

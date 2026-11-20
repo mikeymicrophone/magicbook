@@ -5,7 +5,7 @@ RSpec.describe 'Cards', type: :request do
 
   before do
     host! 'localhost'
-    Book.create!(id: 1, title: 'Featured book', version: '1.0.0')
+    create_featured_book!
   end
 
   it 'links a printing to its set and published list memberships' do

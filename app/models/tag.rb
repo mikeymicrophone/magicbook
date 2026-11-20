@@ -1,4 +1,6 @@
 class Tag < ApplicationRecord
+  include UuidSlugParam
+
   KINDS = %w[system user].freeze
 
   belongs_to :tag_context, optional: true

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InvitationsController, type: :controller do
-  let!(:book) { Book.create!(id: 1, title: 'Featured book', version: '1.0.0') }
+  let!(:book) { create_featured_book! }
   let!(:mage) do
     Mage.create!(
       email: 'owner@example.test',

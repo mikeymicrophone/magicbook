@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Card functions', type: :request do
   before do
     host! 'localhost'
-    Book.create!(id: 1, title: 'Featured book', version: '1.0.0')
+    create_featured_book!
   end
 
   it 'browses the graph with direct and descendant-inclusive counts' do

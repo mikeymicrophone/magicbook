@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CitationsHelper, type: :helper do
   describe '#citation_form' do
     it 'requests a Turbo Stream response' do
-      html = helper.citation_form(TableOfContent.new(id: 1)).to_s
+      html = helper.citation_form(TableOfContent.new(id: SecureRandom.uuid_v7)).to_s
 
       expect(html).to include('data-turbo-stream="true"')
     end

@@ -10,21 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_20_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blob_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false
-    t.bigint "record_id", null: false
+    t.uuid "record_id", null: false
     t.string "record_type", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.string "content_type"
@@ -36,13 +36,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "books", id: :serial, force: :cascade do |t|
+  create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "author"
     t.datetime "created_at", precision: nil, null: false
     t.string "pdf"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.string "version"
   end
 
-  create_table "card_concepts", force: :cascade do |t|
+  create_table "card_concepts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "keywords", default: [], null: false, array: true
     t.string "name", null: false
@@ -63,9 +63,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["oracle_id"], name: "index_card_concepts_on_oracle_id", unique: true, where: "(oracle_id IS NOT NULL)"
   end
 
-  create_table "card_function_assignments", force: :cascade do |t|
-    t.bigint "card_concept_id", null: false
-    t.bigint "card_function_id", null: false
+  create_table "card_function_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "card_concept_id", null: false
+    t.uuid "card_function_id", null: false
     t.datetime "created_at", null: false
     t.string "source", default: "manual", null: false
     t.datetime "updated_at", null: false
@@ -75,17 +75,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["source"], name: "index_card_function_assignments_on_source"
   end
 
-  create_table "card_function_relations", force: :cascade do |t|
-    t.bigint "child_function_id", null: false
+  create_table "card_function_relations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "child_function_id", null: false
     t.datetime "created_at", null: false
-    t.bigint "parent_function_id", null: false
+    t.uuid "parent_function_id", null: false
     t.datetime "updated_at", null: false
     t.index ["child_function_id"], name: "index_card_function_relations_on_child_function_id"
     t.index ["parent_function_id", "child_function_id"], name: "index_card_function_relations_on_parent_and_child", unique: true
     t.index ["parent_function_id"], name: "index_card_function_relations_on_parent_function_id"
   end
 
-  create_table "card_functions", force: :cascade do |t|
+  create_table "card_functions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.string "name", null: false
@@ -95,16 +95,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["slug"], name: "index_card_functions_on_slug", unique: true
   end
 
-  create_table "card_inclusions", force: :cascade do |t|
-    t.bigint "card_id"
+  create_table "card_inclusions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "card_id"
     t.datetime "created_at", precision: nil, null: false
-    t.integer "piece_id"
+    t.uuid "piece_id"
     t.string "piece_type"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["card_id"], name: "index_card_inclusions_on_card_id"
   end
 
-  create_table "card_sets", force: :cascade do |t|
+  create_table "card_sets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "category", default: 6, null: false
     t.string "code", null: false
     t.datetime "created_at", null: false
@@ -116,9 +116,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["code"], name: "index_card_sets_on_code", unique: true
   end
 
-  create_table "cards", force: :cascade do |t|
-    t.bigint "card_concept_id", null: false
-    t.bigint "card_set_id"
+  create_table "cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "card_concept_id", null: false
+    t.uuid "card_set_id"
     t.string "collector_number"
     t.integer "colors"
     t.integer "converted_mana_cost"
@@ -138,22 +138,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["scryfall_id"], name: "index_cards_on_scryfall_id", unique: true, where: "(scryfall_id IS NOT NULL)"
   end
 
-  create_table "chapters", force: :cascade do |t|
+  create_table "chapters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.text "subtitle"
     t.string "title"
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "citations", force: :cascade do |t|
+  create_table "citations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.text "finding"
     t.text "source"
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "editions", force: :cascade do |t|
-    t.bigint "book_id"
+  create_table "editions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "book_id"
     t.datetime "created_at", precision: nil, null: false
     t.integer "major"
     t.integer "minor"
@@ -165,10 +165,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["book_id"], name: "index_editions_on_book_id"
   end
 
-  create_table "format_sets", force: :cascade do |t|
-    t.bigint "card_set_id", null: false
+  create_table "format_sets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "card_set_id", null: false
     t.datetime "created_at", null: false
-    t.bigint "format_id", null: false
+    t.uuid "format_id", null: false
     t.date "legal_from"
     t.date "legal_until"
     t.datetime "updated_at", null: false
@@ -177,7 +177,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["format_id"], name: "index_format_sets_on_format_id"
   end
 
-  create_table "formats", force: :cascade do |t|
+  create_table "formats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.text "description"
@@ -187,12 +187,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["name"], name: "index_formats_on_name", unique: true
   end
 
-  create_table "identifiers", force: :cascade do |t|
+  create_table "identifiers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "email"
-    t.bigint "mage_id"
-    t.bigint "magician_id"
-    t.bigint "muggle_id"
+    t.uuid "mage_id"
+    t.uuid "magician_id"
+    t.uuid "muggle_id"
     t.string "provider"
     t.string "uid"
     t.datetime "updated_at", precision: nil, null: false
@@ -202,11 +202,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["provider", "uid"], name: "index_identifiers_on_provider_and_uid", unique: true
   end
 
-  create_table "invitations", force: :cascade do |t|
+  create_table "invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "inviter_id", null: false
-    t.bigint "mage_id", null: false
-    t.bigint "purchase_id", null: false
+    t.uuid "inviter_id", null: false
+    t.uuid "mage_id", null: false
+    t.uuid "purchase_id", null: false
     t.datetime "updated_at", null: false
     t.index ["inviter_id"], name: "index_invitations_on_inviter_id"
     t.index ["mage_id"], name: "index_invitations_on_mage_id"
@@ -214,25 +214,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["purchase_id"], name: "index_invitations_on_purchase_id"
   end
 
-  create_table "listed_items", force: :cascade do |t|
-    t.integer "content_id"
+  create_table "listed_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "content_id"
     t.string "content_type"
     t.datetime "created_at", precision: nil, null: false
     t.text "designation"
     t.text "expression"
-    t.bigint "list_id"
+    t.uuid "list_id"
     t.integer "ordering"
     t.integer "privacy"
-    t.integer "replacing"
+    t.uuid "replacing"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["list_id"], name: "index_listed_items_on_list_id"
   end
 
-  create_table "lists", force: :cascade do |t|
+  create_table "lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.text "description"
-    t.bigint "mage_id"
-    t.bigint "magician_id"
+    t.uuid "mage_id"
+    t.uuid "magician_id"
     t.integer "mode"
     t.string "name"
     t.integer "pin"
@@ -243,7 +243,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["magician_id"], name: "index_lists_on_magician_id"
   end
 
-  create_table "mages", force: :cascade do |t|
+  create_table "mages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.boolean "admin", default: false, null: false
     t.string "authentication_token"
     t.datetime "authentication_token_created_at"
@@ -276,7 +276,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["webauthn_user_handle"], name: "index_mages_on_webauthn_user_handle", unique: true
   end
 
-  create_table "magicians", force: :cascade do |t|
+  create_table "magicians", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "authentication_token"
     t.datetime "authentication_token_created_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
@@ -301,7 +301,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["reset_password_token"], name: "index_magicians_on_reset_password_token", unique: true
   end
 
-  create_table "muggles", force: :cascade do |t|
+  create_table "muggles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "confirmation_sent_at", precision: nil
     t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil
@@ -312,8 +312,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.string "encrypted_password", default: "", null: false
     t.datetime "last_sign_in_at", precision: nil
     t.inet "last_sign_in_ip"
-    t.bigint "magician_id"
-    t.bigint "purchase_id"
+    t.uuid "magician_id"
+    t.uuid "purchase_id"
     t.datetime "remember_created_at", precision: nil
     t.datetime "reset_password_sent_at", precision: nil
     t.string "reset_password_token"
@@ -326,17 +326,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["reset_password_token"], name: "index_muggles_on_reset_password_token", unique: true
   end
 
-  create_table "paragraphs", force: :cascade do |t|
+  create_table "paragraphs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.text "text"
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "passkeys", force: :cascade do |t|
+  create_table "passkeys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "external_id", null: false
     t.datetime "last_used_at"
-    t.bigint "mage_id", null: false
+    t.uuid "mage_id", null: false
     t.text "public_key", null: false
     t.bigint "sign_count", default: 0, null: false
     t.string "transports", default: [], null: false, array: true
@@ -345,27 +345,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["mage_id"], name: "index_passkeys_on_mage_id"
   end
 
-  create_table "purchased_books", force: :cascade do |t|
-    t.bigint "book_id"
+  create_table "purchased_books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "book_id"
     t.datetime "created_at", precision: nil, null: false
-    t.bigint "purchase_id"
+    t.uuid "purchase_id"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["book_id"], name: "index_purchased_books_on_book_id"
     t.index ["purchase_id"], name: "index_purchased_books_on_purchase_id"
   end
 
-  create_table "purchases", id: :serial, force: :cascade do |t|
+  create_table "purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "email"
-    t.bigint "mage_id"
-    t.bigint "magician_id"
+    t.uuid "mage_id"
+    t.uuid "magician_id"
     t.string "stripe_token"
     t.string "token"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["mage_id"], name: "index_purchases_on_mage_id"
   end
 
-  create_table "scribes", force: :cascade do |t|
+  create_table "scribes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "confirmation_sent_at", precision: nil
     t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil
@@ -386,7 +386,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["reset_password_token"], name: "index_scribes_on_reset_password_token", unique: true
   end
 
-  create_table "sections", force: :cascade do |t|
+  create_table "sections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "heading"
     t.text "subheading"
@@ -514,16 +514,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
-  create_table "table_of_contents", force: :cascade do |t|
-    t.bigint "book_id"
-    t.bigint "chapter_id"
-    t.bigint "citation_id"
+  create_table "table_of_contents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "book_id"
+    t.uuid "chapter_id"
+    t.uuid "citation_id"
     t.datetime "created_at", precision: nil, null: false
-    t.bigint "edition_id"
+    t.uuid "edition_id"
     t.integer "flags", default: 0, null: false
     t.integer "ordering"
-    t.bigint "paragraph_id"
-    t.bigint "section_id"
+    t.uuid "paragraph_id"
+    t.uuid "section_id"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["book_id"], name: "index_table_of_contents_on_book_id"
     t.index ["chapter_id"], name: "index_table_of_contents_on_chapter_id"
@@ -533,17 +533,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["section_id"], name: "index_table_of_contents_on_section_id"
   end
 
-  create_table "tag_context_color_overrides", force: :cascade do |t|
+  create_table "tag_context_color_overrides", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "color", null: false
     t.datetime "created_at", null: false
-    t.bigint "mage_id", null: false
-    t.bigint "tag_context_id", null: false
+    t.uuid "mage_id", null: false
+    t.uuid "tag_context_id", null: false
     t.datetime "updated_at", null: false
     t.index ["mage_id", "tag_context_id"], name: "index_tag_context_color_overrides_on_mage_and_context", unique: true
     t.index ["tag_context_id"], name: "index_tag_context_color_overrides_on_tag_context_id"
   end
 
-  create_table "tag_contexts", force: :cascade do |t|
+  create_table "tag_contexts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "color", null: false
     t.datetime "created_at", null: false
     t.string "kind", default: "user", null: false
@@ -553,11 +553,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["slug"], name: "index_tag_contexts_on_slug", unique: true
   end
 
-  create_table "taggings", force: :cascade do |t|
+  create_table "taggings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "mage_id"
-    t.bigint "tag_id", null: false
-    t.bigint "taggable_id", null: false
+    t.uuid "mage_id"
+    t.uuid "tag_id", null: false
+    t.uuid "taggable_id", null: false
     t.string "taggable_type", null: false
     t.datetime "updated_at", null: false
     t.index ["mage_id"], name: "index_taggings_on_mage_id"
@@ -566,12 +566,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_010000) do
     t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
   end
 
-  create_table "tags", force: :cascade do |t|
+  create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "kind", default: "user", null: false
     t.string "name", null: false
     t.string "slug", null: false
-    t.bigint "tag_context_id"
+    t.uuid "tag_context_id"
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_tags_on_unstyled_slug", unique: true, where: "(tag_context_id IS NULL)"
     t.index ["tag_context_id", "slug"], name: "index_tags_on_tag_context_id_and_slug", unique: true, where: "(tag_context_id IS NOT NULL)"

@@ -20,7 +20,7 @@ RSpec.describe ListsController, type: :controller do
     )
   end
   let!(:list) { List.create!(mage: mage, name: 'Turbo review list', privacy: 'unreviewed') }
-  let!(:featured_book) { Book.create!(id: 1, title: 'Featured book', version: '1.0.0') }
+  let!(:featured_book) { create_featured_book! }
 
   before { sign_in scribe }
 

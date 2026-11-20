@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
+  include UuidSlugParam
+
   has_many :table_of_contents
   has_many :taggings, as: :taggable, dependent: :destroy
   has_many :tags, through: :taggings

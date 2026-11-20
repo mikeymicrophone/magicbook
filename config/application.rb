@@ -11,6 +11,10 @@ module Magicbook
     config.load_defaults 8.1
     config.action_view.form_with_generates_remote_forms = true
 
+    config.generators do |generators|
+      generators.orm :active_record, primary_key_type: :uuid
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
