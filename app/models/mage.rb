@@ -1,4 +1,5 @@
 class Mage < ApplicationRecord
+  RESERVED_USERNAMES = %w[admin administrator moderator support system staff help rizz micharisma magicbook wayswemage].freeze
   MAGIC_LINK_LIFETIME = 15.minutes
   MAGIC_LINK_RESEND_INTERVAL = 1.minute
 
@@ -17,6 +18,17 @@ class Mage < ApplicationRecord
   has_many :sent_invitations, class_name: 'Invitation', foreign_key: :inviter_id, dependent: :destroy
   has_many :gifted_purchases, through: :received_invitations, source: :purchase
   has_many :gifted_books, through: :gifted_purchases, source: :books
+
+  normalizes :username, with: ->(value) { value.to_s.strip.downcase.presence }
+  normalizes :display_name, with: ->(value) { value.to_s.gsub(/[[:cntrl:]]/, '').strip.presence }
+
+  validates :username,
+    length: { in: 3..24 },
+    format: { with: /\A[a-z0-9_]+\z/, message: 'can only contain letters, numbers, and underscores' },
+    uniqueness: { case_sensitive: false },
+    exclusion: { in: RESERVED_USERNAMES },
+    allow_nil: true
+  validates :display_name, length: { maximum: 60 }, allow_nil: true
 
   def self.create_access_account!(email)
     mage = find_or_initialize_by(email: email.to_s.strip.downcase)
@@ -50,13 +62,25 @@ class Mage < ApplicationRecord
         password_confirmation: password,
         confirmed_at: Time.current,
         first_name: auth.info.first_name.presence,
-        last_name: auth.info.last_name.presence
+        last_name: auth.info.last_name.presence,
+        display_name: google_display_name(auth)
       )
       mage.save!
+    elsif mage.display_name.blank? && google_display_name(auth).present?
+      mage.update!(display_name: google_display_name(auth))
     end
 
     identifier.update!(mage: mage, email: email)
     mage
+  end
+
+  def self.google_display_name(auth)
+    auth.info[:name].to_s.gsub(/[[:cntrl:]]/, '').strip.first(60)
+  end
+  private_class_method :google_display_name
+
+  def handle
+    "@#{username}" if username.present?
   end
 
   def issue_magic_link!
